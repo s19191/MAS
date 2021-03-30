@@ -1,4 +1,4 @@
-package cw03;
+package zad03;
 
 import java.util.ArrayList;
 import java.util.List;

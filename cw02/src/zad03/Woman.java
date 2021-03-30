@@ -1,4 +1,4 @@
-package cw03;
+package zad03;
 
 public class Woman implements Person {
     public String sayYourGender() {
