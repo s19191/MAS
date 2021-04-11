@@ -40,4 +40,16 @@ public class Student {
     public int getSemestr() {
         return semestr;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "imie='" + imie + '\'' +
+                ", nazwisko='" + nazwisko + '\'' +
+                ", index='" + index + '\'' +
+                ", rokUrodzenia=" + rokUrodzenia +
+                ", rokStudiow=" + rokStudiow +
+                ", semestr=" + semestr +
+                '}';
+    }
 }

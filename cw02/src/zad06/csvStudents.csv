@@ -1,0 +1,5 @@
+Student{imie='Jan', nazwisko='Kwasowski', index='s19191', rokUrodzenia=1998, rokStudiow=3, semestr=6},
+Student{imie='Adam', nazwisko='Marian', index='s20000', rokUrodzenia=2000, rokStudiow=1, semestr=1},
+Student{imie='Ala', nazwisko='Kowalska', index='s18000', rokUrodzenia=1995, rokStudiow=4, semestr=7},
+Student{imie='Anna', nazwisko='Maria', index='s21922', rokUrodzenia=2001, rokStudiow=2, semestr=3},
+Student{imie='Roman', nazwisko='Janusz', index='s18999', rokUrodzenia=1997, rokStudiow=3, semestr=5},
