@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c1b5b813-2c2e-4726-8398-7de55c9a7f20" name="Default Changelist" comment="zad06" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="cw02" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1q6uBmQr4zUPhguf2lVJkFl4d1v" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Dokumenty/PJATK/Sem4/NAI/mpp2" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="inlay.hints.JAVA" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MAS\cw02\src\zad06\xml" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.zad06csv">
+    <configuration name="zad03" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="zad03.zad03" />
+      <module name="cw02" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="zad03.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="zad04" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="zad04.zad04" />
+      <module name="cw02" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="zad04.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="zad05" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="zad05.zad05" />
+      <module name="cw02" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="zad05.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="zad06csv" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="zad06.zad06csv" />
+      <module name="cw02" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="zad06.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="zad06xml" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="zad06.zad06xml" />
+      <module name="cw02" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="zad06.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.zad06csv" />
+        <item itemvalue="Application.zad06xml" />
+        <item itemvalue="Application.zad05" />
+        <item itemvalue="Application.zad04" />
+        <item itemvalue="Application.zad03" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c1b5b813-2c2e-4726-8398-7de55c9a7f20" name="Default Changelist" comment="" />
+      <created>1616412230352</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1616412230352</updated>
+      <workItem from="1616412231499" duration="2293000" />
+      <workItem from="1616423818283" duration="275000" />
+      <workItem from="1616510230645" duration="674000" />
+      <workItem from="1616628128262" duration="6596000" />
+      <workItem from="1616636719181" duration="59000" />
+      <workItem from="1616688939922" duration="762000" />
+      <workItem from="1616697615158" duration="238000" />
+      <workItem from="1616697960447" duration="1774000" />
+      <workItem from="1616704661519" duration="1989000" />
+      <workItem from="1616721826152" duration="3085000" />
+      <workItem from="1616790874548" duration="46000" />
+      <workItem from="1617136038574" duration="21000" />
+      <workItem from="1617136085092" duration="29000" />
+      <workItem from="1617137923585" duration="1041000" />
+      <workItem from="1617139342846" duration="7162000" />
+      <workItem from="1617187313116" duration="4166000" />
+      <workItem from="1617713678083" duration="7000" />
+      <workItem from="1617804133847" duration="35000" />
+      <workItem from="1617804282229" duration="64000" />
+      <workItem from="1617902953102" duration="352000" />
+      <workItem from="1617994640162" duration="977000" />
+      <workItem from="1618176342838" duration="1646000" />
+      <workItem from="1618178164108" duration="51000" />
+    </task>
+    <task id="LOCAL-00001" summary="początek">
+      <created>1616412455919</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1616412455919</updated>
+    </task>
+    <task id="LOCAL-00002" summary="zad01">
+      <created>1616413928790</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1616413928790</updated>
+    </task>
+    <task id="LOCAL-00003" summary="początek zad02">
+      <created>1616510293035</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1616510293035</updated>
+    </task>
+    <task id="LOCAL-00004" summary="zad02">
+      <created>1616723485032</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1616723485032</updated>
+    </task>
+    <task id="LOCAL-00005" summary="zad03">
+      <created>1617138365044</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617138365044</updated>
+    </task>
+    <task id="LOCAL-00006" summary="zad04">
+      <created>1617139888478</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1617139888478</updated>
+    </task>
+    <task id="LOCAL-00007" summary="zad05">
+      <created>1617140886199</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1617140886199</updated>
+    </task>
+    <task id="LOCAL-00008" summary="zad03">
+      <created>1617142126291</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1617142126291</updated>
+    </task>
+    <task id="LOCAL-00009" summary="zad06, ale źle bo do xml">
+      <created>1617148597657</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1617148597657</updated>
+    </task>
+    <task id="LOCAL-00010" summary="zad06">
+      <created>1618177687918</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1618177687918</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="początek" />
+    <MESSAGE value="zad01" />
+    <MESSAGE value="początek zad02" />
+    <MESSAGE value="zad02" />
+    <MESSAGE value="zad04" />
+    <MESSAGE value="zad05" />
+    <MESSAGE value="zad03" />
+    <MESSAGE value="zad06, ale źle bo do xml" />
+    <MESSAGE value="zad06" />
+    <option name="LAST_COMMIT_MESSAGE" value="zad06" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.ConcurrentModificationException" package="java.util" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>
