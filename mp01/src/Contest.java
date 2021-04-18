@@ -1,22 +1,24 @@
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Contest implements Serializable {
-    String name;
-    int mainPrize;
-    int sumOfPrizes;
-    LocalDateTime dateOfTheEvent;
-    String description;
+    private String name;
+    private int mainPrize;
+    private int sumOfPrizes;
+    private LocalDateTime dateOfTheEvent;
+    private String description;
+    private static LocalTime minTimeOfEvent = LocalTime.of(2, 30);
 //    atrybut złożony
-    Address address;
+    private Address address;
 //    atrybut powtarzalny
-    Set<String> organizer;
+    private Set<String> organizer;
 //    atrybut opcjonalny
-    String urlAddress;
+    private String urlAddress;
 //    ekstensja
     private static List<Contest> extent = new ArrayList<>();
 
@@ -70,9 +72,14 @@ public class Contest implements Serializable {
         return extent.stream().filter(contest -> contest.dateOfTheEvent.isAfter(since.minusDays(1)) && contest.dateOfTheEvent.isBefore(LocalDateTime.now())).collect(Collectors.toList());
     }
 
-//    atrybut pochodny
+//    atrybut pochodny nr.1
     public int getAmountOfRestOfThePrizes() {
         return sumOfPrizes - mainPrize;
+    }
+
+//    atrybut pochodny nr.2
+    public LocalDateTime getPredictedEndTime() {
+        return dateOfTheEvent.plusHours(minTimeOfEvent.getHour()).plusMinutes(minTimeOfEvent.getMinute());
     }
 
 //    gettery i settery
@@ -108,6 +115,22 @@ public class Contest implements Serializable {
         this.dateOfTheEvent = dateOfTheEvent;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public static LocalTime getMinTimeOfEvent() {
+        return minTimeOfEvent;
+    }
+
+    public static void setMinTimeOfEvent(LocalTime minTimeOfEvent) {
+        Contest.minTimeOfEvent = minTimeOfEvent;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -130,14 +153,6 @@ public class Contest implements Serializable {
 
     public void setUrlAddress(String urlAddress) {
         this.urlAddress = urlAddress;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
 //    dodawanie do ekstensji

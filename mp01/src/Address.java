@@ -1,15 +1,15 @@
 import java.io.Serializable;
 
 public class Address implements Serializable {
-    String country;
-    String voivodeship;
-    String district;
-    String community;
-    String town;
-    String street;
-    int houseNr;
-    Integer apartmentNr;
-    String postalCode;
+    private String country;
+    private String voivodeship;
+    private String district;
+    private String community;
+    private String town;
+    private String street;
+    private int houseNr;
+    private Integer apartmentNr;
+    private String postalCode;
 
     public Address(String country, String voivodeship, String district, String community, String town, String street, int houseNr, Integer apartmentNr, String postalCode) {
         this.country = country;

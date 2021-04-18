@@ -70,12 +70,15 @@ public class Test {
         System.out.println("**************************************************************************************************");
 
         System.out.println("Atrybut klasowy");
-//        TODO:Zrobić argument klasowy
-        System.out.println("NIE MA ZRÓB");
+        System.out.println(Contest.getMinTimeOfEvent());
         System.out.println("**************************************************************************************************");
 
-        System.out.println("Atrybut pochodny");
+        System.out.println("Atrybut pochodny nr.1");
         System.out.println(contest01.getAmountOfRestOfThePrizes());
+        System.out.println("**************************************************************************************************");
+
+        System.out.println("Atrybut pochodny nr.2");
+        System.out.println(contest01.getPredictedEndTime());
         System.out.println("**************************************************************************************************");
 
         System.out.println("Metoda klasowa");
