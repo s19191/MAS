@@ -19,7 +19,8 @@ public class Contest implements Serializable {
 //    atrybut powtarzalny
     private Set<String> organizer;
 //    atrybut opcjonalny
-    private Optional<String> urlAddress = Optional.empty();
+//    private Optional<String> urlAddress = Optional.empty();
+    private String urlAddress = null;
 //    ekstensja
     private static List<Contest> extent = new ArrayList<>();
 
@@ -31,7 +32,8 @@ public class Contest implements Serializable {
         this.dateOfTheEvent = dateOfTheEvent;
         this.address = address;
         this.organizer = organizer;
-        this.urlAddress = Optional.of(urlAddress);
+//        this.urlAddress = Optional.of(urlAddress);
+        this.urlAddress = urlAddress;
         this.description = description;
         addContest(this);
     }
@@ -103,6 +105,10 @@ public class Contest implements Serializable {
 //    atrybut pochodny nr.2
     public LocalDateTime getPredictedEndTime() {
         return dateOfTheEvent.plusHours(minTimeOfEvent.getHour()).plusMinutes(minTimeOfEvent.getMinute());
+    }
+
+    public String getBasicInformation() {
+        return "Name of contest: " + getName() + ", description: " + getDescription() + ", url address: " + getUrlAddress();
     }
 
 //    gettery i settery
@@ -195,15 +201,21 @@ public class Contest implements Serializable {
     }
 
     public String getUrlAddress() {
-        if (urlAddress.isPresent()) {
-            return urlAddress.get();
+//        if (urlAddress.isPresent()) {
+//            return urlAddress.get();
+//        } else {
+//            return "urlAddress not set";
+//        }
+        if (urlAddress != null) {
+            return urlAddress;
         } else {
             return "urlAddress not set";
         }
     }
 
     public void setUrlAddress(String urlAddress) {
-        this.urlAddress = Optional.of(urlAddress);
+//        this.urlAddress = Optional.of(urlAddress);
+        this.urlAddress = urlAddress;
     }
 
 //    dodawanie do ekstensji
@@ -253,7 +265,8 @@ public class Contest implements Serializable {
                 ", description='" + description + '\'' +
                 ", address=" + address +
                 ", organizer=" + organizer +
-                (urlAddress.isPresent() ? ", urlAddress=" + urlAddress.get() : ", urlAddress not set") + '\'' +
+//                (urlAddress.isPresent() ? ", urlAddress=" + urlAddress.get() : ", urlAddress not set") + '\'' +
+                (urlAddress != null ? ", urlAddress=" + urlAddress : ", urlAddress not set") + '\'' +
                 '}';
     }
 }
