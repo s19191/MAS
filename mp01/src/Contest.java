@@ -3,6 +3,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,24 +19,24 @@ public class Contest implements Serializable {
 //    atrybut powtarzalny
     private Set<String> organizer;
 //    atrybut opcjonalny
-    private String urlAddress;
+    private Optional<String> urlAddress = Optional.empty();
 //    ekstensja
     private static List<Contest> extent = new ArrayList<>();
 
 //    konstruktory
-    public Contest(String name, int mainPrize, int sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String urlAddress, String description) {
+    private Contest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String urlAddress, String description) {
         this.name = name;
         this.mainPrize = mainPrize;
         this.sumOfPrizes = sumOfPrizes;
         this.dateOfTheEvent = dateOfTheEvent;
         this.address = address;
         this.organizer = organizer;
-        this.urlAddress = urlAddress;
+        this.urlAddress = Optional.of(urlAddress);
         this.description = description;
         addContest(this);
     }
 
-    public Contest(String name, int mainPrize, int sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String description) {
+    private Contest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String description) {
         this.name = name;
         this.mainPrize = mainPrize;
         this.sumOfPrizes = sumOfPrizes;
@@ -44,14 +45,36 @@ public class Contest implements Serializable {
         this.organizer = organizer;
         this.description = description;
         addContest(this);
+    }
+
+    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String urlAddress, String description) throws NotNullException {
+        if (name == null || mainPrize == null || sumOfPrizes == null || dateOfTheEvent == null || address == null || organizer == null || description == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        Contest contest = new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, organizer, urlAddress, description);
+        return contest;
+    }
+
+    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String description) throws NotNullException {
+        if (name == null || mainPrize == null || sumOfPrizes == null || dateOfTheEvent == null || address == null || organizer == null || description == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        Contest contest = new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, organizer, description);
+        return contest;
     }
 
 //    przeciążenie nr.1
-    public void addOrganizer(String organizer) {
+    public void addOrganizer(String organizer) throws NotNullException {
+        if (organizer == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         this.organizer.add(organizer);
     }
 
-    public void addOrganizer(List<String> organizer) {
+    public void addOrganizer(List<String> organizer) throws NotNullException {
+        if (organizer == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         this.organizer.addAll(organizer);
     }
 
@@ -87,7 +110,10 @@ public class Contest implements Serializable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws NotNullException {
+        if (name == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         this.name = name;
     }
 
@@ -95,7 +121,10 @@ public class Contest implements Serializable {
         return mainPrize;
     }
 
-    public void setMainPrize(int mainPrize) {
+    public void setMainPrize(Integer mainPrize) throws NotNullException {
+        if (mainPrize == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         this.mainPrize = mainPrize;
     }
 
@@ -103,7 +132,10 @@ public class Contest implements Serializable {
         return sumOfPrizes;
     }
 
-    public void setSumOfPrizes(int sumOfPrizes) {
+    public void setSumOfPrizes(Integer sumOfPrizes) throws NotNullException {
+        if (sumOfPrizes == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         this.sumOfPrizes = sumOfPrizes;
     }
 
@@ -111,7 +143,10 @@ public class Contest implements Serializable {
         return dateOfTheEvent;
     }
 
-    public void setDateOfTheEvent(LocalDateTime dateOfTheEvent) {
+    public void setDateOfTheEvent(LocalDateTime dateOfTheEvent) throws NotNullException {
+        if (dateOfTheEvent == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         this.dateOfTheEvent = dateOfTheEvent;
     }
 
@@ -119,7 +154,10 @@ public class Contest implements Serializable {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(String description) throws NotNullException {
+        if (description == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         this.description = description;
     }
 
@@ -127,7 +165,10 @@ public class Contest implements Serializable {
         return minTimeOfEvent;
     }
 
-    public static void setMinTimeOfEvent(LocalTime minTimeOfEvent) {
+    public static void setMinTimeOfEvent(LocalTime minTimeOfEvent) throws NotNullException {
+        if (minTimeOfEvent == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         Contest.minTimeOfEvent = minTimeOfEvent;
     }
 
@@ -135,7 +176,10 @@ public class Contest implements Serializable {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(Address address) throws NotNullException {
+        if (address == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         this.address = address;
     }
 
@@ -143,16 +187,23 @@ public class Contest implements Serializable {
         return organizer;
     }
 
-    public void setOrganizer(Set<String> organizer) {
+    public void setOrganizer(Set<String> organizer) throws NotNullException {
+        if (organizer == null) {
+            throw new NotNullException("Can't create object, value can not be null");
+        }
         this.organizer = organizer;
     }
 
     public String getUrlAddress() {
-        return (urlAddress != null ? urlAddress : "urlAddress not set");
+        if (urlAddress.isPresent()) {
+            return urlAddress.get();
+        } else {
+            return "urlAddress not set";
+        }
     }
 
     public void setUrlAddress(String urlAddress) {
-        this.urlAddress = urlAddress;
+        this.urlAddress = Optional.of(urlAddress);
     }
 
 //    dodawanie do ekstensji
@@ -202,7 +253,7 @@ public class Contest implements Serializable {
                 ", description='" + description + '\'' +
                 ", address=" + address +
                 ", organizer=" + organizer +
-                ", urlAddress='" + getUrlAddress() + '\'' +
+                (urlAddress.isPresent() ? ", urlAddress=" + urlAddress.get() : ", urlAddress not set") + '\'' +
                 '}';
     }
 }

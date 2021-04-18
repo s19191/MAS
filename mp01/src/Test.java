@@ -1,14 +1,17 @@
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Test {
     public static void main(String[] args) {
-        Address address01 = new Address("Poland", "Mazowieckie", "Warszawski", "Warszawa-Mokotów", "Warszawa", "Melomanów", 10, 50, "00-712");
-        Address address02 = new Address("Poland", "Mazowieckie", "Warszawski", "Warszawa-Mokotów", "Warszawa", "Iwicka", 12, "00-735");
+        Address address01 = null;
+        Address address02 = null;
+        try {
+            address01 = Address.createAddress("Poland", "Mazowieckie", "Warszawski", "Warszawa-Mokotów", "Warszawa", "Melomanów", 10, 50, "00-712");
+            address02 = Address.createAddress("Poland", "Mazowieckie", "Warszawski", "Warszawa-Mokotów", "Warszawa", "Iwicka", 12, "00-735");
+        } catch (NotNullException e) {
+            e.printStackTrace();
+        }
 
         Set<String> organizer01 = new HashSet<>();
         organizer01.add("Jan Kwasowski");
@@ -17,12 +20,22 @@ public class Test {
         Set<String> organizer02 = new HashSet<>();
         organizer02.add("Polskie stowarzyszenie baristów");
 
-        Contest contest01 = new Contest("Konkurs Barista nr.1", 1000, 3000, LocalDateTime.of(2020, 9, 23, 16, 0), address01, organizer01, "https://github.com/s19191", "Super fajny konkurs");
-        Contest contest02 = new Contest("Konkurs gminy Warszawa-Mokotów", 500, 1000, LocalDateTime.of(2021, 2, 12, 12, 30), address02, organizer02, "Oficjalny konkurs polskiego stowarzyszenia baristów");
-        Contest contest03 = new Contest("Konkurs01", 100, 500, LocalDateTime.of(2021, 1, 30, 10, 15), address02, organizer01, "Opis01");
-        Contest contest04 = new Contest("Konkurs02", 1500, 3000, LocalDateTime.of(2021, 2, 22, 10, 15), address02, organizer01, "https://github.com/s19191", "Opis02");
-        Contest contest05 = new Contest("Konkurs03", 200, 800, LocalDateTime.of(2021, 4, 16, 9, 0), address01, organizer02, "Opis03");
-        Contest contest06 = new Contest("Konkurs04", 10, 50, LocalDateTime.of(2021, 3, 23, 18, 0), address01, organizer02, "https://github.com/s19191", "Opis04");
+        Contest contest01 = null;
+        Contest contest02 = null;
+        Contest contest03 = null;
+        Contest contest04 = null;
+        Contest contest05 = null;
+        Contest contest06 = null;
+        try {
+        contest01 = Contest.createContest("Konkurs Barista nr.1", 1000, 3000, LocalDateTime.of(2020, 9, 23, 16, 0), address01, organizer01, "https://github.com/s19191", "Super fajny konkurs");
+        contest02 = Contest.createContest("Konkurs gminy Warszawa-Mokotów", 500, 1000, LocalDateTime.of(2021, 2, 12, 12, 30), address02, organizer02, "Oficjalny konkurs polskiego stowarzyszenia baristów");
+        contest03 = Contest.createContest("Konkurs01", 100, 500, LocalDateTime.of(2021, 1, 30, 10, 15), address02, organizer01, "Opis01");
+        contest04 = Contest.createContest("Konkurs02", 1500, 3000, LocalDateTime.of(2021, 2, 22, 10, 15), address02, organizer01, "https://github.com/s19191", "Opis02");
+        contest05 = Contest.createContest("Konkurs03", 200, 800, LocalDateTime.of(2021, 4, 16, 9, 0), address01, organizer02, "Opis03");
+        contest06 = Contest.createContest("Konkurs04", 10, 50, LocalDateTime.of(2021, 3, 23, 18, 0), address01, organizer02, "https://github.com/s19191", "Opis04");
+        } catch (NotNullException e) {
+            e.printStackTrace();
+        }
 
         System.out.println("Ekstensja");
         Contest.showExtent();
@@ -54,6 +67,7 @@ public class Test {
             e.printStackTrace();
         }
 
+        try {
         System.out.println("Atrybut złożony");
         System.out.println("Address= " + contest01.getAddress());
         contest01.setAddress(address02);
@@ -118,5 +132,8 @@ public class Test {
             System.out.println(contest);
         }
         System.out.println("**************************************************************************************************");
+        } catch (NotNullException e) {
+            e.printStackTrace();
+        }
     }
 }
