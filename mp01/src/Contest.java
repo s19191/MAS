@@ -66,14 +66,14 @@ public class Contest implements Serializable {
 //    przeciążenie nr.1
     public void addOrganizer(String organizer) throws NotNullException {
         if (organizer == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't add organizer, value can not be null");
         }
         this.organizer.add(organizer);
     }
 
     public void addOrganizer(List<String> organizer) throws NotNullException {
         if (organizer == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't add organizer, value can not be null");
         }
         this.organizer.addAll(organizer);
     }
@@ -116,7 +116,7 @@ public class Contest implements Serializable {
 
     public void setName(String name) throws NotNullException {
         if (name == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of name, value can not be null");
         }
         this.name = name;
     }
@@ -127,7 +127,7 @@ public class Contest implements Serializable {
 
     public void setMainPrize(Integer mainPrize) throws NotNullException {
         if (mainPrize == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of mainPrize, value can not be null");
         }
         this.mainPrize = mainPrize;
     }
@@ -138,7 +138,7 @@ public class Contest implements Serializable {
 
     public void setSumOfPrizes(Integer sumOfPrizes) throws NotNullException {
         if (sumOfPrizes == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of sumOfPrizes, value can not be null");
         }
         this.sumOfPrizes = sumOfPrizes;
     }
@@ -149,7 +149,7 @@ public class Contest implements Serializable {
 
     public void setDateOfTheEvent(LocalDateTime dateOfTheEvent) throws NotNullException {
         if (dateOfTheEvent == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of dateOfTheEvent, value can not be null");
         }
         this.dateOfTheEvent = dateOfTheEvent;
     }
@@ -160,7 +160,7 @@ public class Contest implements Serializable {
 
     public void setDescription(String description) throws NotNullException {
         if (description == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of description, value can not be null");
         }
         this.description = description;
     }
@@ -171,7 +171,7 @@ public class Contest implements Serializable {
 
     public static void setMinTimeOfEvent(LocalTime minTimeOfEvent) throws NotNullException {
         if (minTimeOfEvent == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of minTimeOfEvent, value can not be null");
         }
         Contest.minTimeOfEvent = minTimeOfEvent;
     }
@@ -182,7 +182,7 @@ public class Contest implements Serializable {
 
     public void setAddress(Address address) throws NotNullException {
         if (address == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of address, value can not be null");
         }
         this.address = address;
     }
@@ -193,7 +193,7 @@ public class Contest implements Serializable {
 
     public void setOrganizer(Set<String> organizer) throws NotNullException {
         if (organizer == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of organizer, value can not be null");
         }
         this.organizer = organizer;
     }

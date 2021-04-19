@@ -58,7 +58,7 @@ public class Address implements Serializable {
 
     public void setCountry(String country) throws NotNullException {
         if (country == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of country, value can not be null");
         }
         this.country = country;
     }
@@ -69,7 +69,7 @@ public class Address implements Serializable {
 
     public void setVoivodeship(String voivodeship) throws NotNullException {
         if (voivodeship == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of voivodeship, value can not be null");
         }
         this.voivodeship = voivodeship;
     }
@@ -80,7 +80,7 @@ public class Address implements Serializable {
 
     public void setDistrict(String district) throws NotNullException {
         if (district == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of district, value can not be null");
         }
         this.district = district;
     }
@@ -91,7 +91,7 @@ public class Address implements Serializable {
 
     public void setCommunity(String community) throws NotNullException {
         if (community == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of community, value can not be null");
         }
         this.community = community;
     }
@@ -102,7 +102,7 @@ public class Address implements Serializable {
 
     public void setTown(String town) throws NotNullException {
         if (town == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of town, value can not be null");
         }
         this.town = town;
     }
@@ -113,7 +113,7 @@ public class Address implements Serializable {
 
     public void setStreet(String street) throws NotNullException {
         if (street == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of street, value can not be null");
         }
         this.street = street;
     }
@@ -124,7 +124,7 @@ public class Address implements Serializable {
 
     public void setHouseNr(Integer houseNr) throws NotNullException {
         if (houseNr == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of houseNr, value can not be null");
         }
         this.houseNr = houseNr;
     }
@@ -143,7 +143,7 @@ public class Address implements Serializable {
 
     public void setPostalCode(String postalCode) throws NotNullException {
         if (postalCode == null) {
-            throw new NotNullException("Can't create object, value can not be null");
+            throw new NotNullException("Can't set value of postalCode, value can not be null");
         }
         this.postalCode = postalCode;
     }
