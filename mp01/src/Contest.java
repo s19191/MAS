@@ -1,4 +1,6 @@
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -12,58 +14,68 @@ public class Contest implements Serializable {
     private int mainPrize;
     private int sumOfPrizes;
     private LocalDateTime dateOfTheEvent;
-    private String description;
     private static LocalTime minTimeOfEvent = LocalTime.of(2, 30);
-//    atrybut złożony
     private Address address;
-//    atrybut powtarzalny
+    //    atrybut złożony
+    private URL urlAddress;
+    //    atrybut powtarzalny
     private Set<String> organizer;
-//    atrybut opcjonalny
-    private Optional<String> urlAddress = Optional.absent();
-//    ekstensja
+    //    atrybut opcjonalny
+    private Optional<String> description = Optional.absent();
+    //    ekstensja
     private static List<Contest> extent = new ArrayList<>();
 
-//    konstruktory
-    private Contest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String urlAddress, String description) {
+    //    konstruktory
+    private Contest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, URL urlAddress, String description) throws MalformedURLException {
         this.name = name;
         this.mainPrize = mainPrize;
         this.sumOfPrizes = sumOfPrizes;
         this.dateOfTheEvent = dateOfTheEvent;
         this.address = address;
         this.organizer = organizer;
-        this.urlAddress = Optional.of(urlAddress);
-        this.description = description;
+        this.urlAddress = urlAddress;
+        this.description = Optional.of(description);
         addContest(this);
     }
 
-    private Contest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String description) {
+    private Contest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, URL urlAddress) throws MalformedURLException {
         this.name = name;
         this.mainPrize = mainPrize;
         this.sumOfPrizes = sumOfPrizes;
         this.dateOfTheEvent = dateOfTheEvent;
         this.address = address;
         this.organizer = organizer;
-        this.description = description;
+        this.urlAddress = urlAddress;
         addContest(this);
     }
 
-    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String urlAddress, String description) throws NotNullException {
+    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, URL urlAddress, String description) throws NotNullException {
         if (name == null || mainPrize == null || sumOfPrizes == null || dateOfTheEvent == null || address == null || organizer == null || description == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        Contest contest = new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, organizer, urlAddress, description);
+        Contest contest = null;
+        try {
+            contest = new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, organizer, urlAddress, description);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         return contest;
     }
 
-    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, String description) throws NotNullException {
-        if (name == null || mainPrize == null || sumOfPrizes == null || dateOfTheEvent == null || address == null || organizer == null || description == null) {
+    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, URL urlAddress) throws NotNullException {
+        if (name == null || mainPrize == null || sumOfPrizes == null || dateOfTheEvent == null || address == null || organizer == null || urlAddress == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        Contest contest = new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, organizer, description);
+        Contest contest = null;
+        try {
+            contest = new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, organizer, urlAddress);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         return contest;
     }
 
-//    przeciążenie nr.1
+    //    przeciążenie nr.1
     public void addOrganizer(String organizer) throws NotNullException {
         if (organizer == null) {
             throw new NotNullException("Can't add organizer, value can not be null");
@@ -86,7 +98,7 @@ public class Contest implements Serializable {
         this.organizer.removeAll(organizer);
     }
 
-//    przeciążenie nr.2 + metody klasowe
+    //    przeciążenie nr.2 + metody klasowe
     public static List<Contest> getContests(LocalDateTime since, LocalDateTime to) {
         return extent.stream().filter(contest -> contest.dateOfTheEvent.isAfter(since.minusDays(1)) && contest.dateOfTheEvent.isBefore(to)).collect(Collectors.toList());
     }
@@ -95,12 +107,12 @@ public class Contest implements Serializable {
         return extent.stream().filter(contest -> contest.dateOfTheEvent.isAfter(since.minusDays(1)) && contest.dateOfTheEvent.isBefore(LocalDateTime.now())).collect(Collectors.toList());
     }
 
-//    atrybut pochodny nr.1
+    //    atrybut pochodny nr.1
     public int getAmountOfRestOfThePrizes() {
         return sumOfPrizes - mainPrize;
     }
 
-//    atrybut pochodny nr.2
+    //    atrybut pochodny nr.2
     public LocalDateTime getPredictedEndTime() {
         return dateOfTheEvent.plusHours(minTimeOfEvent.getHour()).plusMinutes(minTimeOfEvent.getMinute());
     }
@@ -109,7 +121,7 @@ public class Contest implements Serializable {
         return "Name of contest: " + getName() + ", description: " + getDescription() + ", url address: " + getUrlAddress();
     }
 
-//    gettery i settery
+    //    gettery i settery
     public String getName() {
         return name;
     }
@@ -155,14 +167,15 @@ public class Contest implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        if (description.isPresent()) {
+            return description.get();
+        } else {
+            return "description not set";
+        }
     }
 
     public void setDescription(String description) throws NotNullException {
-        if (description == null) {
-            throw new NotNullException("Can't set value of description, value can not be null");
-        }
-        this.description = description;
+        this.description = Optional.of(description);
     }
 
     public static LocalTime getMinTimeOfEvent() {
@@ -199,23 +212,22 @@ public class Contest implements Serializable {
     }
 
     public String getUrlAddress() {
-        if (urlAddress.isPresent()) {
-            return urlAddress.get();
-        } else {
-            return "urlAddress not set";
+        return urlAddress.toString();
+    }
+
+    public void setUrlAddress(String urlAddress) throws NotNullException, MalformedURLException {
+        if (urlAddress == null) {
+            throw new NotNullException("Can't set value of organizer, value can not be null");
         }
+        this.urlAddress = new URL(urlAddress);
     }
 
-    public void setUrlAddress(String urlAddress) {
-        this.urlAddress = Optional.of(urlAddress);
-    }
-
-//    dodawanie do ekstensji
+    //    dodawanie do ekstensji
     private static void addContest(Contest contest) {
         extent.add(contest);
     }
 
-//    usuwanie z ekstensji
+    //    usuwanie z ekstensji
     private static void removeContest(Contest contest) {
         extent.remove(contest);
     }
@@ -236,17 +248,17 @@ public class Contest implements Serializable {
         extent.clear();
     }
 
-//    utrwalenie ekstensji
+    //    utrwalenie ekstensji
     public static void writeExtent(ObjectOutputStream stream) throws IOException {
         stream.writeObject(extent);
     }
 
-//    odczytywanie ekstensji
+    //    odczytywanie ekstensji
     public static void readExtent(ObjectInputStream stream) throws  IOException, ClassNotFoundException {
         extent = (ArrayList<Contest>) stream.readObject();
     }
 
-//    przesłonięcie
+    //    przesłonięcie
     @Override
     public String toString() {
         return "Contest{" +
@@ -254,10 +266,11 @@ public class Contest implements Serializable {
                 ", mainPrize=" + mainPrize +
                 ", sumOfPrizes=" + sumOfPrizes +
                 ", dateOfTheEvent=" + dateOfTheEvent +
+                (description.isPresent() ? ", description=" + description.get() : ", description not set") + '\'' +
                 ", description='" + description + '\'' +
                 ", address=" + address +
                 ", organizer=" + organizer +
-                (urlAddress.isPresent() ? ", urlAddress=" + urlAddress.get() : ", urlAddress not set") + '\'' +
+                ", urlAddress=" + urlAddress +
                 '}';
     }
 }
