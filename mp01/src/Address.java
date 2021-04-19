@@ -1,5 +1,6 @@
+import com.google.common.base.Optional;
+
 import java.io.Serializable;
-import java.util.Optional;
 
 public class Address implements Serializable {
     private String country;
@@ -9,8 +10,7 @@ public class Address implements Serializable {
     private String town;
     private String street;
     private int houseNr;
-//    private Optional<Integer> apartmentNr = Optional.empty();
-    private Integer apartmentNr = null;
+    private Optional<Integer> apartmentNr = Optional.absent();
     private String postalCode;
 
     private Address(String country, String voivodeship, String district, String community, String town, String street, Integer houseNr, Integer apartmentNr, String postalCode) {
@@ -21,8 +21,7 @@ public class Address implements Serializable {
         this.town = town;
         this.street = street;
         this.houseNr = houseNr;
-//        this.apartmentNr = Optional.of(apartmentNr);
-        this.apartmentNr = apartmentNr;
+        this.apartmentNr = Optional.of(apartmentNr);
         this.postalCode = postalCode;
     }
 
@@ -131,13 +130,11 @@ public class Address implements Serializable {
     }
 
     public Integer getApartmentNr() {
-//        return apartmentNr.isPresent() ? apartmentNr.get() : null;
-        return apartmentNr;
+        return apartmentNr.isPresent() ? apartmentNr.get() : null;
     }
 
     public void setApartmentNr(Integer apartmentNr) {
-//        this.apartmentNr = Optional.of(apartmentNr);
-        this.apartmentNr = apartmentNr;
+        this.apartmentNr = Optional.of(apartmentNr);
     }
 
     public String getPostalCode() {
@@ -161,8 +158,7 @@ public class Address implements Serializable {
                 ", town='" + town + '\'' +
                 ", street='" + street + '\'' +
                 ", houseNr=" + houseNr + '\'' +
-//                (apartmentNr.isPresent() ? ", apartmentNr=" + apartmentNr.get() : ", apartmentNr not set") + '\'' +
-                (apartmentNr != null ? ", apartmentNr=" + apartmentNr : ", apartmentNr not set") + '\'' +
+                (apartmentNr.isPresent() ? ", apartmentNr=" + apartmentNr.get() : ", apartmentNr not set") + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 '}';
     }

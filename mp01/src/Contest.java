@@ -3,9 +3,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import com.google.common.base.Optional;
 
 public class Contest implements Serializable {
     private String name;
@@ -19,8 +19,7 @@ public class Contest implements Serializable {
 //    atrybut powtarzalny
     private Set<String> organizer;
 //    atrybut opcjonalny
-//    private Optional<String> urlAddress = Optional.empty();
-    private String urlAddress = null;
+    private Optional<String> urlAddress = Optional.absent();
 //    ekstensja
     private static List<Contest> extent = new ArrayList<>();
 
@@ -32,8 +31,7 @@ public class Contest implements Serializable {
         this.dateOfTheEvent = dateOfTheEvent;
         this.address = address;
         this.organizer = organizer;
-//        this.urlAddress = Optional.of(urlAddress);
-        this.urlAddress = urlAddress;
+        this.urlAddress = Optional.of(urlAddress);
         this.description = description;
         addContest(this);
     }
@@ -201,21 +199,15 @@ public class Contest implements Serializable {
     }
 
     public String getUrlAddress() {
-//        if (urlAddress.isPresent()) {
-//            return urlAddress.get();
-//        } else {
-//            return "urlAddress not set";
-//        }
-        if (urlAddress != null) {
-            return urlAddress;
+        if (urlAddress.isPresent()) {
+            return urlAddress.get();
         } else {
             return "urlAddress not set";
         }
     }
 
     public void setUrlAddress(String urlAddress) {
-//        this.urlAddress = Optional.of(urlAddress);
-        this.urlAddress = urlAddress;
+        this.urlAddress = Optional.of(urlAddress);
     }
 
 //    dodawanie do ekstensji
@@ -265,8 +257,7 @@ public class Contest implements Serializable {
                 ", description='" + description + '\'' +
                 ", address=" + address +
                 ", organizer=" + organizer +
-//                (urlAddress.isPresent() ? ", urlAddress=" + urlAddress.get() : ", urlAddress not set") + '\'' +
-                (urlAddress != null ? ", urlAddress=" + urlAddress : ", urlAddress not set") + '\'' +
+                (urlAddress.isPresent() ? ", urlAddress=" + urlAddress.get() : ", urlAddress not set") + '\'' +
                 '}';
     }
 }
