@@ -174,7 +174,7 @@ public class Contest implements Serializable {
         }
     }
 
-    public void setDescription(String description) throws NotNullException {
+    public void setDescription(String description) {
         this.description = Optional.of(description);
     }
 
