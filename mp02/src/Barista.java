@@ -1,7 +1,10 @@
 import com.google.common.base.Optional;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Barista {
     private String name;
@@ -10,7 +13,7 @@ public class Barista {
     private LocalDate dateOfEmployment;
     private Optional<LocalDate> dateOfFire = Optional.absent();
     private List<ContestResult> contestResults = new ArrayList<>();
-    private List<Order> orders = new ArrayList<>();
+    private Map<Integer, Order> ordersQualif = new HashMap<>();
 
     private Barista(String name, String surname, Sex sex, LocalDate dateOfEmployment, LocalDate dateOfFire) {
         this.name = name;
@@ -43,24 +46,29 @@ public class Barista {
         return barista;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void addOrder(Order newOrder) {
-        if (!orders.contains(newOrder)) {
-            orders.add(newOrder);
+    //      Zarządzanie acocjacją kwalifikowaną
+    public void addOrderQualif(Order newOrder) {
+        if (!ordersQualif.containsKey(newOrder.getOrderNr())) {
+            ordersQualif.put(newOrder.getOrderNr(), newOrder);
             newOrder.setAssignedBarista(this);
         }
     }
 
-    public void removeOrder(Order oldOrder) {
-        if (orders.contains(oldOrder)) {
-            orders.remove(oldOrder);
+    public void removeOrderQualif(Order oldOrder) {
+        if (!ordersQualif.containsKey(oldOrder.getOrderNr())) {
+            ordersQualif.remove(oldOrder.getOrderNr());
             oldOrder.removeBarista();
         }
     }
 
+    public Order findOrderQualif(int orderNr) throws Exception{
+        if (ordersQualif.containsKey(orderNr)) {
+            throw new Exception("Unable to find a order: " + orderNr);
+        }
+        return ordersQualif.get(orderNr);
+    }
+
+    //      Zarządzanie asocjacją z atrybutem
     public List<ContestResult> getContestResults() {
         return contestResults;
     }
@@ -136,16 +144,16 @@ public class Barista {
         this.dateOfFire = Optional.of(dateOfFire);
     }
 
-    @Override
-    public String toString() {
-        return "Barista{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", sex=" + sex +
-                ", dateOfEmployment=" + dateOfEmployment +
-                (dateOfFire.isPresent() ? ", dateOfFire=" + dateOfFire.get() : ", dateOfFire not set") + '\'' +
-                ", contestResults=" + contestResults +
-                ", orders=" + orders +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Barista{" +
+//                "name='" + name + '\'' +
+//                ", surname='" + surname + '\'' +
+//                ", sex=" + sex +
+//                ", dateOfEmployment=" + dateOfEmployment +
+//                (dateOfFire.isPresent() ? ", dateOfFire=" + dateOfFire.get() : ", dateOfFire not set") + '\'' +
+//                ", contestResults=" + contestResults +
+//                ", orders=" + orders +
+//                '}';
+//    }
 }
