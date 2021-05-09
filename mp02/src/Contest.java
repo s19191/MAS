@@ -24,6 +24,8 @@ public class Contest implements Serializable {
     private Optional<String> description = Optional.absent();
     //    ekstensja
     private static List<Contest> extent = new ArrayList<>();
+    //    asocjacja
+    private List<ContestResult> contestResults = new ArrayList<>();
 
     //    konstruktory
     private Contest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, URL urlAddress, String description) throws MalformedURLException {
@@ -73,6 +75,22 @@ public class Contest implements Serializable {
             e.printStackTrace();
         }
         return contest;
+    }
+
+    //    zarządzanie asocjacją z atrybutem
+    public void addContestResult(ContestResult newContestResult) {
+        if (!contestResults.contains(newContestResult)) {
+            contestResults.add(newContestResult);
+            newContestResult.setContest(this);
+        }
+    }
+
+    //    TODO: Tu coś jest nie tak, bo skoro ma być 1, no to nie możemy tak o usunąć tego
+    public void removeContestResult(ContestResult oldContestResult) {
+        if (!contestResults.contains(oldContestResult)) {
+            contestResults.remove(oldContestResult);
+            oldContestResult.removeContest();
+        }
     }
 
     //    przeciążenie nr.1
@@ -174,7 +192,7 @@ public class Contest implements Serializable {
         }
     }
 
-    public void setDescription(String description) throws NotNullException {
+    public void setDescription(String description) {
         this.description = Optional.of(description);
     }
 
