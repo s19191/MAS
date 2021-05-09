@@ -1,21 +1,21 @@
 public class Composition {
-    private String unit;
     private double quantity;
+    private double temperature;
     private Beverage beverage;
     private Ingredient ingredient;
 
-    private Composition(String unit, double quantity, Beverage beverage, Ingredient ingredient) {
-        this.unit = unit;
+    private Composition(double quantity, double temperature, Beverage beverage, Ingredient ingredient) throws NotNullException {
         this.quantity = quantity;
-        this.beverage = beverage;
-        this.ingredient = ingredient;
+        this.temperature = temperature;
+        setBeverage(beverage);
+        setIngredient(ingredient);
     }
 
-    public static Composition createOrder(String unit, Double quantity, Beverage beverage, Ingredient ingredient) throws NotNullException {
-        if (unit == null || quantity == null || beverage == null || ingredient == null) {
+    public static Composition createComposition(Double quantity, Double temperature, Beverage beverage, Ingredient ingredient) throws NotNullException {
+        if (quantity == null || temperature == null || beverage == null || ingredient == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        Composition composition = new Composition(unit, quantity, beverage, ingredient);
+        Composition composition = new Composition(quantity, temperature, beverage, ingredient);
         return composition;
     }
 
@@ -28,11 +28,13 @@ public class Composition {
         if (newBeverage == null) {
             throw new NotNullException("Can't set value of beverage, value can not be null");
         }
-        if (beverage != null) {
-            removeBeverage();
+        if (newBeverage != beverage) {
+            if (beverage != null) {
+                removeBeverage();
+            }
+            beverage = newBeverage;
+            newBeverage.addComposition(this);
         }
-        beverage = newBeverage;
-        newBeverage.addComposition(this);
     }
 
     public void removeBeverage() {
@@ -51,11 +53,13 @@ public class Composition {
         if (newIngredient == null) {
             throw new NotNullException("Can't set value of ingredient, value can not be null");
         }
-        if (ingredient != null) {
-            removeIngredient();
+        if (newIngredient != ingredient) {
+            if (ingredient != null) {
+                removeIngredient();
+            }
+            ingredient = newIngredient;
+            newIngredient.addComposition(this);
         }
-        ingredient = newIngredient;
-        newIngredient.addComposition(this);
     }
 
     public void removeIngredient() {
@@ -63,17 +67,6 @@ public class Composition {
             ingredient.removeComposition(this);
             ingredient = null;
         }
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) throws NotNullException {
-        if (unit == null) {
-            throw new NotNullException("Can't set value of unit, value can not be null");
-        }
-        this.unit = unit;
     }
 
     public double getQuantity() {
@@ -85,5 +78,24 @@ public class Composition {
             throw new NotNullException("Can't set value of quantity, value can not be null");
         }
         this.quantity = quantity;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(Double temperature) throws NotNullException {
+        if (temperature == null) {
+            throw new NotNullException("Can't set value of temperature, value can not be null");
+        }
+        this.temperature = temperature;
+    }
+
+    @Override
+    public String toString() {
+        return "Composition{" +
+                "quantity=" + quantity +
+                ", temperature=" + temperature +
+                '}';
     }
 }

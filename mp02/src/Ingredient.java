@@ -4,26 +4,28 @@ import java.util.List;
 public class Ingredient {
     private String name;
     private double quantityOnStock;
+    private String unit;
     private List<Composition> compositions = new ArrayList<>();
 
-    private Ingredient(String name, double quantityOnStock) {
+    private Ingredient(String name, double quantityOnStock, String unit) {
         this.name = name;
         this.quantityOnStock = quantityOnStock;
+        this.unit = unit;
     }
 
-    public static Ingredient createIngredient(String name, Double quantityOnStock) throws NotNullException {
-        if (name == null || quantityOnStock == null) {
+    public static Ingredient createIngredient(String name, Double quantityOnStock, String unit) throws NotNullException {
+        if (name == null || quantityOnStock == null || unit == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        Ingredient ingredient = new Ingredient(name, quantityOnStock);
+        Ingredient ingredient = new Ingredient(name, quantityOnStock, unit);
         return ingredient;
     }
 
+    //    zarządzanie asocjacją z atrybutem
     public List<Composition> getCompositions() {
         return compositions;
     }
 
-    //    zarządzanie asocjacją z atrybutem
     public void addComposition(Composition newComposition) throws NotNullException {
         if (newComposition == null) {
             throw new NotNullException("Can't set value of newComposition, value can not be null");
@@ -36,7 +38,7 @@ public class Ingredient {
 
     //    TODO: Tu coś jest nie tak, bo skoro ma być 1, no to nie możemy tak o usunąć tego
     public void removeComposition(Composition oldComposition) {
-        if (!compositions.contains(oldComposition)) {
+        if (compositions.contains(oldComposition)) {
             compositions.remove(oldComposition);
             oldComposition.removeIngredient();
         }
@@ -62,5 +64,25 @@ public class Ingredient {
             throw new NotNullException("Can't set value of quantityOnStock, value can not be null");
         }
         this.quantityOnStock = quantityOnStock;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) throws NotNullException {
+        if (unit == null) {
+            throw new NotNullException("Can't set value of unit, value can not be null");
+        }
+        this.unit = unit;
+    }
+
+    @Override
+    public String toString() {
+        return "Ingredient{" +
+                "name='" + name + '\'' +
+                ", quantityOnStock=" + quantityOnStock +
+                ", compositions=" + compositions +
+                '}';
     }
 }

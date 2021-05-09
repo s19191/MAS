@@ -28,12 +28,17 @@ public class Order {
         return assignedBarista;
     }
 
-    public void setAssignedBarista(Barista newAssignedBarista) {
-        if (assignedBarista != null) {
-            removeBarista();
+    public void setAssignedBarista(Barista newAssignedBarista) throws NotNullException {
+        if (newAssignedBarista == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
         }
-        this.assignedBarista = newAssignedBarista;
-        newAssignedBarista.addOrderQualif(this);
+        if (newAssignedBarista != assignedBarista) {
+            if (assignedBarista != null) {
+                removeBarista();
+            }
+            this.assignedBarista = newAssignedBarista;
+            newAssignedBarista.addOrderQualif(this);
+        }
     }
 
     public void removeBarista() {
@@ -76,9 +81,9 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "dateOfAcceptance=" + dateOfAcceptance.toString() +
+                "dateOfAcceptance=" + dateOfAcceptance +
                 ", coffees=" + coffees +
-                ", assignedBarista=" + assignedBarista.toString() +
+                ", orderNr=" + orderNr +
                 '}';
     }
 }

@@ -38,7 +38,7 @@ public class Beverage {
 
     //    TODO: Tu coś jest nie tak, bo skoro ma być 1, no to nie możemy tak o usunąć tego
     public void removeComposition(Composition oldComposition) {
-        if (!compositions.contains(oldComposition)) {
+        if (compositions.contains(oldComposition)) {
             compositions.remove(oldComposition);
             oldComposition.removeBeverage();
         }
@@ -75,5 +75,15 @@ public class Beverage {
             throw new NotNullException("Can't set value of code, value can not be null");
         }
         this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        return "Beverage{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", code='" + code + '\'' +
+                ", compositions=" + compositions +
+                '}';
     }
 }

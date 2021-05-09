@@ -1,4 +1,9 @@
-import java.io.*;
+import com.google.common.base.Optional;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -7,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import com.google.common.base.Optional;
 
 public class Contest implements Serializable {
     private String name;
@@ -24,8 +28,8 @@ public class Contest implements Serializable {
     private Optional<String> description = Optional.absent();
     //    ekstensja
     private static List<Contest> extent = new ArrayList<>();
-    //    asocjacja
-    private List<ContestResult> contestResults = new ArrayList<>();
+    //    asocjacja zwykła
+    private List<Barista> baristas = new ArrayList<>();
 
     //    konstruktory
     private Contest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, URL urlAddress, String description) throws MalformedURLException {
@@ -77,19 +81,25 @@ public class Contest implements Serializable {
         return contest;
     }
 
-    //    zarządzanie asocjacją z atrybutem
-    public void addContestResult(ContestResult newContestResult) {
-        if (!contestResults.contains(newContestResult)) {
-            contestResults.add(newContestResult);
-            newContestResult.setContest(this);
+    //    zarządzanie asocjacją zwykłą
+    public List<Barista> getBaristas() {
+        return baristas;
+    }
+
+    public void addBarista(Barista newBarista) throws NotNullException {
+        if (newBarista == null) {
+            throw new NotNullException("Can't add value of barista, value can not be null");
+        }
+        if (!baristas.contains(newBarista)) {
+            baristas.add(newBarista);
+            newBarista.addContest(this);
         }
     }
 
-    //    TODO: Tu coś jest nie tak, bo skoro ma być 1, no to nie możemy tak o usunąć tego
-    public void removeContestResult(ContestResult oldContestResult) {
-        if (!contestResults.contains(oldContestResult)) {
-            contestResults.remove(oldContestResult);
-            oldContestResult.removeContest();
+    public void removeBarista(Barista oldBarista) {
+        if (baristas.contains(oldBarista)) {
+            baristas.remove(oldBarista);
+            oldBarista.removeContest(this);
         }
     }
 
@@ -285,10 +295,25 @@ public class Contest implements Serializable {
                 ", sumOfPrizes=" + sumOfPrizes +
                 ", dateOfTheEvent=" + dateOfTheEvent +
                 (description.isPresent() ? ", description=" + description.get() : ", description not set") + '\'' +
-                ", description='" + description + '\'' +
                 ", address=" + address +
                 ", organizer=" + organizer +
                 ", urlAddress=" + urlAddress +
                 '}';
     }
+
+
+//    @Override
+//    public String toString() {
+//        return "Contest{" +
+//                "name='" + name + '\'' +
+//                ", mainPrize=" + mainPrize +
+//                ", sumOfPrizes=" + sumOfPrizes +
+//                ", dateOfTheEvent=" + dateOfTheEvent +
+//                ", address=" + address +
+//                ", urlAddress=" + urlAddress +
+//                ", organizer=" + organizer +
+//                (description.isPresent() ? ", description=" + description.get() : ", description not set") + '\'' +
+//                ", baristas=" + baristas +
+//                '}';
+//    }
 }

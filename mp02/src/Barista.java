@@ -12,7 +12,9 @@ public class Barista {
     private Sex sex;
     private LocalDate dateOfEmployment;
     private Optional<LocalDate> dateOfFire = Optional.absent();
-    private List<ContestResult> contestResults = new ArrayList<>();
+    //      asocjacja zwykła
+    private List<Contest> contests = new ArrayList<>();
+    //      asocjacja kwalifikowana
     private Map<Integer, Order> ordersQualif = new HashMap<>();
 
     private Barista(String name, String surname, Sex sex, LocalDate dateOfEmployment, LocalDate dateOfFire) {
@@ -46,8 +48,33 @@ public class Barista {
         return barista;
     }
 
+    //      Zarządzanie acocjacją
+    public List<Contest> getContests() {
+        return contests;
+    }
+
+    public void addContest(Contest newContest) throws NotNullException {
+        if (newContest == null) {
+            throw new NotNullException("Can't add value of newContest, value can not be null");
+        }
+        if (!contests.contains(newContest)) {
+            contests.add(newContest);
+            newContest.addBarista(this);
+        }
+    }
+
+    public void removeContest(Contest oldContest) {
+        if (contests.contains(oldContest)) {
+            contests.remove(oldContest);
+            oldContest.removeBarista(this);
+        }
+    }
+
     //      Zarządzanie acocjacją kwalifikowaną
-    public void addOrderQualif(Order newOrder) {
+    public void addOrderQualif(Order newOrder) throws NotNullException {
+        if (newOrder == null) {
+            throw new NotNullException("Can't add value of newOrder, value can not be null");
+        }
         if (!ordersQualif.containsKey(newOrder.getOrderNr())) {
             ordersQualif.put(newOrder.getOrderNr(), newOrder);
             newOrder.setAssignedBarista(this);
@@ -61,31 +88,11 @@ public class Barista {
         }
     }
 
-    public Order findOrderQualif(int orderNr) throws Exception{
-        if (ordersQualif.containsKey(orderNr)) {
-            throw new Exception("Unable to find a order: " + orderNr);
+    public Order findOrderQualif(int orderNr) throws NotNullException{
+        if (!ordersQualif.containsKey(orderNr)) {
+            throw new NotNullException("Unable to find a order: " + orderNr);
         }
         return ordersQualif.get(orderNr);
-    }
-
-    //      Zarządzanie asocjacją z atrybutem
-    public List<ContestResult> getContestResults() {
-        return contestResults;
-    }
-
-    public void addContestResult(ContestResult newContestResult) {
-        if (!contestResults.contains(newContestResult)) {
-            contestResults.add(newContestResult);
-            newContestResult.setBarista(this);
-        }
-    }
-
-    //    TODO: Tu coś jest nie tak, bo skoro ma być 1, no to nie możemy tak o usunąć tego
-    public void removeContestResult(ContestResult oldContestResult) {
-        if (!contestResults.contains(oldContestResult)) {
-            contestResults.remove(oldContestResult);
-            oldContestResult.removeBarista();
-        }
     }
 
     public String getName() {
@@ -144,16 +151,16 @@ public class Barista {
         this.dateOfFire = Optional.of(dateOfFire);
     }
 
-//    @Override
-//    public String toString() {
-//        return "Barista{" +
-//                "name='" + name + '\'' +
-//                ", surname='" + surname + '\'' +
-//                ", sex=" + sex +
-//                ", dateOfEmployment=" + dateOfEmployment +
-//                (dateOfFire.isPresent() ? ", dateOfFire=" + dateOfFire.get() : ", dateOfFire not set") + '\'' +
-//                ", contestResults=" + contestResults +
-//                ", orders=" + orders +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Barista{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", sex=" + sex +
+                ", dateOfEmployment=" + dateOfEmployment +
+                (dateOfFire.isPresent() ? ", dateOfFire=" + dateOfFire.get() : ", dateOfFire not set") + '\'' +
+                ", contests=" + contests +
+                ", ordersQualif=" + ordersQualif +
+                '}';
+    }
 }
