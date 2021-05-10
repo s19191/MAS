@@ -36,7 +36,6 @@ public class Ingredient {
         }
     }
 
-    //    TODO: Tu coś jest nie tak, bo skoro ma być 1, no to nie możemy tak o usunąć tego
     public void removeComposition(Composition oldComposition) {
         if (compositions.contains(oldComposition)) {
             compositions.remove(oldComposition);
