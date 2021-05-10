@@ -176,23 +176,24 @@ public class Test {
         System.out.println("************************************************************************************************Kompozycja************************************************************************************************");
         System.out.println();
         try {
-            barista01.addOrderQualif(order01);
-            System.out.println("**********************Znalezienie i wyświetlenie z barista01 znalezienie po nrOrder 1**********************");
-            System.out.println(barista01.findOrderQualif(1));
-            System.out.println(order01.getAssignedBarista());
+            LoyaltyClubMember loyaltyClubMember01 = LoyaltyClubMember.createLoyaltyClubMember("Jan", "Kwasowski", Sex.MALE, LocalDate.now(), "s19191@pjwstk.edu.pl", "+48 111-111-111", LocalDate.now(), 0);
+            loyaltyClubMember01.createDiscount(0.2, "Purpose01", "D01");
+            System.out.println("**********************Znalezienie i wyświetlenie z loyaltyClubMember01 discountAmount oraz purpose z discount o kodzie D01**********************");
+            System.out.println(loyaltyClubMember01.getDiscountAmount("D01"));
+            System.out.println(loyaltyClubMember01.getDiscountPurpose("D01"));
             System.out.println();
 
-            System.out.println("**********************Początkowo order2 jest połączone z barista02**********************");
-            barista02.addOrderQualif(order02);
-            System.out.println(order02.getAssignedBarista());
+            loyaltyClubMember01.createDiscount(0.3, "Purpose02", "D02");
+            System.out.println("**********************Znalezienie i wyświetlenie z loyaltyClubMember01 discountAmount oraz purpose z discount o kodzie D02**********************");
+            System.out.println(loyaltyClubMember01.getDiscountAmount("D02"));
+            System.out.println(loyaltyClubMember01.getDiscountPurpose("D02"));
             System.out.println();
 
-            order02.setAssignedBarista(barista01);
-            System.out.println("**********************Znalezienie i wyświetlenie z barista01 znalezienie po nrOrder 2**********************");
-            System.out.println(barista01.findOrderQualif(2));
-            System.out.println(order01.getAssignedBarista());
-            System.out.println();
+            System.out.println("**********************Próba dodania discount o kodzie, który istnieje (D01)**********************");
+            loyaltyClubMember01.createDiscount(0.2, "Purpose01", "D01");
         } catch (NotNullException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
