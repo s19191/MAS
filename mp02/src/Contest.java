@@ -300,20 +300,4 @@ public class Contest implements Serializable {
                 ", urlAddress=" + urlAddress +
                 '}';
     }
-
-
-//    @Override
-//    public String toString() {
-//        return "Contest{" +
-//                "name='" + name + '\'' +
-//                ", mainPrize=" + mainPrize +
-//                ", sumOfPrizes=" + sumOfPrizes +
-//                ", dateOfTheEvent=" + dateOfTheEvent +
-//                ", address=" + address +
-//                ", urlAddress=" + urlAddress +
-//                ", organizer=" + organizer +
-//                (description.isPresent() ? ", description=" + description.get() : ", description not set") + '\'' +
-//                ", baristas=" + baristas +
-//                '}';
-//    }
 }
