@@ -1,7 +1,7 @@
 import java.time.LocalTime;
 
 public class Hybrid extends InternalCombustion implements IElectric {
-    Electric electric;
+    private Electric electric;
 
     public Hybrid(String model, String mark, Double wage, Integer howManySeats, double tankCapacity, double averageCombustion, int batteryCapacity, double averagePowerConsumption) {
         super(model, mark, wage, howManySeats, tankCapacity, averageCombustion, TypeOfGearbox.AUTOMATIC);
