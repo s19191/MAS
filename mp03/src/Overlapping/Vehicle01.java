@@ -234,4 +234,17 @@ public class Vehicle01 {
         }
         this.howManySeats = howManySeats;
     }
+
+    @Override
+    public String toString() {
+        if (vehicleKind.contains(VehicleType.INTERNALCOMBUSTION) && vehicleKind.contains(VehicleType.ELECTRIC)) {
+            return "Electric and Internal combustion";
+        } else if (vehicleKind.contains(VehicleType.INTERNALCOMBUSTION)) {
+            return "Internal combustion";
+        } else if (vehicleKind.contains(VehicleType.ELECTRIC)) {
+            return "Electric";
+        } else {
+            return "Standard";
+        }
+    }
 }
