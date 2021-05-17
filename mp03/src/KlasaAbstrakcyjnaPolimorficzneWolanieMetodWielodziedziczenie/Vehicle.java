@@ -1,11 +1,10 @@
+package KlasaAbstrakcyjnaPolimorficzneWolanieMetodWielodziedziczenie;
+
 public abstract class Vehicle {
     private String model;
     private String mark;
     private Double wage;
     private Integer howManySeats;
-    private MovementEnvironment movementEnvironment;
-
-    //TODO: Czy tu dodać do kosntruktora?
 
     public Vehicle(String model, String mark, Double wage, Integer howManySeats) {
         this.model = model;
@@ -15,17 +14,6 @@ public abstract class Vehicle {
     }
 
     public abstract double calculateAverageMonthlyCost();
-
-    public MovementEnvironment getMovementEnvironment() {
-        return movementEnvironment;
-    }
-
-    public void setMovementEnvironment(MovementEnvironment movementEnvironment) throws NotNullException {
-        if (movementEnvironment == null) {
-            throw new NotNullException("Can't set value of country, value can not be null");
-        }
-        this.movementEnvironment = movementEnvironment;
-    }
 
     public String getModel() {
         return model;

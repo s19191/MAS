@@ -3,7 +3,7 @@ package Overlapping;
 import java.time.LocalTime;
 import java.util.EnumSet;
 
-public class Vehicle01 {
+public class Vehicle {
 
     private EnumSet<VehicleType> vehicleKind = EnumSet.of(VehicleType.STANDARD);
 
@@ -20,14 +20,14 @@ public class Vehicle01 {
     private double averageCombustion;
     private TypeOfGearbox typeOfGearbox;
 
-    public Vehicle01(String model, String mark, Double wage, Integer howManySeats) throws NotNullException {
+    public Vehicle(String model, String mark, Double wage, Integer howManySeats) throws NotNullException {
         this.model = model;
         this.mark = mark;
         this.wage = wage;
         this.howManySeats = howManySeats;
     }
 
-    public Vehicle01(String model, String mark, Double wage, Integer howManySeats, int batteryCapacity, double averagePowerConsumption, LocalTime averageChargingTime) throws NotNullException {
+    public Vehicle(String model, String mark, Double wage, Integer howManySeats, int batteryCapacity, double averagePowerConsumption, LocalTime averageChargingTime) {
         this.model = model;
         this.mark = mark;
         this.wage = wage;
@@ -95,7 +95,7 @@ public class Vehicle01 {
         }
     }
 
-    public Vehicle01(String model, String mark, Double wage, Integer howManySeats, double tankCapacity, double averageCombustion, TypeOfGearbox typeOfGearbox) throws NotNullException {
+    public Vehicle(String model, String mark, Double wage, Integer howManySeats, double tankCapacity, double averageCombustion, TypeOfGearbox typeOfGearbox) {
         this.model = model;
         this.mark = mark;
         this.wage = wage;
@@ -163,8 +163,7 @@ public class Vehicle01 {
         }
     }
 
-    public Vehicle01(EnumSet<VehicleType> vehicleKind, String model, String mark, Double wage, Integer howManySeats, int batteryCapacity, double averagePowerConsumption, LocalTime averageChargingTime, double tankCapacity, double averageCombustion, TypeOfGearbox typeOfGearbox) {
-        this.vehicleKind = vehicleKind;
+    public Vehicle(String model, String mark, Double wage, Integer howManySeats, int batteryCapacity, double averagePowerConsumption, LocalTime averageChargingTime, double tankCapacity, double averageCombustion, TypeOfGearbox typeOfGearbox) {
         this.model = model;
         this.mark = mark;
         this.wage = wage;

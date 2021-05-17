@@ -1,3 +1,5 @@
+package KlasaAbstrakcyjnaPolimorficzneWolanieMetodWielodziedziczenie;
+
 import java.time.LocalTime;
 
 public interface IElectric {

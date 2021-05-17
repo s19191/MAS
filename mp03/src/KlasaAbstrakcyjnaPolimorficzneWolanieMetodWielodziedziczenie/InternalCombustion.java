@@ -1,3 +1,5 @@
+package KlasaAbstrakcyjnaPolimorficzneWolanieMetodWielodziedziczenie;
+
 public class InternalCombustion extends Vehicle {
     private double tankCapacity;
     private double averageCombustion;
@@ -46,5 +48,10 @@ public class InternalCombustion extends Vehicle {
             throw new NotNullException("Can't set value of country, value can not be null");
         }
         this.typeOfGearbox = typeOfGearbox;
+    }
+
+    @Override
+    public String toString() {
+        return "Internal combustion";
     }
 }
