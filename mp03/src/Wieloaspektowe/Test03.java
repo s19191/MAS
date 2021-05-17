@@ -1,4 +1,4 @@
-package Wielodziedziczenie;
+package Wieloaspektowe;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

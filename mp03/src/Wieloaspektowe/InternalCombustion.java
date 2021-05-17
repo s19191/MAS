@@ -1,4 +1,4 @@
-package Wielodziedziczenie;
+package Wieloaspektowe;
 
 public class InternalCombustion extends Vehicle {
     private double tankCapacity;

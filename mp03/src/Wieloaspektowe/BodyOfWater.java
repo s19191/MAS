@@ -1,4 +1,4 @@
-package Wielodziedziczenie;
+package Wieloaspektowe;
 
 public enum BodyOfWater {
     MARINE, INLAND

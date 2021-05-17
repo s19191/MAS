@@ -1,4 +1,4 @@
-package Wielodziedziczenie;
+package Wieloaspektowe;
 
 public enum TypeOfMovementEnvironment {
     AQUEOUS, OVERLAND
