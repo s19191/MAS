@@ -7,22 +7,12 @@ public class Electric extends Vehicle implements IElectric {
     private double averagePowerConsumption;
     private LocalTime averageChargingTime;
 
-//    private Hybrid hybrid;
-
     public Electric(String model, String mark, Double wage, Integer howManySeats, int batteryCapacity, double averagePowerConsumption, LocalTime averageChargingTime) {
         super(model, mark, wage, howManySeats);
         this.batteryCapacity = batteryCapacity;
         this.averagePowerConsumption = averagePowerConsumption;
         this.averageChargingTime = averageChargingTime;
     }
-
-//    public Hybrid getHybrid() {
-//        return hybrid;
-//    }
-//
-//    public void setHybrid(Hybrid hybrid) {
-//        this.hybrid = hybrid;
-//    }
 
     @Override
     public double calculateAverageMonthlyCost() {

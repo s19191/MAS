@@ -8,7 +8,6 @@ public class Hybrid extends InternalCombustion implements IElectric {
     public Hybrid(String model, String mark, Double wage, Integer howManySeats, double tankCapacity, double averageCombustion, int batteryCapacity, double averagePowerConsumption) {
         super(model, mark, wage, howManySeats, tankCapacity, averageCombustion, TypeOfGearbox.AUTOMATIC);
         electric = new Electric(null, null, null, null, batteryCapacity, averagePowerConsumption, LocalTime.of(0,0));
-//        electric.setHybrid(this);
     }
 
     public double calculateAverageMonthlyCost() {
