@@ -62,11 +62,16 @@ public class Beverage {
         return code;
     }
 
-    public void setCode(String code) throws NotNullException {
+    public void setCode(String code) throws Exception {
         if (code == null) {
             throw new NotNullException("Can't set value of code, value can not be null");
         }
+        if (codeBeverage.containsKey(code)) {
+            throw new Exception(String.format("Another beverage have code: %s, unable to change", code));
+        }
+        codeBeverage.remove(this.code);
         this.code = code;
+        codeBeverage.put(code, this);
     }
 
     @Override
