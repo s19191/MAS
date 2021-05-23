@@ -18,6 +18,10 @@ public class Barista {
     Comparator<Contest> comp = Comparator.comparing(Contest::getDateOfTheEvent);
     private Set<Contest> contests = new TreeSet<>(comp);
 
+    public Contest findTheClosesContest() {
+        return contests.stream().findFirst().get();
+    }
+
     public Set<Contest> getContests() {
         return contests;
     }

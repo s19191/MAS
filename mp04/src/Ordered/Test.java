@@ -44,6 +44,8 @@ public class Test {
             for (Contest c : barista01.getContests()) {
                 System.out.println(c.getDateOfTheEvent());
             }
+
+            System.out.println(barista01.findTheClosesContest());
         } catch (NotNullException e) {
             e.printStackTrace();
         }
