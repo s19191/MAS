@@ -61,6 +61,9 @@ public class Barista {
             contestsWon.remove(oldWonContest);
             oldWonContest.removeWinner();
         }
+        if (contestsWon.contains(oldWonContest)) {
+            removeContestWon(oldWonContest);
+        }
     }
 
     private Barista(String name, String surname, Sex sex, LocalDate dateOfEmployment, LocalDate dateOfFire) {

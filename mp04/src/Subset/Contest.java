@@ -55,6 +55,9 @@ public class Contest implements Serializable {
             baristas.remove(oldBarista);
             oldBarista.removeContest(this);
         }
+        if (winner == oldBarista) {
+            removeWinner();
+        }
     }
 
     //      subset
