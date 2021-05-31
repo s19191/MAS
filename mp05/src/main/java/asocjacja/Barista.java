@@ -12,7 +12,7 @@ public class Barista {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment",strategy = "increment")
-    private Long id;
+    private Long id_Barista;
     @Basic
     private String name;
     @Basic
@@ -21,9 +21,11 @@ public class Barista {
     private Sex sex;
     @Basic
     private LocalDate dateOfEmployment;
-    @ManyToMany(
-            mappedBy = "contest",
-            cascade = CascadeType.ALL
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+            name = "Barista_Contest",
+            joinColumns = { @JoinColumn(name = "id_barista") },
+            inverseJoinColumns = { @JoinColumn(name = "id_contest") }
     )
     private final List<Contest> contests = new ArrayList<>();
 

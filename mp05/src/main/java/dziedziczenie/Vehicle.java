@@ -9,7 +9,7 @@ public class Vehicle {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment",strategy = "increment")
-    private Long id;
+    private Long id_Vehicle;
     @Basic
     private String model;
     @Basic

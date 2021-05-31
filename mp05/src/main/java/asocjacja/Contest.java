@@ -10,14 +10,13 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 public class Contest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment",strategy = "increment")
-    private Long id;
+    private Long id_Contest;
     @Basic
     private String name;
     @Basic
@@ -32,10 +31,7 @@ public class Contest {
     private URL urlAddress;
     @ElementCollection
     private Set<String> organizer;
-    @ManyToMany(
-            mappedBy = "barista",
-            cascade = CascadeType.ALL
-    )
+    @ManyToMany(mappedBy = "contests")
     private final List<Barista> baristas = new ArrayList<>();
 
     public Contest() { }
