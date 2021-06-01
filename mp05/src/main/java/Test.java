@@ -1,5 +1,9 @@
 import asocjacja.Barista;
 import asocjacja.Contest;
+import dziedziczenie.Electric;
+import dziedziczenie.InternalCombustion;
+import dziedziczenie.TypeOfGearbox;
+import dziedziczenie.Vehicle;
 import klasa.LoyaltyClubMember;
 import klasa.Sex;
 import org.hibernate.Session;
@@ -14,6 +18,7 @@ import javax.persistence.criteria.Root;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -98,12 +103,25 @@ public class Test {
 
             System.out.println("************************************************************************************************Dziedziczenie************************************************************************************************");
             session.beginTransaction();
+            Vehicle vehicle = new Vehicle("Apacz", "Rower", 2.0, 1);
+            Electric electric = new Electric("Tesla", "Tesla", 2000.0, 5, 2000, 14.7, LocalTime.of(3, 0));
+            InternalCombustion internalCombustion = new InternalCombustion("Astra", "Opel", 1500.0, 5, 55.5, 9.5, TypeOfGearbox.MANUAL);
 
+            session.save(vehicle);
+            session.save(electric);
+            session.save(internalCombustion);
 
+            session.getTransaction().commit();
 
+            session.close();
         } catch (Exception e) {
             e.printStackTrace();
             StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
         }
     }
 }

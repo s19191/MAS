@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="dodane wszystko">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/7d00a94c-221c-48b3-a275-6b527422f001.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/7d00a94c-221c-48b3-a275-6b527422f001.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="testy do klasy oraz asocjacji">
       <change beforePath="$PROJECT_DIR$/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/asocjacja/Barista.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/asocjacja/Barista.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/asocjacja/Contest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/asocjacja/Contest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +80,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1622485905575</updated>
-      <workItem from="1622485906852" duration="18884000" />
+      <workItem from="1622485906852" duration="19200000" />
     </task>
     <task id="LOCAL-00001" summary="początek">
       <created>1622496546153</created>
@@ -100,7 +96,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622500290255</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="testy do klasy oraz asocjacji">
+      <created>1622506048684</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1622506048684</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,6 +123,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="początek" />
     <MESSAGE value="dodane wszystko" />
-    <option name="LAST_COMMIT_MESSAGE" value="dodane wszystko" />
+    <MESSAGE value="testy do klasy oraz asocjacji" />
+    <option name="LAST_COMMIT_MESSAGE" value="testy do klasy oraz asocjacji" />
   </component>
 </project>
