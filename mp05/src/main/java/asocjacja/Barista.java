@@ -21,13 +21,21 @@ public class Barista {
     private Sex sex;
     @Basic
     private LocalDate dateOfEmployment;
+
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
             name = "Barista_Contest",
             joinColumns = { @JoinColumn(name = "id_barista") },
             inverseJoinColumns = { @JoinColumn(name = "id_contest") }
     )
-    private final List<Contest> contests = new ArrayList<>();
+    private List<Contest> contests = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "winner",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Contest> contestsWon = new ArrayList<>();
 
     public Barista() { }
 
@@ -56,6 +64,29 @@ public class Barista {
         if (contests.contains(oldContest)) {
             contests.remove(oldContest);
             oldContest.removeBarista(this);
+        }
+    }
+
+    public void addContestWon(Contest newWonContest) throws Exception {
+        if (newWonContest == null) {
+            throw new NotNullException("Can't add value of newContest, value can not be null");
+        }
+        if (!contests.contains(newWonContest)) {
+            throw new Exception(String.format("Can not set contest: %s as won contest, because barista was not participant", newWonContest));
+        }
+        if (!contestsWon.contains(newWonContest)) {
+            contestsWon.add(newWonContest);
+            newWonContest.setWinner(this);
+        }
+    }
+
+    public void removeContestWon(Contest oldWonContest) {
+        if (contestsWon.contains(oldWonContest)) {
+            contestsWon.remove(oldWonContest);
+            oldWonContest.removeWinner();
+        }
+        if (contestsWon.contains(oldWonContest)) {
+            removeContestWon(oldWonContest);
         }
     }
 
@@ -111,7 +142,7 @@ public class Barista {
                 ", surname='" + surname + '\'' +
                 ", sex=" + sex +
                 ", dateOfEmployment=" + dateOfEmployment +
-                ", contests=" + contests +
+//                ", contests=" + contests +
                 '}';
     }
 }

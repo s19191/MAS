@@ -31,8 +31,12 @@ public class Contest {
     private URL urlAddress;
     @ElementCollection
     private Set<String> organizer;
+
     @ManyToMany(mappedBy = "contests")
-    private final List<Barista> baristas = new ArrayList<>();
+    private List<Barista> baristas = new ArrayList<>();
+
+    @ManyToOne()
+    private Barista winner;
 
     public Contest() { }
 
@@ -64,6 +68,30 @@ public class Contest {
         if (baristas.contains(oldBarista)) {
             baristas.remove(oldBarista);
             oldBarista.removeContest(this);
+        }
+    }
+
+    public Barista getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Barista newWinner) throws Exception {
+        if (newWinner == null) {
+            throw new NotNullException("Can't add value of barista, value can not be null");
+        }
+        if (newWinner != winner) {
+            if (winner != null) {
+                removeWinner();
+            }
+            winner = newWinner;
+            newWinner.addContestWon(this);
+        }
+    }
+
+    public void removeWinner() {
+        if (winner != null) {
+            winner.removeContestWon(this);
+            winner = null;
         }
     }
 
