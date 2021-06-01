@@ -54,18 +54,18 @@ public class Test {
 
             session.getTransaction().commit();
 
-//            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-//
-//            CriteriaQuery<LoyaltyClubMember> criteria = criteriaBuilder.createQuery(LoyaltyClubMember.class);
-//            Root<LoyaltyClubMember> root = criteria.from(LoyaltyClubMember.class);
-//            criteria.select(root);
-//            criteria.where(criteriaBuilder.equal(root.get("phoneNumber"), "+48 222-222-222"));
-//
-//            List<LoyaltyClubMember> loyaltyClubMemberList = session.createQuery(criteria).getResultList();
-//
-//            for (LoyaltyClubMember lcm : loyaltyClubMemberList) {
-//                System.out.println(lcm);
-//            }
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+
+            CriteriaQuery<LoyaltyClubMember> queryLoyaltyClubMember = criteriaBuilder.createQuery(LoyaltyClubMember.class);
+            Root<LoyaltyClubMember> rootLoyaltyClubMember = queryLoyaltyClubMember.from(LoyaltyClubMember.class);
+            queryLoyaltyClubMember.select(rootLoyaltyClubMember);
+            queryLoyaltyClubMember.where(criteriaBuilder.equal(rootLoyaltyClubMember.get("phoneNumber"), "+48 222-222-222"));
+
+            List<LoyaltyClubMember> loyaltyClubMemberList = session.createQuery(queryLoyaltyClubMember).getResultList();
+
+            for (LoyaltyClubMember lcm : loyaltyClubMemberList) {
+                System.out.println(lcm);
+            }
 
             System.out.println("************************************************************************************************Asocjacja *_* ************************************************************************************************");
             session.beginTransaction();
@@ -98,6 +98,16 @@ public class Test {
             session.save(barista02);
             session.save(barista03);
 
+            CriteriaQuery<Contest> queryContest = criteriaBuilder.createQuery(Contest.class);
+            Root<Contest> rootContest = queryContest.from(Contest.class);
+            queryContest.select(rootContest);
+
+            List<Contest> contestList = session.createQuery(queryContest).getResultList();
+
+            for (Contest c : contestList) {
+                System.out.println(c);
+            }
+
             session.getTransaction().commit();
 
             System.out.println("************************************************************************************************Dziedziczenie************************************************************************************************");
@@ -109,6 +119,16 @@ public class Test {
             session.save(vehicle);
             session.save(electric);
             session.save(internalCombustion);
+
+            CriteriaQuery<Vehicle> queryVehicle = criteriaBuilder.createQuery(Vehicle.class);
+            Root<Vehicle> rootVehicle = queryVehicle.from(Vehicle.class);
+            queryVehicle.select(rootVehicle);
+
+            List<Vehicle> vehicleList = session.createQuery(queryVehicle).getResultList();
+
+            for (Vehicle v : vehicleList) {
+                System.out.println(v);
+            }
 
             session.getTransaction().commit();
 

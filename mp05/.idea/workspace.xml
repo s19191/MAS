@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="skończone">
+    <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="ostatnie szlify">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/asocjacja/Barista.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/asocjacja/Barista.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/asocjacja/Contest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/asocjacja/Contest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/helpers/HibernateUtil.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,15 +57,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -88,7 +83,8 @@
       <option name="presentableId" value="Default" />
       <updated>1622485905575</updated>
       <workItem from="1622485906852" duration="20547000" />
-      <workItem from="1622537537983" duration="1914000" />
+      <workItem from="1622537537983" duration="1964000" />
+      <workItem from="1622539894232" duration="2048000" />
     </task>
     <task id="LOCAL-00001" summary="początek">
       <created>1622496546153</created>
@@ -118,7 +114,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622506521260</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="ostatnie szlify">
+      <created>1622539490197</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1622539490197</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -141,6 +144,7 @@
     <MESSAGE value="dodane wszystko" />
     <MESSAGE value="testy do klasy oraz asocjacji" />
     <MESSAGE value="skończone" />
-    <option name="LAST_COMMIT_MESSAGE" value="skończone" />
+    <MESSAGE value="ostatnie szlify" />
+    <option name="LAST_COMMIT_MESSAGE" value="ostatnie szlify" />
   </component>
 </project>
