@@ -37,7 +37,6 @@ public class Test {
                     .buildSessionFactory();
             Session session = sessionFactory.openSession();
 
-
             System.out.println("************************************************************************************************Klasa************************************************************************************************");
             session.beginTransaction();
             LoyaltyClubMember loyaltyClubMember01 = new LoyaltyClubMember("Jan", "Kwasowski", Sex.MALE, LocalDate.now(), "s19191@pjwstk.edu.pl", "+48 111-111-111", LocalDate.now(), 0);
@@ -55,18 +54,18 @@ public class Test {
 
             session.getTransaction().commit();
 
-            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-
-            CriteriaQuery<LoyaltyClubMember> criteria = criteriaBuilder.createQuery(LoyaltyClubMember.class);
-            Root<LoyaltyClubMember> root = criteria.from(LoyaltyClubMember.class);
-            criteria.select(root);
-            criteria.where(criteriaBuilder.equal(root.get("phoneNumber"), "+48 222-222-222"));
-
-            List<LoyaltyClubMember> loyaltyClubMemberList = session.createQuery(criteria).getResultList();
-
-            for (LoyaltyClubMember lcm : loyaltyClubMemberList) {
-                System.out.println(lcm);
-            }
+//            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+//
+//            CriteriaQuery<LoyaltyClubMember> criteria = criteriaBuilder.createQuery(LoyaltyClubMember.class);
+//            Root<LoyaltyClubMember> root = criteria.from(LoyaltyClubMember.class);
+//            criteria.select(root);
+//            criteria.where(criteriaBuilder.equal(root.get("phoneNumber"), "+48 222-222-222"));
+//
+//            List<LoyaltyClubMember> loyaltyClubMemberList = session.createQuery(criteria).getResultList();
+//
+//            for (LoyaltyClubMember lcm : loyaltyClubMemberList) {
+//                System.out.println(lcm);
+//            }
 
             System.out.println("************************************************************************************************Asocjacja *_* ************************************************************************************************");
             session.beginTransaction();

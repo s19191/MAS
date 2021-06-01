@@ -22,7 +22,7 @@ public class Barista {
     @Basic
     private LocalDate dateOfEmployment;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany
     @JoinTable(
             name = "Barista_Contest",
             joinColumns = { @JoinColumn(name = "id_barista") },
@@ -31,9 +31,7 @@ public class Barista {
     private List<Contest> contests = new ArrayList<>();
 
     @OneToMany(
-            mappedBy = "winner",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            mappedBy = "winner"
     )
     private List<Contest> contestsWon = new ArrayList<>();
 

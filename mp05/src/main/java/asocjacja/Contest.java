@@ -27,7 +27,7 @@ public class Contest {
     private LocalDateTime dateOfTheEvent;
     @Basic
     private static LocalTime minTimeOfEvent = LocalTime.of(2, 30);
-    //TODO: atrybut złożony
+    @Basic
     private URL urlAddress;
     @ElementCollection
     private Set<String> organizer;
