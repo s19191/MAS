@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="ostatnie szlify">
+    <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="dodane pobieranie z bazy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,17 +56,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Test" />
@@ -84,7 +72,9 @@
       <updated>1622485905575</updated>
       <workItem from="1622485906852" duration="20547000" />
       <workItem from="1622537537983" duration="1964000" />
-      <workItem from="1622539894232" duration="2048000" />
+      <workItem from="1622539894232" duration="4393000" />
+      <workItem from="1622987335557" duration="21000" />
+      <workItem from="1622987429290" duration="34000" />
     </task>
     <task id="LOCAL-00001" summary="początek">
       <created>1622496546153</created>
@@ -121,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1622539490197</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="dodane pobieranie z bazy">
+      <created>1622544186768</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1622544186768</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,6 +142,7 @@
     <MESSAGE value="testy do klasy oraz asocjacji" />
     <MESSAGE value="skończone" />
     <MESSAGE value="ostatnie szlify" />
-    <option name="LAST_COMMIT_MESSAGE" value="ostatnie szlify" />
+    <MESSAGE value="dodane pobieranie z bazy" />
+    <option name="LAST_COMMIT_MESSAGE" value="dodane pobieranie z bazy" />
   </component>
 </project>
