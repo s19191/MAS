@@ -155,18 +155,18 @@ public class Test {
             barista01.addOrderQualif(order01);
             System.out.println("**********************Znalezienie i wyświetlenie z barista01 znalezienie po nrOrder 1**********************");
             System.out.println(barista01.findOrderQualif(1));
-            System.out.println(order01.getAssignedBarista());
+            System.out.println(order01.getAssignedBaristas());
             System.out.println();
 
-            System.out.println("**********************Początkowo order2 jest połączone z barista02**********************");
-            barista02.addOrderQualif(order02);
-            System.out.println(order02.getAssignedBarista());
-            System.out.println();
+//            System.out.println("**********************Początkowo order2 jest połączone z barista02**********************");
+//            barista02.addOrderQualif(order02);
+//            System.out.println(order02.getAssignedBaristas());
+//            System.out.println();
 
-            order02.setAssignedBarista(barista01);
+            order02.addAssignedBarista(barista01);
             System.out.println("**********************Znalezienie i wyświetlenie z barista01 znalezienie po nrOrder 2**********************");
             System.out.println(barista01.findOrderQualif(2));
-            System.out.println(order01.getAssignedBarista());
+            System.out.println(order01.getAssignedBaristas());
             System.out.println();
         } catch (NotNullException e) {
             e.printStackTrace();

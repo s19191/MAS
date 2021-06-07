@@ -77,14 +77,14 @@ public class Barista {
         }
         if (!ordersQualif.containsKey(newOrder.getOrderNr())) {
             ordersQualif.put(newOrder.getOrderNr(), newOrder);
-            newOrder.setAssignedBarista(this);
+            newOrder.addAssignedBarista(this);
         }
     }
 
     public void removeOrderQualif(Order oldOrder) {
         if (!ordersQualif.containsKey(oldOrder.getOrderNr())) {
             ordersQualif.remove(oldOrder.getOrderNr());
-            oldOrder.removeBarista();
+            oldOrder.removeBarista(this);
         }
     }
 
@@ -159,8 +159,6 @@ public class Barista {
                 ", sex=" + sex +
                 ", dateOfEmployment=" + dateOfEmployment +
                 (dateOfFire.isPresent() ? ", dateOfFire=" + dateOfFire.get() : ", dateOfFire not set") + '\'' +
-                ", contests=" + contests +
-                ", ordersQualif=" + ordersQualif +
                 '}';
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 public class Order {
     private LocalDateTime dateOfAcceptance;
     private List<String> coffees = new ArrayList<>();
-    private Barista assignedBarista;
+    private List<Barista> assignedBaristas = new ArrayList<>();
     private int orderNr;
     private static int nr = 1;
 
@@ -24,27 +24,24 @@ public class Order {
         return order;
     }
 
-    public Barista getAssignedBarista() {
-        return assignedBarista;
+    public List<Barista> getAssignedBaristas() {
+        return assignedBaristas;
     }
 
-    public void setAssignedBarista(Barista newAssignedBarista) throws NotNullException {
+    public void addAssignedBarista(Barista newAssignedBarista) throws NotNullException {
         if (newAssignedBarista == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        if (newAssignedBarista != assignedBarista) {
-            if (assignedBarista != null) {
-                removeBarista();
-            }
-            this.assignedBarista = newAssignedBarista;
+        if (!assignedBaristas.contains(newAssignedBarista)) {
+            assignedBaristas.add(newAssignedBarista);
             newAssignedBarista.addOrderQualif(this);
         }
     }
 
-    public void removeBarista() {
-        if (assignedBarista != null) {
-            assignedBarista.removeOrderQualif(this);
-            assignedBarista = null;
+    public void removeBarista(Barista oldBarista) {
+        if (assignedBaristas.contains(oldBarista)) {
+            assignedBaristas.remove(oldBarista);
+            oldBarista.removeOrderQualif(this);
         }
     }
 
