@@ -15,26 +15,20 @@ public class Contest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment",strategy = "increment")
     private Long id_Contest;
-    @Basic
     private String name;
-    @Basic
     private int mainPrize;
-    @Basic
     private int sumOfPrizes;
-    @Basic
     private LocalDateTime dateOfTheEvent;
-    @Basic
     private static LocalTime minTimeOfEvent = LocalTime.of(2, 30);
-    @Basic
     private URL urlAddress;
     @ElementCollection
     private Set<String> organizer;
 
     @ManyToMany(mappedBy = "contests")
-    private List<Barista> baristas = new ArrayList<>();
+    private List<Person> baristas = new ArrayList<>();
 
     @ManyToOne()
-    private Barista winner;
+    private Person winner;
 
     public Contest() { }
 
@@ -48,11 +42,11 @@ public class Contest {
     }
 
     //    zarządzanie asocjacją zwykłą
-    public List<Barista> getBaristas() {
+    public List<Person> getBaristas() {
         return baristas;
     }
 
-    public void addBarista(Barista newBarista) throws NotNullException {
+    public void addBarista(Person newBarista) throws NotNullException {
         if (newBarista == null) {
             throw new NotNullException("Can't add value of barista, value can not be null");
         }
@@ -62,18 +56,18 @@ public class Contest {
         }
     }
 
-    public void removeBarista(Barista oldBarista) {
+    public void removeBarista(Person oldBarista) {
         if (baristas.contains(oldBarista)) {
             baristas.remove(oldBarista);
             oldBarista.removeContest(this);
         }
     }
 
-    public Barista getWinner() {
+    public Person getWinner() {
         return winner;
     }
 
-    public void setWinner(Barista newWinner) throws Exception {
+    public void setWinner(Person newWinner) throws Exception {
         if (newWinner == null) {
             throw new NotNullException("Can't add value of barista, value can not be null");
         }

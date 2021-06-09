@@ -2,9 +2,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 public class Person {
@@ -23,7 +21,8 @@ public class Person {
     private Address address;
 
     @ElementCollection
-    private EnumSet<PersonType> personKind;
+    @Enumerated(EnumType.STRING)
+    private Set<PersonType> personKind;
 
     // Atrybuty pracownika
     private LocalDate dateOfEmployment;
@@ -42,6 +41,63 @@ public class Person {
     private String phoneNumber;
     private LocalDate dateOfJoining;
     private int numberOfStars;
+
+    @ManyToMany
+    @JoinTable(
+            name = "Barista_Contest",
+            joinColumns = { @JoinColumn(name = "id_barista") },
+            inverseJoinColumns = { @JoinColumn(name = "id_contest") }
+    )
+    private List<Contest> contests = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "winner"
+    )
+    private List<Contest> contestsWon = new ArrayList<>();
+
+    public List<Contest> getContests() {
+        return contests;
+    }
+
+    public void addContest(Contest newContest) throws NotNullException {
+        if (newContest == null) {
+            throw new NotNullException("Can't add value of newContest, value can not be null");
+        }
+        if (!contests.contains(newContest)) {
+            contests.add(newContest);
+            newContest.addBarista(this);
+        }
+    }
+
+    public void removeContest(Contest oldContest) {
+        if (contests.contains(oldContest)) {
+            contests.remove(oldContest);
+            oldContest.removeBarista(this);
+        }
+    }
+
+    public void addContestWon(Contest newWonContest) throws Exception {
+        if (newWonContest == null) {
+            throw new NotNullException("Can't add value of newContest, value can not be null");
+        }
+        if (!contests.contains(newWonContest)) {
+            throw new Exception(String.format("Can not set contest: %s as won contest, because barista was not participant", newWonContest));
+        }
+        if (!contestsWon.contains(newWonContest)) {
+            contestsWon.add(newWonContest);
+            newWonContest.setWinner(this);
+        }
+    }
+
+    public void removeContestWon(Contest oldWonContest) {
+        if (contestsWon.contains(oldWonContest)) {
+            contestsWon.remove(oldWonContest);
+            oldWonContest.removeWinner();
+        }
+        if (contestsWon.contains(oldWonContest)) {
+            removeContestWon(oldWonContest);
+        }
+    }
 
     public Person() {}
 
