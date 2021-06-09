@@ -17,11 +17,9 @@
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">create</property>
-        <mapping class="dziedziczenie.Vehicle"/>
-        <mapping class="dziedziczenie.Electric"/>
-        <mapping class="dziedziczenie.InternalCombustion"/>
-        <mapping class="asocjacja.Contest"/>
-        <mapping class="asocjacja.Barista"/>
-        <mapping class="klasa.LoyaltyClubMember"/>
+        <mapping class="Contest"/>
+        <mapping class="Person"/>
+        <mapping class="Barista"/>
+        <mapping class="LoyaltyClubMember"/>
     </session-factory>
 </hibernate-configuration>

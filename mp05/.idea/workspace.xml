@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="dodane pobieranie z bazy">
-      <change beforePath="$PROJECT_DIR$/../mp02/src/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mp02/src/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/Barista.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/Barista.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/Contest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/Contest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/LoyaltyClubMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/LoyaltyClubMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/NotNullException.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/NotNullException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/Sex.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/Sex.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -84,7 +88,7 @@
       <workItem from="1623057793833" duration="269000" />
       <workItem from="1623191382626" duration="625000" />
       <workItem from="1623237228821" duration="50000" />
-      <workItem from="1623237484878" duration="2088000" />
+      <workItem from="1623237484878" duration="3399000" />
     </task>
     <task id="LOCAL-00001" summary="początek">
       <created>1622496546153</created>
