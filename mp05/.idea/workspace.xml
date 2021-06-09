@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="dodane pobieranie z bazy" />
+    <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="dodane pobieranie z bazy">
+      <change beforePath="$PROJECT_DIR$/../mp02/src/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../mp02/src/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +43,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mp02" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -79,6 +82,9 @@
       <workItem from="1622987335557" duration="21000" />
       <workItem from="1622987429290" duration="34000" />
       <workItem from="1623057793833" duration="269000" />
+      <workItem from="1623191382626" duration="625000" />
+      <workItem from="1623237228821" duration="50000" />
+      <workItem from="1623237484878" duration="2088000" />
     </task>
     <task id="LOCAL-00001" summary="początek">
       <created>1622496546153</created>

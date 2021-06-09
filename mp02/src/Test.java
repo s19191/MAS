@@ -167,6 +167,7 @@ public class Test {
             System.out.println("**********************Znalezienie i wyświetlenie z barista01 znalezienie po nrOrder 2**********************");
             System.out.println(barista01.findOrderQualif(2));
             System.out.println(order01.getAssignedBaristas());
+            System.out.println(barista01.findOrderQualif(1000));
             System.out.println();
         } catch (NotNullException e) {
             e.printStackTrace();

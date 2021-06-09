@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.jclouds.driver:jclouds-enterprise:1.0-beta-9c">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jclouds/driver/jclouds-enterprise/1.0-beta-9c/jclouds-enterprise-1.0-beta-9c.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jclouds/driver/jclouds-enterprise/1.0-beta-9c/jclouds-enterprise-1.0-beta-9c-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jclouds/driver/jclouds-enterprise/1.0-beta-9c/jclouds-enterprise-1.0-beta-9c-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
