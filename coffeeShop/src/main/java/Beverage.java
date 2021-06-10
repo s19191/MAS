@@ -18,6 +18,9 @@ public class Beverage {
     )
     private List<Recipe> recipes = new ArrayList<>();
 
+    @ManyToMany
+    private List<Order> orders = new ArrayList<>();
+
     public Beverage() {}
 
     private Beverage(String name, double price, String code) {
@@ -54,6 +57,27 @@ public class Beverage {
         if (recipes.contains(oldRecipe)) {
             recipes.remove(oldRecipe);
             oldRecipe.removeBeverage();
+        }
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void addOrder(Order newOrder) throws Exception {
+        if (newOrder == null) {
+            throw new NotNullException("Can't add value of order, value can not be null");
+        }
+        if (!orders.contains(newOrder)) {
+            orders.add(newOrder);
+            newOrder.addBeverage(this);
+        }
+    }
+
+    public void removeOrder(Order oldOrder) {
+        if (orders.contains(oldOrder)) {
+            orders.remove(oldOrder);
+            oldOrder.removeOrder(this);
         }
     }
 

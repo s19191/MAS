@@ -30,6 +30,13 @@ public class Opinion {
         }
     }
 
+    public void removeOrder() {
+        if (order != null) {
+            order.removeOpinion();
+            order = null;
+        }
+    }
+
     public Opinion() {}
 
     private Opinion(LocalDateTime dateOfIssue, String description, int score) {

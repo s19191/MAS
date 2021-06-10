@@ -64,6 +64,14 @@ public class Person {
     @OneToMany(mappedBy = "loyaltyClubMember")
     private List<Order> ordersPlaced = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "LoyaltyClubMember_Discount",
+            joinColumns = { @JoinColumn(name = "id_loyaltyClubMember") },
+            inverseJoinColumns = { @JoinColumn(name = "id_discount") }
+    )
+    private List<Discount> discounts = new ArrayList<>();
+
     public List<Contest> getContests() {
         return contests;
     }
@@ -162,6 +170,30 @@ public class Person {
         if (ordersPlaced.contains(oldOrder)) {
             ordersPlaced.remove(oldOrder);
             oldOrder.removeLoyaltyClubMember();
+        }
+    }
+
+    public List<Discount> getDiscounts() {
+        return discounts;
+    }
+
+    public void addDiscount(Discount newDiscount) throws Exception {
+        if (!personKind.contains(PersonType.LOYALTYCLUBMEMBER)) {
+            throw new Exception("Can't add discount, because this person it's not Loyalty club member!");
+        }
+        if (newDiscount == null) {
+            throw new NotNullException("Can't add value of newDiscount, value can not be null");
+        }
+        if (!discounts.contains(newDiscount)) {
+            discounts.add(newDiscount);
+            newDiscount.addLoyaltyClubMember(this);
+        }
+    }
+
+    public void removeDiscount(Discount oldDiscount) throws Exception {
+        if (discounts.contains(oldDiscount)) {
+            discounts.remove(oldDiscount);
+            oldDiscount.removeLoyaltyClubMember(this);
         }
     }
 
