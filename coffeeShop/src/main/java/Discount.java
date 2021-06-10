@@ -14,7 +14,7 @@ public class Discount {
     private String purpose;
     private String code;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "discounts")
     private List<Person> loyaltyClubMembers = new ArrayList<>();
 
     public List<Person> getLoyaltyClubMembers() {

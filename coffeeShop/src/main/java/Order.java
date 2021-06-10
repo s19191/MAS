@@ -27,9 +27,17 @@ public class Order {
     private Person loyaltyClubMember;
 
     @ManyToMany
+    @JoinTable(
+            name = "Beverage_Order",
+            joinColumns = { @JoinColumn(name = "id_order") },
+            inverseJoinColumns = { @JoinColumn(name = "id_beverage") }
+    )
     private List<Beverage> beverages = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private Opinion opinion;
 
     public Order() {
@@ -139,8 +147,18 @@ public class Order {
         return dateOfAcceptance;
     }
 
+    @Transient
     public LocalDateTime getPredictedDateOfRealisation () {
         return dateOfAcceptance.plusMinutes(beverages.size() * 5L);
+    }
+
+    @Transient
+    public double getOrderPrice() {
+        double result = 0.0;
+        for (Beverage b : beverages) {
+            result += b.getPrice();
+        }
+        return result;
     }
 
     public LocalDateTime getDateOfActualLead() {

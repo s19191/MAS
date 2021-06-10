@@ -14,11 +14,13 @@ public class Beverage {
     private double price;
     private String code;
     @OneToMany(
-            mappedBy = "beverage"
+            mappedBy = "beverage",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
     private List<Recipe> recipes = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "beverages")
     private List<Order> orders = new ArrayList<>();
 
     public Beverage() {}
