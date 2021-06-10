@@ -1,11 +1,14 @@
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Entity;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "OrderTable")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,29 +21,19 @@ public class Order {
     private int orderNr;
     private static int nr = 1;
 
-    @ManyToOne()
+    @ManyToOne
     private Person assignedBarista;
 
-    @ManyToOne()
+    @ManyToOne
     private Person loyaltyClubMember;
 
     @ManyToMany
     private List<Beverage> beverages = new ArrayList<>();
 
-    public Order() {}
-
-    private Order(List<String> coffees) {
+    public Order() {
         this.dateOfAcceptance = LocalDateTime.now();
         orderNr = nr;
         nr++;
-    }
-
-    public static Order createOrder(List<String> coffees) throws NotNullException {
-        if (coffees == null) {
-            throw new NotNullException("Can't create object, one of parameters is null");
-        }
-        Order order = new Order(coffees);
-        return order;
     }
 
     public Person getAssignedBarista() {
@@ -83,7 +76,7 @@ public class Order {
         }
         if (newLoyaltyClubMember != loyaltyClubMember) {
             if (loyaltyClubMember != null) {
-                removeAssignedBarista();
+                removeLoyaltyClubMember();
             }
             loyaltyClubMember = newLoyaltyClubMember;
             newLoyaltyClubMember.addOrderPlaced(this);

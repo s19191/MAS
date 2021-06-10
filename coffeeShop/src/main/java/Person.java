@@ -1,5 +1,7 @@
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Entity;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
@@ -50,19 +52,13 @@ public class Person {
     )
     private List<Contest> contests = new ArrayList<>();
 
-    @OneToMany(
-            mappedBy = "winner"
-    )
+    @OneToMany(mappedBy = "winner")
     private List<Contest> contestsWon = new ArrayList<>();
 
-    @OneToMany(
-            mappedBy = "assignedBarista"
-    )
+    @OneToMany(mappedBy = "assignedBarista")
     private List<Order> ordersAssigned = new ArrayList<>();
 
-    @OneToMany(
-            mappedBy = "loyaltyClubMember"
-    )
+    @OneToMany(mappedBy = "loyaltyClubMember")
     private List<Order> ordersPlaced = new ArrayList<>();
 
     public List<Contest> getContests() {
@@ -87,6 +83,10 @@ public class Person {
             contests.remove(oldContest);
             oldContest.removeBarista(this);
         }
+    }
+
+    public List<Contest> getContestsWon() {
+        return contestsWon;
     }
 
     public void addContestWon(Contest newWonContest) throws Exception {

@@ -3,6 +3,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,8 +19,6 @@ public class Test {
     public static void main(String[] args) {
         StandardServiceRegistry registry = null;
         SessionFactory sessionFactory = null;
-        String i = "AAA";
-        System.out.println(i.length());
 
         try {
             registry = new StandardServiceRegistryBuilder()

@@ -1,7 +1,6 @@
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -31,7 +30,7 @@ public class Contest {
     @ManyToMany(mappedBy = "contests")
     private List<Person> baristas = new ArrayList<>();
 
-    @ManyToOne()
+    @ManyToOne
     private Person winner;
 
     public Contest() { }

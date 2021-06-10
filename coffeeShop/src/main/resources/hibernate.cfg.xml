@@ -19,6 +19,7 @@
         <property name="hbm2ddl.auto">create</property>
         <mapping class="Person"/>
         <mapping class="Contest"/>
+        <mapping class="Order"/>
         <mapping class="Beverage"/>
         <mapping class="Recipe"/>
         <mapping class="Ingredient"/>
