@@ -22,7 +22,7 @@ public class Person {
 
     @ElementCollection
     @Enumerated(EnumType.STRING)
-    private Set<PersonType> personKind;
+    private Set<PersonType> personKind = new HashSet<>();
 
     // Atrybuty pracownika
     private LocalDate dateOfEmployment;
@@ -55,11 +55,24 @@ public class Person {
     )
     private List<Contest> contestsWon = new ArrayList<>();
 
+    @OneToMany(
+            mappedBy = "assignedBarista"
+    )
+    private List<Order> ordersAssigned = new ArrayList<>();
+
+    @OneToMany(
+            mappedBy = "loyaltyClubMember"
+    )
+    private List<Order> ordersPlaced = new ArrayList<>();
+
     public List<Contest> getContests() {
         return contests;
     }
 
-    public void addContest(Contest newContest) throws NotNullException {
+    public void addContest(Contest newContest) throws Exception {
+        if (!personKind.contains(PersonType.BARISTA)) {
+            throw new Exception("Can't add contest, because this person it's not Barista!");
+        }
         if (newContest == null) {
             throw new NotNullException("Can't add value of newContest, value can not be null");
         }
@@ -69,7 +82,7 @@ public class Person {
         }
     }
 
-    public void removeContest(Contest oldContest) {
+    public void removeContest(Contest oldContest) throws Exception {
         if (contests.contains(oldContest)) {
             contests.remove(oldContest);
             oldContest.removeBarista(this);
@@ -80,6 +93,9 @@ public class Person {
         if (newWonContest == null) {
             throw new NotNullException("Can't add value of newContest, value can not be null");
         }
+        if (!personKind.contains(PersonType.BARISTA)) {
+            throw new Exception("Can't add contest, because it's not Barista!");
+        }
         if (!contests.contains(newWonContest)) {
             throw new Exception(String.format("Can not set contest: %s as won contest, because barista was not participant", newWonContest));
         }
@@ -89,13 +105,61 @@ public class Person {
         }
     }
 
-    public void removeContestWon(Contest oldWonContest) {
+    public void removeContestWon(Contest oldWonContest) throws Exception {
         if (contestsWon.contains(oldWonContest)) {
             contestsWon.remove(oldWonContest);
             oldWonContest.removeWinner();
         }
         if (contestsWon.contains(oldWonContest)) {
             removeContestWon(oldWonContest);
+        }
+    }
+
+    public List<Order> getOrdersAssigned() {
+        return ordersAssigned;
+    }
+
+    public void addAssignedOrder(Order newOrder) throws Exception {
+        if (newOrder == null) {
+            throw new NotNullException("Can't add value of newOrder, value can not be null");
+        }
+        if (!personKind.contains(PersonType.BARISTA)) {
+            throw new Exception("Can't add assigned order, because this person it's not Barista!");
+        }
+        if (!ordersAssigned.contains(newOrder)) {
+            ordersAssigned.add(newOrder);
+            newOrder.setAssignedBarista(this);
+        }
+    }
+
+    public void removeAssignedOrder(Order oldOrder) throws Exception {
+        if (ordersAssigned.contains(oldOrder)) {
+            ordersAssigned.remove(oldOrder);
+            oldOrder.removeAssignedBarista();
+        }
+    }
+
+    public List<Order> getOrdersPlaced() {
+        return ordersPlaced;
+    }
+
+    public void addOrderPlaced(Order newOrder) throws Exception {
+        if (newOrder == null) {
+            throw new NotNullException("Can't add value of newOrder, value can not be null");
+        }
+        if (!personKind.contains(PersonType.LOYALTYCLUBMEMBER)) {
+            throw new Exception("Can't add assigned order, because this person it's not Barista!");
+        }
+        if (!ordersPlaced.contains(newOrder)) {
+            ordersPlaced.add(newOrder);
+            newOrder.setLoyaltyClubMember(this);
+        }
+    }
+
+    public void removeOrderPlaced(Order oldOrder) throws Exception {
+        if (ordersPlaced.contains(oldOrder)) {
+            ordersPlaced.remove(oldOrder);
+            oldOrder.removeLoyaltyClubMember();
         }
     }
 
@@ -325,6 +389,10 @@ public class Person {
             throw new Exception(String.format("Can't create object, another manager has keySetNumber: %s", keySetNumber));
         }
         return new Person(firstName, surname, sex, dateOfBirth, address, dateOfEmployment, keySetNumber, e_mailAddress, phoneNumber, dateOfJoining);
+    }
+
+    public Set<PersonType> getPersonKind() {
+        return personKind;
     }
 
     public String getFirstName() {

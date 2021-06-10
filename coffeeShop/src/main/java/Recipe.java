@@ -3,7 +3,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-public class Composition {
+public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "increment",strategy = "increment")
@@ -16,21 +16,21 @@ public class Composition {
     @ManyToOne()
     private Ingredient ingredient;
 
-    public Composition() {}
+    public Recipe() {}
 
-    private Composition(double quantity, double temperature, Beverage beverage, Ingredient ingredient) throws NotNullException {
+    private Recipe(double quantity, double temperature, Beverage beverage, Ingredient ingredient) throws NotNullException {
         this.quantity = quantity;
         this.temperature = temperature;
         setBeverage(beverage);
         setIngredient(ingredient);
     }
 
-    public static Composition createComposition(Double quantity, Double temperature, Beverage beverage, Ingredient ingredient) throws NotNullException {
+    public static Recipe createRecipe(Double quantity, Double temperature, Beverage beverage, Ingredient ingredient) throws NotNullException {
         if (quantity == null || temperature == null || beverage == null || ingredient == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        Composition composition = new Composition(quantity, temperature, beverage, ingredient);
-        return composition;
+        Recipe recipe = new Recipe(quantity, temperature, beverage, ingredient);
+        return recipe;
     }
 
     //    zarządzanie asocjacją z atrybutem - Baverage

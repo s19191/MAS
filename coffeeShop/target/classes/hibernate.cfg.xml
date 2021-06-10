@@ -20,7 +20,7 @@
         <mapping class="Person"/>
         <mapping class="Contest"/>
         <mapping class="Beverage"/>
-        <mapping class="Composition"/>
+        <mapping class="Recipe"/>
         <mapping class="Ingredient"/>
     </session-factory>
 </hibernate-configuration>

@@ -16,7 +16,7 @@ public class Ingredient {
     @OneToMany(
             mappedBy = "ingredient"
     )
-    private List<Composition> compositions = new ArrayList<>();
+    private List<Recipe> recipes = new ArrayList<>();
 
     public Ingredient() {}
 
@@ -35,25 +35,25 @@ public class Ingredient {
     }
 
     //    zarządzanie asocjacją z atrybutem
-    public List<Composition> getCompositions() {
-        return compositions;
+    public List<Recipe> getCompositions() {
+        return recipes;
     }
 
-    public void addComposition(Composition newComposition) throws NotNullException {
-        if (newComposition == null) {
+    public void addComposition(Recipe newRecipe) throws NotNullException {
+        if (newRecipe == null) {
             throw new NotNullException("Can't set value of newComposition, value can not be null");
         }
-        if (!compositions.contains(newComposition)) {
-            compositions.add(newComposition);
-            newComposition.setIngredient(this);
+        if (!recipes.contains(newRecipe)) {
+            recipes.add(newRecipe);
+            newRecipe.setIngredient(this);
         }
     }
 
     //    TODO: Tu coś jest nie tak, bo skoro ma być 1, no to nie możemy tak o usunąć tego
-    public void removeComposition(Composition oldComposition) {
-        if (compositions.contains(oldComposition)) {
-            compositions.remove(oldComposition);
-            oldComposition.removeIngredient();
+    public void removeComposition(Recipe oldRecipe) {
+        if (recipes.contains(oldRecipe)) {
+            recipes.remove(oldRecipe);
+            oldRecipe.removeIngredient();
         }
     }
 
@@ -95,7 +95,7 @@ public class Ingredient {
         return "Ingredient{" +
                 "name='" + name + '\'' +
                 ", quantityOnStock=" + quantityOnStock +
-                ", compositions=" + compositions +
+                ", compositions=" + recipes +
                 '}';
     }
 }

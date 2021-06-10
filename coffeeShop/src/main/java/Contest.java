@@ -1,6 +1,7 @@
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDateTime;
@@ -20,9 +21,12 @@ public class Contest {
     private int sumOfPrizes;
     private LocalDateTime dateOfTheEvent;
     private static LocalTime minTimeOfEvent = LocalTime.of(2, 30);
+    @Embedded
+    private Address address;
     private URL urlAddress;
     @ElementCollection
     private Set<String> organizer;
+    private String description = null;
 
     @ManyToMany(mappedBy = "contests")
     private List<Person> baristas = new ArrayList<>();
@@ -32,13 +36,22 @@ public class Contest {
 
     public Contest() { }
 
-    public Contest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Set<String> organizer, URL urlAddress) throws MalformedURLException {
+    private Contest(String name, int mainPrize, int sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, URL urlAddress, Set<String> organizer, String description) {
         this.name = name;
         this.mainPrize = mainPrize;
         this.sumOfPrizes = sumOfPrizes;
         this.dateOfTheEvent = dateOfTheEvent;
-        this.organizer = organizer;
+        this.address = address;
         this.urlAddress = urlAddress;
+        this.organizer = organizer;
+        this.description = description;
+    }
+
+    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, URL urlAddress, Set<String> organizer, String description) throws NotNullException {
+        if (name == null || mainPrize == null || sumOfPrizes == null || dateOfTheEvent == null || address == null || urlAddress == null || organizer == null || description == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        return new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, urlAddress, organizer, description);
     }
 
     //    zarządzanie asocjacją zwykłą
@@ -46,9 +59,12 @@ public class Contest {
         return baristas;
     }
 
-    public void addBarista(Person newBarista) throws NotNullException {
+    public void addBarista(Person newBarista) throws Exception {
         if (newBarista == null) {
             throw new NotNullException("Can't add value of barista, value can not be null");
+        }
+        if (!newBarista.getPersonKind().contains(PersonType.BARISTA)) {
+            throw new Exception("Can't add barista, because this person it's not Barista!");
         }
         if (!baristas.contains(newBarista)) {
             baristas.add(newBarista);
@@ -56,7 +72,7 @@ public class Contest {
         }
     }
 
-    public void removeBarista(Person oldBarista) {
+    public void removeBarista(Person oldBarista) throws Exception {
         if (baristas.contains(oldBarista)) {
             baristas.remove(oldBarista);
             oldBarista.removeContest(this);
@@ -71,6 +87,12 @@ public class Contest {
         if (newWinner == null) {
             throw new NotNullException("Can't add value of barista, value can not be null");
         }
+        if (!newWinner.getPersonKind().contains(PersonType.BARISTA)) {
+            throw new Exception("Can't set winner, because this person it's not Barista!");
+        }
+        if (!baristas.contains(newWinner)) {
+            throw new Exception(String.format("Can not set barista: %s as winner, because he was not participant", newWinner));
+        }
         if (newWinner != winner) {
             if (winner != null) {
                 removeWinner();
@@ -80,7 +102,7 @@ public class Contest {
         }
     }
 
-    public void removeWinner() {
+    public void removeWinner() throws Exception {
         if (winner != null) {
             winner.removeContestWon(this);
             winner = null;

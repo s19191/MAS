@@ -18,6 +18,8 @@ public class Test {
     public static void main(String[] args) {
         StandardServiceRegistry registry = null;
         SessionFactory sessionFactory = null;
+        String i = "AAA";
+        System.out.println(i.length());
 
         try {
             registry = new StandardServiceRegistryBuilder()
