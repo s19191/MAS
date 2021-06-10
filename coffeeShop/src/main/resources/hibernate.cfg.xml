@@ -23,5 +23,6 @@
         <mapping class="Beverage"/>
         <mapping class="Recipe"/>
         <mapping class="Ingredient"/>
+        <mapping class="Opinion"/>
     </session-factory>
 </hibernate-configuration>
