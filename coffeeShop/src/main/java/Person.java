@@ -177,6 +177,7 @@ public class Person {
         this.address = address;
         this.dateOfEmployment = dateOfEmployment;
         this.baristaRank = baristaRank;
+        personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
     }
 
@@ -195,6 +196,7 @@ public class Person {
         this.address = address;
         this.dateOfEmployment = dateOfEmployment;
         this.baristaRank = baristaRank;
+        personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
     }
 
@@ -217,6 +219,8 @@ public class Person {
         baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
         keySetNumberManager.put(keySetNumber, this);
+        personKind.add(PersonType.EMPLOYEE);
+        personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.SHIFTMANAGER);
     }
 
@@ -240,6 +244,8 @@ public class Person {
         baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
         keySetNumberManager.put(keySetNumber, this);
+        personKind.add(PersonType.EMPLOYEE);
+        personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.SHIFTMANAGER);
     }
 
@@ -263,6 +269,7 @@ public class Person {
         this.address = address;
         this.dateOfEmployment = dateOfEmployment;
         this.businessPhoneNumber = businessPhoneNumber;
+        personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.MANAGER);
     }
 
@@ -281,6 +288,7 @@ public class Person {
         this.address = address;
         this.dateOfEmployment = dateOfEmployment;
         this.businessPhoneNumber = businessPhoneNumber;
+        personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.MANAGER);
     }
 
@@ -347,6 +355,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
+        personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
@@ -370,6 +379,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
+        personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
@@ -397,6 +407,8 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
+        personKind.add(PersonType.EMPLOYEE);
+        personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.SHIFTMANAGER);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
@@ -425,6 +437,8 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
+        personKind.add(PersonType.EMPLOYEE);
+        personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.SHIFTMANAGER);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
@@ -453,6 +467,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
+        personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.MANAGER);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
@@ -476,6 +491,7 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
+        personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.MANAGER);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
@@ -485,6 +501,36 @@ public class Person {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
         return new Person(firstName, surname, sex, dateOfBirth, address, dateOfEmployment, businessPhoneNumber, e_mailAddress, phoneNumber, dateOfJoining);
+    }
+
+    private void checkIfEmployee() throws Exception {
+        if (!personKind.contains(PersonType.EMPLOYEE)) {
+            throw new Exception("Can't make operation, this person is not Employee!");
+        }
+    }
+
+    private void checkIfBarista() throws Exception {
+        if (!personKind.contains(PersonType.BARISTA)) {
+            throw new Exception("Can't make operation, this person is not Barista!");
+        }
+    }
+
+    private void checkIfShiftManager() throws Exception {
+        if (!personKind.contains(PersonType.SHIFTMANAGER)) {
+            throw new Exception("Can't make operation, this person is not Shift manager!");
+        }
+    }
+
+    private void checkIfManager() throws Exception {
+        if (!personKind.contains(PersonType.MANAGER)) {
+            throw new Exception("Can't make operation, this person is not Manager!");
+        }
+    }
+
+    private void checkIfLoyaltyClubMember() throws Exception {
+        if (!personKind.contains(PersonType.LOYALTYCLUBMEMBER)) {
+            throw new Exception("Can't make operation, this person is not Loyalty club member!");
+        }
     }
 
     public Set<PersonType> getPersonKind() {
@@ -500,30 +546,6 @@ public class Person {
             throw new NotNullException("Can't set firstName, parameter is null");
         }
         this.firstName = firstName;
-    }
-
-    private void checkIfEmployee() throws Exception {
-        if (!personKind.contains(PersonType.BARISTA) || !personKind.contains(PersonType.MANAGER)) {
-            throw new Exception("Can't make operation, this person is not Employee!");
-        }
-    }
-
-    private void checkIfBarista() throws Exception {
-        if (!personKind.contains(PersonType.BARISTA)) {
-            throw new Exception("Can't make operation, this person is not Barista!");
-        }
-    }
-
-    private void checkIfManager() throws Exception {
-        if (!personKind.contains(PersonType.MANAGER)) {
-            throw new Exception("Can't make operation, this person is not Manager!");
-        }
-    }
-
-    private void checkIfLoyaltyClubMember() throws Exception {
-        if (!personKind.contains(PersonType.LOYALTYCLUBMEMBER)) {
-            throw new Exception("Can't make operation, this person is not Loyalty club member!");
-        }
     }
 
     //TODO: Może coś tu
@@ -610,61 +632,87 @@ public class Person {
 
     public void setBaristaRank(BaristaRank baristaRank) throws Exception {
         checkIfBarista();
+        if (personKind.contains(PersonType.SHIFTMANAGER)) {
+            throw new Exception("Can't set baristaRank, because it's Shift manager");
+        }
         if (baristaRank == null) {
             throw new NotNullException("Can't set baristaRank, parameter is null");
         }
         this.baristaRank = baristaRank;
     }
 
-    public int getKeySetNumber() {
+    public int getKeySetNumber() throws Exception {
+        checkIfShiftManager();
         return keySetNumber;
     }
 
-    public void setKeySetNumber(Integer keySetNumber) throws NotNullException {
+    public void setKeySetNumber(Integer keySetNumber) throws Exception {
+        checkIfShiftManager();
         if (keySetNumber == null) {
             throw new NotNullException("Can't set keySetNumber, parameter is null");
         }
         this.keySetNumber = keySetNumber;
     }
 
-    public String getE_mailAddress() {
+    public String getBusinessPhoneNumber() throws Exception {
+        checkIfManager();
+        return businessPhoneNumber;
+    }
+
+    public void setBusinessPhoneNumber(String businessPhoneNumber) throws Exception {
+        checkIfManager();
+        if (businessPhoneNumber == null) {
+            throw new NotNullException("Can't set businessPhoneNumber, parameter is null");
+        }
+        this.businessPhoneNumber = businessPhoneNumber;
+    }
+
+    public String getE_mailAddress() throws Exception {
+        checkIfLoyaltyClubMember();
         return e_mailAddress;
     }
 
-    public void setE_mailAddress(String e_mailAddress) throws NotNullException {
+    public void setE_mailAddress(String e_mailAddress) throws Exception {
+        checkIfLoyaltyClubMember();
         if (e_mailAddress == null) {
             throw new NotNullException("Can't set e_mailAddress, parameter is null");
         }
         this.e_mailAddress = e_mailAddress;
     }
 
-    public String getPhoneNumber() {
+    public String getPhoneNumber() throws Exception {
+        checkIfLoyaltyClubMember();
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) throws NotNullException {
+    public void setPhoneNumber(String phoneNumber) throws Exception {
+        checkIfLoyaltyClubMember();
         if (phoneNumber == null) {
             throw new NotNullException("Can't set phoneNumber, parameter is null");
         }
         this.phoneNumber = phoneNumber;
     }
 
-    public LocalDate getDateOfJoining() {
+    public LocalDate getDateOfJoining() throws Exception {
+        checkIfLoyaltyClubMember();
         return dateOfJoining;
     }
 
-    public void setDateOfJoining(LocalDate dateOfJoining) throws NotNullException {
+    public void setDateOfJoining(LocalDate dateOfJoining) throws Exception {
+        checkIfLoyaltyClubMember();
         if (dateOfJoining == null) {
             throw new NotNullException("Can't set dateOfJoining, parameter is null");
         }
         this.dateOfJoining = dateOfJoining;
     }
 
-    public int getNumberOfStars() {
+    public int getNumberOfStars() throws Exception {
+        checkIfLoyaltyClubMember();
         return numberOfStars;
     }
 
-    public void setNumberOfStars(Integer numberOfStars) throws NotNullException {
+    public void setNumberOfStars(Integer numberOfStars) throws Exception {
+        checkIfLoyaltyClubMember();
         if (numberOfStars == null) {
             throw new NotNullException("Can't set numberOfStars, parameter is null");
         }
