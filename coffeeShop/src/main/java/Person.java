@@ -34,9 +34,12 @@ public class Person {
     @Enumerated(EnumType.STRING)
     private BaristaRank baristaRank;
 
-    // Atrybuty menadzera
+    // Atrybuty kierwonika zmiany
     private int keySetNumber;
     private static Map<Integer, Person> keySetNumberManager = new HashMap<>();
+
+    // Atrybuty menadzera
+    private String businessPhoneNumber;
 
     // Atrybuty członka klubu lojanościowego
     private String e_mailAddress;
@@ -139,7 +142,8 @@ public class Person {
         }
     }
 
-    public List<Order> getOrdersPlaced() {
+    public List<Order> getOrdersPlaced() throws Exception {
+        checkIfLoyaltyClubMember();
         return ordersPlaced;
     }
 
@@ -147,9 +151,7 @@ public class Person {
         if (newOrder == null) {
             throw new NotNullException("Can't add value of newOrder, value can not be null");
         }
-        if (!personKind.contains(PersonType.LOYALTYCLUBMEMBER)) {
-            throw new Exception("Can't add assigned order, because this person it's not Barista!");
-        }
+        checkIfLoyaltyClubMember();
         if (!ordersPlaced.contains(newOrder)) {
             ordersPlaced.add(newOrder);
             newOrder.setLoyaltyClubMember(this);
@@ -203,7 +205,7 @@ public class Person {
         return new Person(firstName, surname, sex, dateOfBirth, address, dateOfEmployment, baristaRank);
     }
 
-    // Konstruktory do tworzenia Menadzera
+    // Konstruktory do tworzenia Kierownika zmiany
     private Person (String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, int keySetNumber) {
         this.firstName = firstName;
         this.secondName = secondName;
@@ -212,12 +214,13 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.dateOfEmployment = dateOfEmployment;
+        baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
         keySetNumberManager.put(keySetNumber, this);
-        personKind.add(PersonType.MANAGER);
+        personKind.add(PersonType.SHIFTMANAGER);
     }
 
-    public static Person createManager(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber) throws Exception {
+    public static Person createShiftManager(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber) throws Exception {
         if (firstName == null || secondName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || keySetNumber == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
@@ -234,12 +237,13 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.dateOfEmployment = dateOfEmployment;
+        baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
         keySetNumberManager.put(keySetNumber, this);
-        personKind.add(PersonType.MANAGER);
+        personKind.add(PersonType.SHIFTMANAGER);
     }
 
-    public static Person createManager(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber) throws Exception {
+    public static Person createShiftManager(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber) throws Exception {
         if (firstName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || keySetNumber == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
@@ -247,6 +251,44 @@ public class Person {
             throw new Exception(String.format("Can't create object, another manager has keySetNumber: %s", keySetNumber));
         }
         return new Person(firstName, surname, sex, dateOfBirth, address, dateOfEmployment, keySetNumber);
+    }
+
+    // Konstruktory do tworzenia Managera
+    private Person (String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.surname = surname;
+        this.sex = sex;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.dateOfEmployment = dateOfEmployment;
+        this.businessPhoneNumber = businessPhoneNumber;
+        personKind.add(PersonType.MANAGER);
+    }
+
+    public static Person createManager(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber) throws Exception {
+        if (firstName == null || secondName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || businessPhoneNumber == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        return new Person(firstName, secondName, surname, sex, dateOfBirth, address, dateOfEmployment, businessPhoneNumber);
+    }
+
+    private Person (String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber) {
+        this.firstName = firstName;
+        this.surname = surname;
+        this.sex = sex;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.dateOfEmployment = dateOfEmployment;
+        this.businessPhoneNumber = businessPhoneNumber;
+        personKind.add(PersonType.MANAGER);
+    }
+
+    public static Person createManager(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber) throws Exception {
+        if (firstName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || businessPhoneNumber == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        return new Person(firstName, surname, sex, dateOfBirth, address, dateOfEmployment, businessPhoneNumber);
     }
 
     // Konstruktory do tworzenia Członka klubu lojanościowego
@@ -306,6 +348,7 @@ public class Person {
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
         personKind.add(PersonType.BARISTA);
+        personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
 
     public static Person createBaristaLoyaltyClubMember(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, BaristaRank baristaRank, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws NotNullException {
@@ -328,6 +371,7 @@ public class Person {
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
         personKind.add(PersonType.BARISTA);
+        personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
 
     public static Person createBaristaLoyaltyClubMember(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, BaristaRank baristaRank, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws NotNullException {
@@ -337,7 +381,7 @@ public class Person {
         return new Person(firstName, surname, sex, dateOfBirth, address, dateOfEmployment, baristaRank, e_mailAddress, phoneNumber, dateOfJoining);
     }
 
-    // Konstruktory do tworzenia Menadzera + Członka klubu lojanościowego
+    // Konstruktory do tworzenia Kierownika zmiany + Członka klubu lojanościowego
     private Person (String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, int keySetNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) {
         this.firstName = firstName;
         this.secondName = secondName;
@@ -346,16 +390,18 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.dateOfEmployment = dateOfEmployment;
+        baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
         keySetNumberManager.put(keySetNumber, this);
         this.e_mailAddress = e_mailAddress;
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
-        personKind.add(PersonType.MANAGER);
+        personKind.add(PersonType.SHIFTMANAGER);
+        personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
 
-    public static Person createManagerLoyaltyClubMember(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
+    public static Person createShiftManagerLoyaltyClubMember(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
         if (firstName == null || secondName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || keySetNumber == null || e_mailAddress == null || phoneNumber == null || dateOfJoining == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
@@ -372,16 +418,18 @@ public class Person {
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.dateOfEmployment = dateOfEmployment;
+        baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
         keySetNumberManager.put(keySetNumber, this);
         this.e_mailAddress = e_mailAddress;
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         numberOfStars = 0;
-        personKind.add(PersonType.MANAGER);
+        personKind.add(PersonType.SHIFTMANAGER);
+        personKind.add(PersonType.LOYALTYCLUBMEMBER);
     }
 
-    public static Person createManagerLoyaltyClubMember(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
+    public static Person createShiftManagerLoyaltyClubMember(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
         if (firstName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || keySetNumber == null || e_mailAddress == null || phoneNumber == null || dateOfJoining == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
@@ -389,6 +437,54 @@ public class Person {
             throw new Exception(String.format("Can't create object, another manager has keySetNumber: %s", keySetNumber));
         }
         return new Person(firstName, surname, sex, dateOfBirth, address, dateOfEmployment, keySetNumber, e_mailAddress, phoneNumber, dateOfJoining);
+    }
+
+    // Konstrutkory do tworzenia Managera + Członka klubu lojanościowego
+    private Person (String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.surname = surname;
+        this.sex = sex;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.dateOfEmployment = dateOfEmployment;
+        this.businessPhoneNumber = businessPhoneNumber;
+        this.e_mailAddress = e_mailAddress;
+        this.phoneNumber = phoneNumber;
+        this.dateOfJoining = dateOfJoining;
+        numberOfStars = 0;
+        personKind.add(PersonType.MANAGER);
+        personKind.add(PersonType.LOYALTYCLUBMEMBER);
+    }
+
+    public static Person createManagerLoyaltyClubMember(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws NotNullException {
+        if (firstName == null || secondName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || businessPhoneNumber == null || e_mailAddress == null || phoneNumber == null || dateOfJoining == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        return new Person(firstName, secondName, surname, sex, dateOfBirth, address, dateOfEmployment, businessPhoneNumber, e_mailAddress, phoneNumber, dateOfJoining);
+    }
+
+    private Person (String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) {
+        this.firstName = firstName;
+        this.surname = surname;
+        this.sex = sex;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.dateOfEmployment = dateOfEmployment;
+        this.businessPhoneNumber = businessPhoneNumber;
+        this.e_mailAddress = e_mailAddress;
+        this.phoneNumber = phoneNumber;
+        this.dateOfJoining = dateOfJoining;
+        numberOfStars = 0;
+        personKind.add(PersonType.MANAGER);
+        personKind.add(PersonType.LOYALTYCLUBMEMBER);
+    }
+
+    public static Person createManagerLoyaltyClubMember(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws NotNullException {
+        if (firstName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || businessPhoneNumber == null || e_mailAddress == null || phoneNumber == null || dateOfJoining == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        return new Person(firstName, surname, sex, dateOfBirth, address, dateOfEmployment, businessPhoneNumber, e_mailAddress, phoneNumber, dateOfJoining);
     }
 
     public Set<PersonType> getPersonKind() {
@@ -404,6 +500,30 @@ public class Person {
             throw new NotNullException("Can't set firstName, parameter is null");
         }
         this.firstName = firstName;
+    }
+
+    private void checkIfEmployee() throws Exception {
+        if (!personKind.contains(PersonType.BARISTA) || !personKind.contains(PersonType.MANAGER)) {
+            throw new Exception("Can't make operation, this person is not Employee!");
+        }
+    }
+
+    private void checkIfBarista() throws Exception {
+        if (!personKind.contains(PersonType.BARISTA)) {
+            throw new Exception("Can't make operation, this person is not Barista!");
+        }
+    }
+
+    private void checkIfManager() throws Exception {
+        if (!personKind.contains(PersonType.MANAGER)) {
+            throw new Exception("Can't make operation, this person is not Manager!");
+        }
+    }
+
+    private void checkIfLoyaltyClubMember() throws Exception {
+        if (!personKind.contains(PersonType.LOYALTYCLUBMEMBER)) {
+            throw new Exception("Can't make operation, this person is not Loyalty club member!");
+        }
     }
 
     //TODO: Może coś tu
@@ -460,30 +580,36 @@ public class Person {
         this.address = address;
     }
 
-    public LocalDate getDateOfEmployment() {
+    public LocalDate getDateOfEmployment() throws Exception {
+        checkIfEmployee();
         return dateOfEmployment;
     }
 
-    public void setDateOfEmployment(LocalDate dateOfEmployment) throws NotNullException {
+    public void setDateOfEmployment(LocalDate dateOfEmployment) throws Exception {
+        checkIfEmployee();
         if (dateOfEmployment == null) {
             throw new NotNullException("Can't set dateOfEmployment, parameter is null");
         }
         this.dateOfEmployment = dateOfEmployment;
     }
 
-    public LocalDate getDateOfFire() {
+    public LocalDate getDateOfFire() throws Exception {
+        checkIfEmployee();
         return dateOfFire;
     }
 
-    public void setDateOfFire(LocalDate dateOfFire) {
+    public void setDateOfFire(LocalDate dateOfFire) throws Exception {
+        checkIfEmployee();
         this.dateOfFire = dateOfFire;
     }
 
-    public BaristaRank getBaristaRank() {
+    public BaristaRank getBaristaRank() throws Exception {
+        checkIfBarista();
         return baristaRank;
     }
 
-    public void setBaristaRank(BaristaRank baristaRank) throws NotNullException {
+    public void setBaristaRank(BaristaRank baristaRank) throws Exception {
+        checkIfBarista();
         if (baristaRank == null) {
             throw new NotNullException("Can't set baristaRank, parameter is null");
         }
