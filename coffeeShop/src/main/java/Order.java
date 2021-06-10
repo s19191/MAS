@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "OrderTable")
+@Entity(name = "OrderTable")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +29,12 @@ public class Order {
     @ManyToMany
     private List<Beverage> beverages = new ArrayList<>();
 
+    @OneToOne
+    private Opinion opinion;
+
     public Order() {
-        this.dateOfAcceptance = LocalDateTime.now();
+        dateOfAcceptance = LocalDateTime.now();
+        orderStatus = OrderStatus.WAITING;
         orderNr = nr;
         nr++;
     }
@@ -90,12 +93,76 @@ public class Order {
         }
     }
 
+    public Opinion getOpinion() {
+        return opinion;
+    }
+
+    public void setOpinion(Opinion newOpinion) throws NotNullException {
+        if (newOpinion == null) {
+            throw new NotNullException("Can't set order, parameter is null");
+        }
+        if (opinion != null) {
+            this.opinion = newOpinion;
+            newOpinion.setOrder(this);
+        }
+    }
+
+    public void removeOpinion() {
+        if (opinion != null) {
+            opinion.removeOrder();
+            opinion = null;
+        }
+    }
+
+    public List<Beverage> getBeverages() {
+        return beverages;
+    }
+
+    public void addBeverage(Beverage newBeverage) throws Exception {
+        if (newBeverage == null) {
+            throw new NotNullException("Can't add value of order, value can not be null");
+        }
+        if (!beverages.contains(newBeverage)) {
+            beverages.add(newBeverage);
+            newBeverage.addOrder(this);
+        }
+    }
+
+    public void removeOrder(Beverage oldBeverage) {
+        if (beverages.contains(oldBeverage)) {
+            beverages.remove(oldBeverage);
+            oldBeverage.removeOrder(this);
+        }
+    }
+
     public LocalDateTime getDateOfAcceptance() {
         return dateOfAcceptance;
     }
 
     public LocalDateTime getPredictedDateOfRealisation () {
         return dateOfAcceptance.plusMinutes(beverages.size() * 5L);
+    }
+
+    public LocalDateTime getDateOfActualLead() {
+        return dateOfActualLead;
+    }
+
+    public void setDateOfActualLead(LocalDateTime dateOfActualLead) throws NotNullException {
+        if (dateOfActualLead == null) {
+            throw new NotNullException("Can't set dateOfActualLead, parameter is null");
+        }
+        this.dateOfActualLead = dateOfActualLead;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) throws NotNullException {
+        if (orderStatus == null) {
+            throw new NotNullException("Can't set orderStatus, parameter is null");
+        }
+        this.orderStatus = orderStatus;
     }
 
     public int getOrderNr() {
