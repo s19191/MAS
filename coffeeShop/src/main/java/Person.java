@@ -593,6 +593,13 @@ public class Person {
         }
     }
 
+    public static Person findByKeySetNumber(Integer keySetNumber) throws Exception {
+        if (!keySetNumberManager.containsKey(keySetNumber)) {
+            throw new Exception(String.format("There are no Shift manager with keySet: %d", keySetNumber));
+        }
+        return keySetNumberManager.get(keySetNumber);
+    }
+
     public Set<PersonType> getPersonKind() {
         return personKind;
     }

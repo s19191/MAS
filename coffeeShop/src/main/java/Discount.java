@@ -2,7 +2,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Discount {
@@ -13,6 +15,7 @@ public class Discount {
     private double discountAmount;
     private String purpose;
     private String code;
+    private static Map<String, Discount> codeDiscount = new HashMap<>();
 
     @ManyToMany(mappedBy = "discounts")
     private List<Person> loyaltyClubMembers = new ArrayList<>();
@@ -47,11 +50,15 @@ public class Discount {
         this.discountAmount = discountAmount;
         this.purpose = purpose;
         this.code = code;
+        codeDiscount.put(code, this);
     }
 
-    public static Discount createDiscount(Double discountAmount, String purpose, String code) throws NotNullException {
+    public static Discount createDiscount(Double discountAmount, String purpose, String code) throws Exception {
         if (discountAmount == null || purpose == null || code == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        if (codeDiscount.containsKey(code)) {
+            throw new Exception(String.format("Can't create object, another beverage has code: %s", code));
         }
         return new Discount(discountAmount, purpose, code);
     }
@@ -65,6 +72,13 @@ public class Discount {
             throw new NotNullException("Can't set value of discountAmount, value can not be null");
         }
         this.discountAmount = discountAmount;
+    }
+
+    public static Discount findByCode(String code) throws Exception {
+        if (!codeDiscount.containsKey(code)) {
+            throw new Exception(String.format("There are no discount with code: %s", code));
+        }
+        return codeDiscount.get(code);
     }
 
     public String getPurpose() {

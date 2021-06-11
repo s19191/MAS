@@ -2,7 +2,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class Beverage {
@@ -13,6 +15,7 @@ public class Beverage {
     private String name;
     private double price;
     private String code;
+    private static Map<String, Beverage> codeBeverage = new HashMap<>();
     @OneToMany(
             mappedBy = "beverage",
             cascade = CascadeType.ALL,
@@ -29,11 +32,15 @@ public class Beverage {
         this.name = name;
         this.price = price;
         this.code = code;
+        codeBeverage.put(code, this);
     }
 
-    public static Beverage createBeverage(String name, Double price, String code) throws NotNullException {
+    public static Beverage createBeverage(String name, Double price, String code) throws Exception {
         if (name == null || price == null || code == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        if (codeBeverage.containsKey(code)) {
+            throw new Exception(String.format("Can't create object, another beverage has code: %s", code));
         }
         Beverage beverage = new Beverage(name, price, code);
         return beverage;
@@ -81,6 +88,13 @@ public class Beverage {
             orders.remove(oldOrder);
             oldOrder.removeOrder(this);
         }
+    }
+
+    public static Beverage findByCode(String code) throws Exception {
+        if (!codeBeverage.containsKey(code)) {
+            throw new Exception(String.format("There are no beverage with code: %s", code));
+        }
+        return codeBeverage.get(code);
     }
 
     public String getName() {
