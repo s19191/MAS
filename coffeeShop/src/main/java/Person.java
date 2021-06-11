@@ -72,14 +72,13 @@ public class Person {
     )
     private List<Discount> discounts = new ArrayList<>();
 
-    public List<Contest> getContests() {
+    public List<Contest> getContests() throws Exception {
+        checkIfBarista();
         return contests;
     }
 
     public void addContest(Contest newContest) throws Exception {
-        if (!personKind.contains(PersonType.BARISTA)) {
-            throw new Exception("Can't add contest, because this person it's not Barista!");
-        }
+        checkIfBarista();
         if (newContest == null) {
             throw new NotNullException("Can't add value of newContest, value can not be null");
         }
@@ -90,22 +89,22 @@ public class Person {
     }
 
     public void removeContest(Contest oldContest) throws Exception {
+        checkIfBarista();
         if (contests.contains(oldContest)) {
             contests.remove(oldContest);
             oldContest.removeBarista(this);
         }
     }
 
-    public List<Contest> getContestsWon() {
+    public List<Contest> getContestsWon() throws Exception {
+        checkIfBarista();
         return contestsWon;
     }
 
     public void addContestWon(Contest newWonContest) throws Exception {
+        checkIfBarista();
         if (newWonContest == null) {
             throw new NotNullException("Can't add value of newContest, value can not be null");
-        }
-        if (!personKind.contains(PersonType.BARISTA)) {
-            throw new Exception("Can't add contest, because it's not Barista!");
         }
         if (!contests.contains(newWonContest)) {
             throw new Exception(String.format("Can not set contest: %s as won contest, because barista was not participant", newWonContest));
@@ -117,6 +116,7 @@ public class Person {
     }
 
     public void removeContestWon(Contest oldWonContest) throws Exception {
+        checkIfBarista();
         if (contestsWon.contains(oldWonContest)) {
             contestsWon.remove(oldWonContest);
             oldWonContest.removeWinner();
@@ -126,16 +126,15 @@ public class Person {
         }
     }
 
-    public List<Order> getOrdersAssigned() {
+    public List<Order> getOrdersAssigned() throws Exception {
+        checkIfBarista();
         return ordersAssigned;
     }
 
     public void addAssignedOrder(Order newOrder) throws Exception {
+        checkIfBarista();
         if (newOrder == null) {
             throw new NotNullException("Can't add value of newOrder, value can not be null");
-        }
-        if (!personKind.contains(PersonType.BARISTA)) {
-            throw new Exception("Can't add assigned order, because this person it's not Barista!");
         }
         if (!ordersAssigned.contains(newOrder)) {
             ordersAssigned.add(newOrder);
@@ -144,6 +143,7 @@ public class Person {
     }
 
     public void removeAssignedOrder(Order oldOrder) throws Exception {
+        checkIfBarista();
         if (ordersAssigned.contains(oldOrder)) {
             ordersAssigned.remove(oldOrder);
             oldOrder.removeAssignedBarista();
@@ -156,10 +156,10 @@ public class Person {
     }
 
     public void addOrderPlaced(Order newOrder) throws Exception {
+        checkIfLoyaltyClubMember();
         if (newOrder == null) {
             throw new NotNullException("Can't add value of newOrder, value can not be null");
         }
-        checkIfLoyaltyClubMember();
         if (!ordersPlaced.contains(newOrder)) {
             ordersPlaced.add(newOrder);
             newOrder.setLoyaltyClubMember(this);
@@ -167,20 +167,20 @@ public class Person {
     }
 
     public void removeOrderPlaced(Order oldOrder) throws Exception {
+        checkIfLoyaltyClubMember();
         if (ordersPlaced.contains(oldOrder)) {
             ordersPlaced.remove(oldOrder);
             oldOrder.removeLoyaltyClubMember();
         }
     }
 
-    public List<Discount> getDiscounts() {
+    public List<Discount> getDiscounts() throws Exception {
+        checkIfLoyaltyClubMember();
         return discounts;
     }
 
     public void addDiscount(Discount newDiscount) throws Exception {
-        if (!personKind.contains(PersonType.LOYALTYCLUBMEMBER)) {
-            throw new Exception("Can't add discount, because this person it's not Loyalty club member!");
-        }
+        checkIfLoyaltyClubMember();
         if (newDiscount == null) {
             throw new NotNullException("Can't add value of newDiscount, value can not be null");
         }
@@ -191,6 +191,7 @@ public class Person {
     }
 
     public void removeDiscount(Discount oldDiscount) throws Exception {
+        checkIfLoyaltyClubMember();
         if (discounts.contains(oldDiscount)) {
             discounts.remove(oldDiscount);
             oldDiscount.removeLoyaltyClubMember(this);
