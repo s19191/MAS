@@ -66,7 +66,7 @@ public class Person {
 
     @ManyToMany
     @JoinTable(
-            name = "LoyaltyClubMember_Discount",
+            name = "Discount_LoyaltyClubMember",
             joinColumns = { @JoinColumn(name = "id_loyaltyClubMember") },
             inverseJoinColumns = { @JoinColumn(name = "id_discount") }
     )
