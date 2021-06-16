@@ -16,6 +16,7 @@ public class Beverage {
     private double price;
     private String code;
     private static Map<String, Beverage> codeBeverage = new HashMap<>();
+
     @OneToMany(
             mappedBy = "beverage",
             cascade = CascadeType.ALL,
@@ -42,15 +43,13 @@ public class Beverage {
         if (codeBeverage.containsKey(code)) {
             throw new Exception(String.format("Can't create object, another beverage has code: %s", code));
         }
-        Beverage beverage = new Beverage(name, price, code);
-        return beverage;
+        return new Beverage(name, price, code);
     }
 
     public List<Recipe> getCompositions() {
         return recipes;
     }
 
-    //    zarządzanie asocjacją z atrybutem
     public void addComposition(Recipe newRecipe) throws NotNullException {
         if (newRecipe == null) {
             throw new NotNullException("Can't set value of newComposition, value can not be null");
@@ -61,7 +60,6 @@ public class Beverage {
         }
     }
 
-    //    TODO: Tu coś jest nie tak, bo skoro ma być 1, no to nie możemy tak o usunąć tego
     public void removeComposition(Recipe oldRecipe) {
         if (recipes.contains(oldRecipe)) {
             recipes.remove(oldRecipe);

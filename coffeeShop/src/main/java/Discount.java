@@ -21,6 +21,25 @@ public class Discount {
     @ManyToMany(mappedBy = "discounts")
     private List<Person> loyaltyClubMembers = new ArrayList<>();
 
+    public Discount() {}
+
+    private Discount(double discountAmount, String purpose, String code) {
+        this.discountAmount = discountAmount;
+        this.purpose = purpose;
+        this.code = code;
+        codeDiscount.put(code, this);
+    }
+
+    public static Discount createDiscount(Double discountAmount, String purpose, String code) throws Exception {
+        if (discountAmount == null || purpose == null || code == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        if (codeDiscount.containsKey(code)) {
+            throw new Exception(String.format("Can't create object, another beverage has code: %s", code));
+        }
+        return new Discount(discountAmount, purpose, code);
+    }
+
     public List<Person> getLoyaltyClubMembers() {
         return loyaltyClubMembers;
     }
@@ -45,25 +64,6 @@ public class Discount {
         }
     }
 
-    public Discount() {}
-
-    private Discount(double discountAmount, String purpose, String code) {
-        this.discountAmount = discountAmount;
-        this.purpose = purpose;
-        this.code = code;
-        codeDiscount.put(code, this);
-    }
-
-    public static Discount createDiscount(Double discountAmount, String purpose, String code) throws Exception {
-        if (discountAmount == null || purpose == null || code == null) {
-            throw new NotNullException("Can't create object, one of parameters is null");
-        }
-        if (codeDiscount.containsKey(code)) {
-            throw new Exception(String.format("Can't create object, another beverage has code: %s", code));
-        }
-        return new Discount(discountAmount, purpose, code);
-    }
-
     public static boolean checkDiscountCode(Person person, String code) throws Exception {
         Discount discount = findByCode(code);
         for (Person lCM : discount.getLoyaltyClubMembers()) {
@@ -72,6 +72,13 @@ public class Discount {
             }
         }
         return false;
+    }
+
+    public static Discount findByCode(String code) throws Exception {
+        if (!codeDiscount.containsKey(code)) {
+            throw new Exception(String.format("There are no discount with code: %s", code));
+        }
+        return codeDiscount.get(code);
     }
 
     public double getDiscountAmount() {
@@ -83,13 +90,6 @@ public class Discount {
             throw new NotNullException("Can't set value of discountAmount, value can not be null");
         }
         this.discountAmount = discountAmount;
-    }
-
-    public static Discount findByCode(String code) throws Exception {
-        if (!codeDiscount.containsKey(code)) {
-            throw new Exception(String.format("There are no discount with code: %s", code));
-        }
-        return codeDiscount.get(code);
     }
 
     public String getPurpose() {
@@ -112,5 +112,14 @@ public class Discount {
             throw new NotNullException("Can't set value of statusName, value can not be null");
         }
         this.code = code;
+    }
+
+    @Override
+    public String toString() {
+        return "Discount{" +
+                "discountAmount=" + discountAmount +
+                ", purpose='" + purpose + '\'' +
+                ", code='" + code + '\'' +
+                '}';
     }
 }

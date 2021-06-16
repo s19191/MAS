@@ -213,6 +213,8 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "dateOfAcceptance=" + dateOfAcceptance +
+                ", dateOfActualLead=" + dateOfActualLead +
+                ", orderStatus=" + orderStatus +
                 ", orderNr=" + orderNr +
                 '}';
     }

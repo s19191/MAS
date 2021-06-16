@@ -13,6 +13,7 @@ public class Ingredient {
     private String name;
     private double quantityOnStock;
     private String unit;
+
     @OneToMany(
             mappedBy = "ingredient"
     )
@@ -30,11 +31,9 @@ public class Ingredient {
         if (name == null || quantityOnStock == null || unit == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        Ingredient ingredient = new Ingredient(name, quantityOnStock, unit);
-        return ingredient;
+        return new Ingredient(name, quantityOnStock, unit);
     }
 
-    //    zarządzanie asocjacją z atrybutem
     public List<Recipe> getCompositions() {
         return recipes;
     }
@@ -49,7 +48,6 @@ public class Ingredient {
         }
     }
 
-    //    TODO: Tu coś jest nie tak, bo skoro ma być 1, no to nie możemy tak o usunąć tego
     public void removeComposition(Recipe oldRecipe) {
         if (recipes.contains(oldRecipe)) {
             recipes.remove(oldRecipe);
@@ -95,7 +93,7 @@ public class Ingredient {
         return "Ingredient{" +
                 "name='" + name + '\'' +
                 ", quantityOnStock=" + quantityOnStock +
-                ", compositions=" + recipes +
+                ", unit='" + unit + '\'' +
                 '}';
     }
 }

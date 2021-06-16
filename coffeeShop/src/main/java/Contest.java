@@ -33,7 +33,7 @@ public class Contest {
     @ManyToOne
     private Person winner;
 
-    public Contest() { }
+    public Contest() {}
 
     private Contest(String name, int mainPrize, int sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, URL urlAddress, Set<String> organizer, String description) {
         this.name = name;
@@ -54,7 +54,6 @@ public class Contest {
         return new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, urlAddress, organizer, description);
     }
 
-    //    zarządzanie asocjacją zwykłą
     public List<Person> getBaristas() {
         return baristas;
     }
@@ -109,7 +108,6 @@ public class Contest {
         }
     }
 
-    //    przeciążenie nr.1
     public void addOrganizer(String organizer) throws NotNullException {
         if (organizer == null) {
             throw new NotNullException("Can't add organizer, value can not be null");
@@ -244,7 +242,7 @@ public class Contest {
 
     @Override
     public String toString() {
-        return "asocjacja.Contest{" +
+        return "Contest{" +
                 "name='" + name + '\'' +
                 ", mainPrize=" + mainPrize +
                 ", sumOfPrizes=" + sumOfPrizes +

@@ -3,17 +3,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class Test {
     public static void main(String[] args) {

@@ -16,27 +16,6 @@ public class Opinion {
     @OneToOne
     private Order order;
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order newOrder) throws NotNullException {
-        if (newOrder == null) {
-            throw new NotNullException("Can't set order, parameter is null");
-        }
-        if (order != null) {
-            this.order = newOrder;
-            newOrder.setOpinion(this);
-        }
-    }
-
-    public void removeOrder() {
-        if (order != null) {
-            order.removeOpinion();
-            order = null;
-        }
-    }
-
     public Opinion() {}
 
     private Opinion(LocalDateTime dateOfIssue, String description, int score) {
@@ -63,6 +42,27 @@ public class Opinion {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
         return new Opinion(dateOfIssue, score);
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order newOrder) throws NotNullException {
+        if (newOrder == null) {
+            throw new NotNullException("Can't set order, parameter is null");
+        }
+        if (order != null) {
+            this.order = newOrder;
+            newOrder.setOpinion(this);
+        }
+    }
+
+    public void removeOrder() {
+        if (order != null) {
+            order.removeOpinion();
+            order = null;
+        }
     }
 
     public static void checkDescriptionLength(String description) throws Exception {
@@ -102,5 +102,14 @@ public class Opinion {
             throw new NotNullException("Can't set score, parameter is null");
         }
         this.score = score;
+    }
+
+    @Override
+    public String toString() {
+        return "Opinion{" +
+                "dateOfIssue=" + dateOfIssue +
+                ", description='" + description + '\'' +
+                ", score=" + score +
+                '}';
     }
 }

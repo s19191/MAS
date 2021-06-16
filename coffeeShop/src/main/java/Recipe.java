@@ -33,7 +33,6 @@ public class Recipe {
         return recipe;
     }
 
-    //    zarządzanie asocjacją z atrybutem - Baverage
     public Beverage getBeverage() {
         return beverage;
     }
@@ -58,7 +57,6 @@ public class Recipe {
         }
     }
 
-    //    zarządzanie asocjacją z atrybutem - Ingredient
     public Ingredient getIngredient() {
         return ingredient;
     }
