@@ -47,6 +47,16 @@ public class Order {
         nr++;
     }
 
+    public Order(List<Beverage> beverages) throws Exception {
+        dateOfAcceptance = LocalDateTime.now();
+        orderStatus = OrderStatus.WAITING;
+        orderNr = nr;
+        nr++;
+        for (Beverage b : beverages) {
+            addBeverage(b);
+        }
+    }
+
     public Person getAssignedBarista() {
         return assignedBarista;
     }
@@ -141,6 +151,18 @@ public class Order {
             beverages.remove(oldBeverage);
             oldBeverage.removeOrder(this);
         }
+    }
+
+    public void acceptOrder() {
+        orderStatus = OrderStatus.INPROGRESS;
+    }
+
+    public void rejectOrder() {
+        orderStatus = OrderStatus.CANCELED;
+    }
+
+    public OrderStatus checkOrderStatus() {
+        return orderStatus;
     }
 
     public LocalDateTime getDateOfAcceptance() {

@@ -25,7 +25,7 @@ public class Contest {
     private URL urlAddress;
     @ElementCollection
     private Set<String> organizer;
-    private String description = null;
+    private String description;
 
     @ManyToMany(mappedBy = "contests")
     private List<Person> baristas = new ArrayList<>();
@@ -46,10 +46,11 @@ public class Contest {
         this.description = description;
     }
 
-    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, URL urlAddress, Set<String> organizer, String description) throws NotNullException {
+    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, URL urlAddress, Set<String> organizer, String description) throws Exception {
         if (name == null || mainPrize == null || sumOfPrizes == null || dateOfTheEvent == null || address == null || urlAddress == null || organizer == null || description == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
+        checkDescriptionLength(description);
         return new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, urlAddress, organizer, description);
     }
 
@@ -134,6 +135,12 @@ public class Contest {
     @Transient
     public int getAmountOfRestOfThePrizes() {
         return sumOfPrizes - mainPrize;
+    }
+
+    public static void checkDescriptionLength(String description) throws Exception {
+        if (description.length() > 300) {
+            throw new Exception(String.format("Opis: %s jest przekracza długość 300 znaków", description));
+        }
     }
 
     @Transient
@@ -221,6 +228,18 @@ public class Contest {
             throw new NotNullException("Can't set value of organizer, value can not be null");
         }
         this.urlAddress = new URL(urlAddress);
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) throws Exception {
+        if (description == null) {
+            throw new NotNullException("Can't set value of description, value can not be null");
+        }
+        checkDescriptionLength(description);
+        this.description = description;
     }
 
     @Override

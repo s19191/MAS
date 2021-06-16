@@ -15,6 +15,7 @@ public class Discount {
     private double discountAmount;
     private String purpose;
     private String code;
+    @Transient
     private static Map<String, Discount> codeDiscount = new HashMap<>();
 
     @ManyToMany(mappedBy = "discounts")
@@ -61,6 +62,16 @@ public class Discount {
             throw new Exception(String.format("Can't create object, another beverage has code: %s", code));
         }
         return new Discount(discountAmount, purpose, code);
+    }
+
+    public static boolean checkDiscountCode(Person person, String code) throws Exception {
+        Discount discount = findByCode(code);
+        for (Person lCM : discount.getLoyaltyClubMembers()) {
+            if (person.equals(lCM)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public double getDiscountAmount() {

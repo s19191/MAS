@@ -53,7 +53,7 @@ public class Person {
             joinColumns = { @JoinColumn(name = "id_barista") },
             inverseJoinColumns = { @JoinColumn(name = "id_contest") }
     )
-    private List<Contest> contests = new ArrayList<>();
+    private Set<Contest> contests = new TreeSet<>(Comparator.comparing(Contest::getDateOfTheEvent));
 
     @OneToMany(mappedBy = "winner")
     private List<Contest> contestsWon = new ArrayList<>();
@@ -72,7 +72,7 @@ public class Person {
     )
     private List<Discount> discounts = new ArrayList<>();
 
-    public List<Contest> getContests() throws Exception {
+    public Set<Contest> getContests() throws Exception {
         checkIfBarista();
         return contests;
     }
@@ -599,6 +599,19 @@ public class Person {
             throw new Exception(String.format("There are no Shift manager with keySet: %d", keySetNumber));
         }
         return keySetNumberManager.get(keySetNumber);
+    }
+
+    public Discount findDiscountByCode(String code) throws NotNullException {
+        Discount result = null;
+        for (Discount d : discounts) {
+            if (d.getCode().equals(code)) {
+                result = d;
+            }
+        }
+        if (result == null) {
+            throw new NotNullException(String.format("There are no decount with code: %s", code));
+        }
+        return result;
     }
 
     public Set<PersonType> getPersonKind() {
