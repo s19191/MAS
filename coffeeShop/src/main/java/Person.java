@@ -35,7 +35,7 @@ public class Person {
     private BaristaRank baristaRank;
 
     // Atrybuty kierwonika zmiany
-    private int keySetNumber;
+    private Integer keySetNumber;
     private static Map<Integer, Person> keySetNumberManager = new HashMap<>();
 
     // Atrybuty menadzera
@@ -587,7 +587,7 @@ public class Person {
     }
 
     private static void checkE_mailAddress(String e_mailAddress) throws Exception {
-        Pattern p = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$");
+        Pattern p = Pattern.compile(".+@.+");
         Matcher m = p.matcher(e_mailAddress);
         if (!m.matches()) {
             throw new Exception(String.format("Invalid e_mailAddress %s", e_mailAddress));
@@ -795,6 +795,8 @@ public class Person {
         checkIfLoyaltyClubMember();
         this.dateOfLeaving = dateOfLeaving;
     }
+
+
 
     //TODO: staż pracy
 //    @Transient
