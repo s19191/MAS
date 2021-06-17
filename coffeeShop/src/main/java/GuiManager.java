@@ -103,14 +103,16 @@ public class GuiManager {
 //            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 //            jf.setPreferredSize(dim);
 
-            List<Person> loyaltyClubMembers = getLoyaltyClubMembers();
-            List<Discount> discounts = getDiscounts();
+            JList whatChosen = new JList();
+            whatChosen.setEnabled(false);
 
-            JComboBox lCMJComboBox = new JComboBox(loyaltyClubMembers.toArray());
-            JComboBox dJComboBox = new JComboBox(discounts.toArray());
+            JComboBox lCMJComboBox = new JComboBox(getLoyaltyClubMembers().toArray());
+            JComboBox dJComboBox = new JComboBox(getDiscounts().toArray());
 
             JPanel jPanel = new JPanel();
-            jPanel.setLayout(new GridLayout(1,2));
+            jPanel.setLayout(new GridLayout(2,2));
+            jPanel.add(new JLabel("Członek klubu lojanościowego"));
+            jPanel.add(new JLabel("Zniżka"));
             jPanel.add(lCMJComboBox);
             jPanel.add(dJComboBox);
 
@@ -120,9 +122,13 @@ public class GuiManager {
                     ActionListener[] oldListener = dJComboBox.getActionListeners();
                     dJComboBox.removeActionListener(oldListener[0]);
                     dJComboBox.removeAllItems();
+                    whatChosen.removeAll();
+                    DefaultListModel model = new DefaultListModel();
                     for (Discount d : loyaltyClubMember.getDiscounts()) {
                         dJComboBox.addItem(d);
+                        model.addElement(d);
                     }
+                    whatChosen.setModel(model);
                     dJComboBox.addActionListener(oldListener[0]);
                 } catch (Exception exe) {
                     exe.printStackTrace();
@@ -135,9 +141,13 @@ public class GuiManager {
                     ActionListener[] oldListener = lCMJComboBox.getActionListeners();
                     lCMJComboBox.removeActionListener(oldListener[0]);
                     lCMJComboBox.removeAllItems();
+                    whatChosen.removeAll();
+                    DefaultListModel model = new DefaultListModel();
                     for (Person lCM : discount.getLoyaltyClubMembers()) {
                         lCMJComboBox.addItem(lCM);
+                        model.addElement(lCM);
                     }
+                    whatChosen.setModel(model);
                     lCMJComboBox.addActionListener(oldListener[0]);
                 } catch (Exception exe) {
                     exe.printStackTrace();
@@ -146,6 +156,7 @@ public class GuiManager {
 
             jf.setLayout(new BorderLayout());
             jf.add(jPanel,BorderLayout.NORTH);
+            jf.add(whatChosen);
             jf.pack();
             jf.setLocationRelativeTo(null);
             jf.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

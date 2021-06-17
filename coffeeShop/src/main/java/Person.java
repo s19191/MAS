@@ -22,7 +22,7 @@ public class Person {
     @Embedded
     private Address address;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<PersonType> personKind = new HashSet<>();
 
@@ -796,32 +796,15 @@ public class Person {
         this.dateOfLeaving = dateOfLeaving;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Person{" +
-//                ", firstName='" + firstName + '\'' +
-//                ", secondName='" + secondName + '\'' +
-//                ", surname='" + surname + '\'' +
-//                ", sex=" + sex +
-//                ", dateOfBirth=" + dateOfBirth +
-//                ", address=" + address +
-//                ", personKind=" + personKind +
-//                ", dateOfEmployment=" + dateOfEmployment +
-//                ", dateOfFire=" + dateOfFire +
-//                ", baristaRank=" + baristaRank +
-//                ", keySetNumber=" + keySetNumber +
-//                ", businessPhoneNumber='" + businessPhoneNumber + '\'' +
-//                ", e_mailAddress='" + e_mailAddress + '\'' +
-//                ", phoneNumber='" + phoneNumber + '\'' +
-//                ", dateOfJoining=" + dateOfJoining +
-//                ", dateOfLeaving=" + dateOfLeaving +
-//                ", contests=" + contests +
-//                ", contestsWon=" + contestsWon +
-//                ", ordersAssigned=" + ordersAssigned +
-//                ", ordersPlaced=" + ordersPlaced +
-//                ", discounts=" + discounts +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        if (getPersonKind().contains(PersonType.LOYALTYCLUBMEMBER)) {
+            return "Pierwsze imie: " + firstName +
+                            (secondName!=null ? secondName : "") +
+                    ", nazwisko: " + surname;
+        }
+        return "Person{";
+    }
 
 
     //TODO: staż pracy

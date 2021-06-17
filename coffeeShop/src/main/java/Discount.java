@@ -119,10 +119,8 @@ public class Discount {
 
     @Override
     public String toString() {
-        return "Discount{" +
-                "discountAmount=" + discountAmount +
-                ", purpose='" + purpose + '\'' +
-                ", code='" + code + '\'' +
-                '}';
+        return "Kwota zniżki: " + discountAmount +
+                ", cel: " + purpose +
+                ", kod: " + code;
     }
 }
