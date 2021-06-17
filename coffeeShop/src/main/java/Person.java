@@ -64,7 +64,7 @@ public class Person {
     @OneToMany(mappedBy = "loyaltyClubMember")
     private List<Order> ordersPlaced = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "Discount_LoyaltyClubMember",
             joinColumns = { @JoinColumn(name = "id_loyaltyClubMember") },
@@ -796,6 +796,32 @@ public class Person {
         this.dateOfLeaving = dateOfLeaving;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Person{" +
+//                ", firstName='" + firstName + '\'' +
+//                ", secondName='" + secondName + '\'' +
+//                ", surname='" + surname + '\'' +
+//                ", sex=" + sex +
+//                ", dateOfBirth=" + dateOfBirth +
+//                ", address=" + address +
+//                ", personKind=" + personKind +
+//                ", dateOfEmployment=" + dateOfEmployment +
+//                ", dateOfFire=" + dateOfFire +
+//                ", baristaRank=" + baristaRank +
+//                ", keySetNumber=" + keySetNumber +
+//                ", businessPhoneNumber='" + businessPhoneNumber + '\'' +
+//                ", e_mailAddress='" + e_mailAddress + '\'' +
+//                ", phoneNumber='" + phoneNumber + '\'' +
+//                ", dateOfJoining=" + dateOfJoining +
+//                ", dateOfLeaving=" + dateOfLeaving +
+//                ", contests=" + contests +
+//                ", contestsWon=" + contestsWon +
+//                ", ordersAssigned=" + ordersAssigned +
+//                ", ordersPlaced=" + ordersPlaced +
+//                ", discounts=" + discounts +
+//                '}';
+//    }
 
 
     //TODO: staż pracy

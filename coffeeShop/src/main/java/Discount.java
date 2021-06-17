@@ -18,7 +18,10 @@ public class Discount {
     @Transient
     private static Map<String, Discount> codeDiscount = new HashMap<>();
 
-    @ManyToMany(mappedBy = "discounts")
+    @ManyToMany(
+            mappedBy = "discounts",
+            fetch = FetchType.EAGER
+    )
     private List<Person> loyaltyClubMembers = new ArrayList<>();
 
     public Discount() {}
