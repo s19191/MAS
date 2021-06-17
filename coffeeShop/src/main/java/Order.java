@@ -47,14 +47,16 @@ public class Order {
         nr++;
     }
 
-    public Order(List<Beverage> beverages) throws Exception {
-        dateOfAcceptance = LocalDateTime.now();
-        orderStatus = OrderStatus.WAITING;
-        orderNr = nr;
-        nr++;
-        for (Beverage b : beverages) {
-            addBeverage(b);
+    public static Order createOrder(List<Beverage> beverages, Person loyaltyClubMember) throws Exception {
+        if (beverages == null || beverages.isEmpty() || loyaltyClubMember == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
         }
+        Order order = new Order();
+        for (Beverage b : beverages) {
+            order.addBeverage(b);
+        }
+        order.setLoyaltyClubMember(loyaltyClubMember);
+        return order;
     }
 
     public Person getAssignedBarista() {
