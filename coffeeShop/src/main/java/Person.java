@@ -796,6 +796,21 @@ public class Person {
         this.dateOfLeaving = dateOfLeaving;
     }
 
+    @Transient
+    public String getSeniority() throws Exception {
+        checkIfEmployee();
+        if (dateOfFire == null) {
+            throw new NotNullException("Can't calculate it, because dateOfFire is not set, employee is still working!");
+        }
+        int years = dateOfFire.getYear() - dateOfEmployment.getYear();
+        int month = dateOfFire.getMonthValue() - dateOfEmployment.getMonthValue();
+        if (month < 0) {
+            years -= 1;
+            month = 12 - Math.abs(month);
+        }
+        return "Worked years: " + years + ", months: " + month;
+    }
+
     @Override
     public String toString() {
         if (getPersonKind().contains(PersonType.LOYALTYCLUBMEMBER)) {
@@ -805,16 +820,4 @@ public class Person {
         }
         return "Person{";
     }
-
-
-    //TODO: staż pracy
-//    @Transient
-//    public String getSeniority() {
-//        if (dateOfFire != null) {
-//            dateOfFire.minusYears(dateOfEmployment.getYear());
-//            dateOfFire.minusMonths(dateOfEmployment.getMonthValue());
-//            dateOfFire.minusDays(dateOfEmployment.getDayOfMonth());
-//            return "" + da
-//        }
-//    }
 }
