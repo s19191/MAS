@@ -1,3 +1,5 @@
+package classes;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -213,7 +215,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "classes.Order{" +
                 "dateOfAcceptance=" + dateOfAcceptance +
                 ", dateOfActualLead=" + dateOfActualLead +
                 ", orderStatus=" + orderStatus +

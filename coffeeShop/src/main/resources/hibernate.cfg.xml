@@ -17,13 +17,13 @@
         <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
         <!-- Drop and re-create the database schema on startup -->
 <!--        <property name="hbm2ddl.auto">create</property>-->
-        <mapping class="Person"/>
-        <mapping class="Contest"/>
-        <mapping class="Order"/>
-        <mapping class="Beverage"/>
-        <mapping class="Recipe"/>
-        <mapping class="Ingredient"/>
-        <mapping class="Opinion"/>
-        <mapping class="Discount"/>
+        <mapping class="classes.Person"/>
+        <mapping class="classes.Contest"/>
+        <mapping class="classes.Order"/>
+        <mapping class="classes.Beverage"/>
+        <mapping class="classes.Recipe"/>
+        <mapping class="classes.Ingredient"/>
+        <mapping class="classes.Opinion"/>
+        <mapping class="classes.Discount"/>
     </session-factory>
 </hibernate-configuration>

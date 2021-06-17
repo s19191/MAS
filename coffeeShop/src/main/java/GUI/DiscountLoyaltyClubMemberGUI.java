@@ -1,3 +1,6 @@
+package GUI;
+
+import classes.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -13,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiManager {
+public class DiscountLoyaltyClubMemberGUI {
     public List<Person> getLoyaltyClubMembers() {
         StandardServiceRegistry registry = null;
         SessionFactory sessionFactory = null;

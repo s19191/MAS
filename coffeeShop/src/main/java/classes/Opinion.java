@@ -1,3 +1,5 @@
+package classes;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -106,7 +108,7 @@ public class Opinion {
 
     @Override
     public String toString() {
-        return "Opinion{" +
+        return "classes.Opinion{" +
                 "dateOfIssue=" + dateOfIssue +
                 ", description='" + description + '\'' +
                 ", score=" + score +

@@ -1,3 +1,5 @@
+package classes;
+
 import javax.persistence.Embeddable;
 
 @Embeddable

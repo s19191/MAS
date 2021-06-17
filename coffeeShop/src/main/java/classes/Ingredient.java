@@ -1,3 +1,5 @@
+package classes;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -90,7 +92,7 @@ public class Ingredient {
 
     @Override
     public String toString() {
-        return "Ingredient{" +
+        return "classes.Ingredient{" +
                 "name='" + name + '\'' +
                 ", quantityOnStock=" + quantityOnStock +
                 ", unit='" + unit + '\'' +

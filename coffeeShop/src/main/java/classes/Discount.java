@@ -1,3 +1,5 @@
+package classes;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,8 +21,8 @@ public class Discount {
     private static Map<String, Discount> codeDiscount = new HashMap<>();
 
     @ManyToMany(
-            mappedBy = "discounts",
-            fetch = FetchType.EAGER
+            mappedBy = "discounts"
+//            fetch = FetchType.EAGER
     )
     private List<Person> loyaltyClubMembers = new ArrayList<>();
 
@@ -76,6 +78,16 @@ public class Discount {
         }
         return false;
     }
+
+//    public boolean checkDiscountCode(classes.Person person, String code) throws Exception {
+//        classes.Discount discount = findByCode(code);
+//        for (classes.Person lCM : discount.getLoyaltyClubMembers()) {
+//            if (person.equals(lCM)) {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     public static Discount findByCode(String code) throws Exception {
         if (!codeDiscount.containsKey(code)) {

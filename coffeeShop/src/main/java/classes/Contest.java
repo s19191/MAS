@@ -1,3 +1,5 @@
+package classes;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -22,36 +24,39 @@ public class Contest {
     private static LocalTime minTimeOfEvent = LocalTime.of(2, 30);
     @Embedded
     private Address address;
-    private URL urlAddress;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> organizer;
+    private URL urlAddress;
     private String description;
 
-    @ManyToMany(mappedBy = "contests")
+    @ManyToMany(
+            mappedBy = "contests",
+            fetch = FetchType.EAGER
+    )
     private List<Person> baristas = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Person winner;
 
     public Contest() {}
 
-    private Contest(String name, int mainPrize, int sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, URL urlAddress, Set<String> organizer, String description) {
+    private Contest(String name, int mainPrize, int sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, URL urlAddress, String description) {
         this.name = name;
         this.mainPrize = mainPrize;
         this.sumOfPrizes = sumOfPrizes;
         this.dateOfTheEvent = dateOfTheEvent;
         this.address = address;
-        this.urlAddress = urlAddress;
         this.organizer = organizer;
+        this.urlAddress = urlAddress;
         this.description = description;
     }
 
-    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, URL urlAddress, Set<String> organizer, String description) throws Exception {
+    public static Contest createContest(String name, Integer mainPrize, Integer sumOfPrizes, LocalDateTime dateOfTheEvent, Address address, Set<String> organizer, URL urlAddress, String description) throws Exception {
         if (name == null || mainPrize == null || sumOfPrizes == null || dateOfTheEvent == null || address == null || urlAddress == null || organizer == null || description == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
         checkDescriptionLength(description);
-        return new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, urlAddress, organizer, description);
+        return new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, organizer, urlAddress, description);
     }
 
     public List<Person> getBaristas() {
@@ -242,13 +247,8 @@ public class Contest {
 
     @Override
     public String toString() {
-        return "Contest{" +
-                "name='" + name + '\'' +
-                ", mainPrize=" + mainPrize +
-                ", sumOfPrizes=" + sumOfPrizes +
-                ", dateOfTheEvent=" + dateOfTheEvent +
-                ", organizer=" + organizer +
-                ", urlAddress=" + urlAddress +
-                '}';
+        return "Konkurs: " + name + '\'' +
+                ", główna nagroda: " + mainPrize +
+                ", kiedy się odbywa: " + dateOfTheEvent;
     }
 }

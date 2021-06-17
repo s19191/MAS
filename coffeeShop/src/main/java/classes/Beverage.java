@@ -1,3 +1,5 @@
+package classes;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -128,9 +130,13 @@ public class Beverage {
         this.code = code;
     }
 
+    public static List<Beverage> getAllBeverages() {
+        return (List<Beverage>) codeBeverage.values();
+    }
+
     @Override
     public String toString() {
-        return "Beverage{" +
+        return "classes.Beverage{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
                 ", code='" + code + '\'' +
