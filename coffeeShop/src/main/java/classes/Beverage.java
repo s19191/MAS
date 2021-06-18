@@ -12,9 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Beverage {
@@ -24,7 +22,10 @@ public class Beverage {
     private Long id_Beverage;
     private String name;
     private double price;
-    @Column(unique = true)
+    @Column(
+            unique = true,
+            length = 64
+    )
     private String code;
 
     @OneToMany(

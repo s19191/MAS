@@ -1,12 +1,18 @@
 package classes;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 public class Discount {
@@ -16,9 +22,13 @@ public class Discount {
     private Long id_Discount;
     private double discountAmount;
     private String purpose;
-    @Column(unique = true)
+    @Column(
+            unique = true,
+            length = 64
+    )
     private String code;
 
+    //TODO: Tu coś
     @ManyToMany(
             mappedBy = "discounts"
 //            fetch = FetchType.EAGER
@@ -64,26 +74,74 @@ public class Discount {
         }
     }
 
-    //TODO:
-    public static boolean checkDiscountCode(Person person, String code) throws Exception {
-//        Discount discount = findByCode(code);
-//        for (Person lCM : discount.getLoyaltyClubMembers()) {
-//            if (person.equals(lCM)) {
-//                return true;
-//            }
-//        }
-        return false;
+    //To jakby miała to być metoda na obiekt
+    public boolean checkDiscountCode01(Person loyaltyClubMember, String code) throws Exception {
+        if (loyaltyClubMember == null || code == null) {
+            throw new NotNullException("Can't make operation one of parameters is null");
+        }
+        if (!loyaltyClubMember.getPersonKind().contains(PersonType.LOYALTYCLUBMEMBER)) {
+            throw new Exception("Can't do it, person is not Barista!");
+        }
+        if (this.code != null) {
+            if (loyaltyClubMembers.contains(loyaltyClubMember)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
-//    public boolean checkDiscountCode(classes.Person person, String code) throws Exception {
-//        classes.Discount discount = findByCode(code);
-//        for (classes.Person lCM : discount.getLoyaltyClubMembers()) {
-//            if (person.equals(lCM)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
+    //To jakby miała to by być metoda klasowa
+    public static boolean checkDiscountCode02(Person loyaltyClubMember, String code) throws Exception {
+        if (loyaltyClubMember == null || code == null) {
+            throw new NotNullException("Can't make operation one of parameters is null");
+        }
+        if (!loyaltyClubMember.getPersonKind().contains(PersonType.LOYALTYCLUBMEMBER)) {
+            throw new Exception("Can't do it, person is not Barista!");
+        }
+
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        boolean result = false;
+
+        try {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Discount> queryDiscount = criteriaBuilder.createQuery(Discount.class);
+            Root<Discount> rootDiscount = queryDiscount.from(Discount.class);
+            queryDiscount.select(rootDiscount);
+            queryDiscount.where(criteriaBuilder.equal(rootDiscount.get("code"), code));
+
+            List<Discount> discountList = session.createQuery(queryDiscount).getResultList();
+
+            if (discountList.get(0).getLoyaltyClubMembers().contains(loyaltyClubMember)) {
+                result = true;
+            }
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+        return result;
+    }
 
     public double getDiscountAmount() {
         return discountAmount;

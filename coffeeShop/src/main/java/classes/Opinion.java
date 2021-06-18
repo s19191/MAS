@@ -134,6 +134,9 @@ public class Opinion {
         if (dateOfIssue == null || description == null || score == null || order == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
+        if (!order.checkOrderStatus().equals(OrderStatus.REALIZED)) {
+            throw new Exception("Order status is not REALIZED!");
+        }
         checkDescriptionLength(description);
         Opinion opinion = new Opinion(dateOfIssue, description, score);
         opinion.setOrder(order);

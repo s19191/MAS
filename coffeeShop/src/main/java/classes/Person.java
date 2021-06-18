@@ -77,6 +77,8 @@ public class Person {
     @OneToMany(mappedBy = "loyaltyClubMember")
     private List<Order> ordersPlaced = new ArrayList<>();
 
+
+    //TODO: TU COś
     @ManyToMany(
 //            fetch = FetchType.EAGER
     )
@@ -593,7 +595,7 @@ public class Person {
         }
     }
 
-    // To chyba by działało lepiej, jak musi być bez kwalifikowanej
+    // To chyba by działało lepiej, jak musi być bez kwalifikowanej to tak, ale to i tak lepsze niż w zniżce
     public Discount findDiscountByCode(String code) throws NotNullException {
         Discount result = null;
         for (Discount d : discounts) {
