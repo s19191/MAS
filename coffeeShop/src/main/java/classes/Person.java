@@ -65,10 +65,7 @@ public class Person {
     )
     private Set<Contest> contests = new TreeSet<>(Comparator.comparing(Contest::getDateOfTheEvent));
 
-    @OneToMany(
-            mappedBy = "winner",
-            fetch = FetchType.EAGER
-    )
+    @OneToMany(mappedBy = "winner")
     private List<Contest> contestsWon = new ArrayList<>();
 
     @OneToMany(mappedBy = "assignedBarista")
@@ -80,7 +77,7 @@ public class Person {
 
     //TODO: TU COś
     @ManyToMany(
-//            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER
     )
     @JoinTable(
             name = "Discount_LoyaltyClubMember",

@@ -14,6 +14,8 @@ public class MethodTest {
             Person barista04 = Person.createBarista("Marianna", "Kowal", Sex.FEMALE, LocalDate.of(2000,4,1), address01, LocalDate.now(), BaristaRank.SENIOR);
 
             System.out.println(Person.getEmployees(LocalDate.of(1000, 2, 2), LocalDate.now().plusYears(2)));
+
+            Order.deleteOldOrders();
         } catch (Exception e) {
             e.printStackTrace();
         }

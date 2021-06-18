@@ -30,8 +30,8 @@ public class Discount {
 
     //TODO: Tu coś
     @ManyToMany(
-            mappedBy = "discounts"
-//            fetch = FetchType.EAGER
+            mappedBy = "discounts",
+            fetch = FetchType.EAGER
     )
     private List<Person> loyaltyClubMembers = new ArrayList<>();
 
@@ -80,9 +80,9 @@ public class Discount {
             throw new NotNullException("Can't make operation one of parameters is null");
         }
         if (!loyaltyClubMember.getPersonKind().contains(PersonType.LOYALTYCLUBMEMBER)) {
-            throw new Exception("Can't do it, person is not Barista!");
+            throw new Exception("Can't do it, person is not Loyalty club member!");
         }
-        if (this.code != null) {
+        if (this.code == code) {
             if (loyaltyClubMembers.contains(loyaltyClubMember)) {
                 return true;
             } else {

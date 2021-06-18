@@ -201,8 +201,6 @@ public class Order {
         return result;
     }
 
-
-    //TODO: Usuwanie zrobić
     public static void deleteOldOrders() {
         StandardServiceRegistry registry = null;
         SessionFactory sessionFactory = null;
@@ -224,6 +222,9 @@ public class Order {
             queryOrder.select(rootOrder);
 
             List<Order> orderList = session.createQuery(queryOrder).getResultList();
+            for (Order o : orderList) {
+                session.delete(o);
+            }
 
             session.getTransaction().commit();
             session.close();

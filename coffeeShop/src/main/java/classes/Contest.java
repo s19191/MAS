@@ -43,7 +43,8 @@ public class Contest {
     )
     private List<Person> baristas = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(
+            fetch = FetchType.EAGER)
     private Person winner;
 
     public Contest() {}
