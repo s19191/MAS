@@ -1,8 +1,16 @@
 package classes;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -28,12 +36,6 @@ public class Person {
     @Enumerated(EnumType.STRING)
     private Set<PersonType> personKind = new HashSet<>();
 
-    @Transient
-    private static Set<Person> actualLoyaltyClubMembers = new HashSet<>();
-
-    @Transient
-    private static Set<Person> employees = new HashSet<>();
-
     // Atrybuty pracownika
     private LocalDate dateOfEmployment;
     private LocalDate dateOfFire = null;
@@ -43,8 +45,8 @@ public class Person {
     private BaristaRank baristaRank;
 
     // Atrybuty kierwonika zmiany
+    @Column(unique = true)
     private Integer keySetNumber;
-    private static Map<Integer, Person> keySetNumberManager = new HashMap<>();
 
     // Atrybuty menadzera
     private String businessPhoneNumber;
@@ -99,7 +101,6 @@ public class Person {
         this.baristaRank = baristaRank;
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
-        employees.add(this);
     }
 
     public static Person createBarista(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, BaristaRank baristaRank) throws NotNullException {
@@ -119,7 +120,6 @@ public class Person {
         this.baristaRank = baristaRank;
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
-        employees.add(this);
     }
 
     public static Person createBarista(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, BaristaRank baristaRank) throws NotNullException {
@@ -140,19 +140,14 @@ public class Person {
         this.dateOfEmployment = dateOfEmployment;
         baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
-        keySetNumberManager.put(keySetNumber, this);
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.SHIFTMANAGER);
-        employees.add(this);
     }
 
     public static Person createShiftManager(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber) throws Exception {
         if (firstName == null || secondName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || keySetNumber == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
-        }
-        if (keySetNumberManager.containsKey(keySetNumber)) {
-            throw new Exception(String.format("Can't create object, another manager has keySetNumber: %s", keySetNumber));
         }
         return new Person(firstName, secondName, surname, sex, dateOfBirth, address, dateOfEmployment, keySetNumber);
     }
@@ -166,19 +161,14 @@ public class Person {
         this.dateOfEmployment = dateOfEmployment;
         baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
-        keySetNumberManager.put(keySetNumber, this);
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.SHIFTMANAGER);
-        employees.add(this);
     }
 
     public static Person createShiftManager(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber) throws Exception {
         if (firstName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || keySetNumber == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
-        }
-        if (keySetNumberManager.containsKey(keySetNumber)) {
-            throw new Exception(String.format("Can't create object, another manager has keySetNumber: %s", keySetNumber));
         }
         return new Person(firstName, surname, sex, dateOfBirth, address, dateOfEmployment, keySetNumber);
     }
@@ -195,7 +185,6 @@ public class Person {
         this.businessPhoneNumber = businessPhoneNumber;
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.MANAGER);
-        employees.add(this);
     }
 
     public static Person createManager(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber) throws Exception {
@@ -216,7 +205,6 @@ public class Person {
         this.businessPhoneNumber = businessPhoneNumber;
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.MANAGER);
-        employees.add(this);
     }
 
     public static Person createManager(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber) throws Exception {
@@ -239,7 +227,6 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
-        actualLoyaltyClubMembers.add(this);
     }
 
     public static Person createLoyaltyClubMember(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
@@ -261,7 +248,6 @@ public class Person {
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
-        actualLoyaltyClubMembers.add(this);
     }
 
     public static Person createLoyaltyClubMember(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
@@ -289,8 +275,6 @@ public class Person {
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
-        actualLoyaltyClubMembers.add(this);
-        employees.add(this);
     }
 
     public static Person createBaristaLoyaltyClubMember(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, BaristaRank baristaRank, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
@@ -316,8 +300,6 @@ public class Person {
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
-        actualLoyaltyClubMembers.add(this);
-        employees.add(this);
     }
 
     public static Person createBaristaLoyaltyClubMember(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, BaristaRank baristaRank, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
@@ -340,7 +322,6 @@ public class Person {
         this.dateOfEmployment = dateOfEmployment;
         baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
-        keySetNumberManager.put(keySetNumber, this);
         this.e_mailAddress = e_mailAddress;
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
@@ -348,16 +329,11 @@ public class Person {
         personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.SHIFTMANAGER);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
-        actualLoyaltyClubMembers.add(this);
-        employees.add(this);
     }
 
     public static Person createShiftManagerLoyaltyClubMember(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
         if (firstName == null || secondName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || keySetNumber == null || e_mailAddress == null || phoneNumber == null || dateOfJoining == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
-        }
-        if (keySetNumberManager.containsKey(keySetNumber)) {
-            throw new Exception(String.format("Can't create object, another manager has keySetNumber: %s", keySetNumber));
         }
         checkPhoneNumber(phoneNumber);
         checkE_mailAddress(e_mailAddress);
@@ -373,7 +349,6 @@ public class Person {
         this.dateOfEmployment = dateOfEmployment;
         baristaRank = BaristaRank.MASTER;
         this.keySetNumber = keySetNumber;
-        keySetNumberManager.put(keySetNumber, this);
         this.e_mailAddress = e_mailAddress;
         this.phoneNumber = phoneNumber;
         this.dateOfJoining = dateOfJoining;
@@ -381,16 +356,11 @@ public class Person {
         personKind.add(PersonType.BARISTA);
         personKind.add(PersonType.SHIFTMANAGER);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
-        actualLoyaltyClubMembers.add(this);
-        employees.add(this);
     }
 
     public static Person createShiftManagerLoyaltyClubMember(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, Integer keySetNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
         if (firstName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || keySetNumber == null || e_mailAddress == null || phoneNumber == null || dateOfJoining == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
-        }
-        if (keySetNumberManager.containsKey(keySetNumber)) {
-            throw new Exception(String.format("Can't create object, another manager has keySetNumber: %s", keySetNumber));
         }
         checkPhoneNumber(phoneNumber);
         checkE_mailAddress(e_mailAddress);
@@ -413,8 +383,6 @@ public class Person {
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.MANAGER);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
-        actualLoyaltyClubMembers.add(this);
-        employees.add(this);
     }
 
     public static Person createManagerLoyaltyClubMember(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
@@ -441,8 +409,6 @@ public class Person {
         personKind.add(PersonType.EMPLOYEE);
         personKind.add(PersonType.MANAGER);
         personKind.add(PersonType.LOYALTYCLUBMEMBER);
-        actualLoyaltyClubMembers.add(this);
-        employees.add(this);
     }
 
     public static Person createManagerLoyaltyClubMember(String firstName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, String businessPhoneNumber, String e_mailAddress, String phoneNumber, LocalDate dateOfJoining) throws Exception {
@@ -627,13 +593,7 @@ public class Person {
         }
     }
 
-    public static Person findByKeySetNumber(Integer keySetNumber) throws Exception {
-        if (!keySetNumberManager.containsKey(keySetNumber)) {
-            throw new Exception(String.format("There are no Shift manager with keySet: %d", keySetNumber));
-        }
-        return keySetNumberManager.get(keySetNumber);
-    }
-
+    // To chyba by działało lepiej, jak musi być bez kwalifikowanej
     public Discount findDiscountByCode(String code) throws NotNullException {
         Discount result = null;
         for (Discount d : discounts) {
@@ -648,19 +608,171 @@ public class Person {
     }
 
     public static Set<Person> getActualLoyaltyClubMembers() {
-        return actualLoyaltyClubMembers;
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        Set<Person> result = new HashSet<>();
+
+        try {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Person> queryPerson = criteriaBuilder.createQuery(Person.class);
+            Root<Person> rootPerson = queryPerson.from(Person.class);
+            queryPerson.select(rootPerson);
+
+            List<Person> personList = session.createQuery(queryPerson).getResultList();
+
+            for (Person p : personList) {
+                if (p.getPersonKind().contains(PersonType.LOYALTYCLUBMEMBER) && p.getDateOfLeaving() != null) {
+                    result.add(p);
+                }
+            }
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+        return result;
     }
 
     public static Set<Person> getEmployees(LocalDate dateFrom, LocalDate dateTo) throws Exception {
+        if (dateFrom.isAfter(dateTo)) {
+            throw new Exception("Incorect dates, dateFrom is after dateTo");
+        }
+
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
         Set<Person> result = new HashSet<>();
 
-//        for (Person p : employees) {
-//            if (p.getDateOfFire()) {
-//
-//            }
-//        }
+        try {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
 
+            session.beginTransaction();
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Person> queryPerson = criteriaBuilder.createQuery(Person.class);
+            Root<Person> rootPerson = queryPerson.from(Person.class);
+            queryPerson.select(rootPerson);
+
+            List<Person> personList = session.createQuery(queryPerson).getResultList();
+
+            for (Person p : personList) {
+                if (p.getPersonKind().contains(PersonType.EMPLOYEE)) {
+                    if (p.getDateOfFire() != null) {
+                        if (!p.dateOfEmployment.isAfter(dateTo) && !p.getDateOfFire().isBefore(dateFrom)) {
+                            result.add(p);
+                        }
+                    } else {
+                        if (!p.dateOfEmployment.isAfter(dateTo)) {
+                            result.add(p);
+                        }
+                    }
+                }
+            }
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
         return result;
+    }
+
+    public static Set<Person> createBaristasStatement(LocalDate dateFrom, LocalDate dateTo) throws Exception {
+        if (dateFrom.isAfter(dateTo)) {
+            throw new Exception("Incorect dates, dateFrom is after dateTo");
+        }
+
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        Set<Person> result = new HashSet<>();
+
+        try {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Person> queryPerson = criteriaBuilder.createQuery(Person.class);
+            Root<Person> rootPerson = queryPerson.from(Person.class);
+            queryPerson.select(rootPerson);
+
+            List<Person> personList = session.createQuery(queryPerson).getResultList();
+
+            for (Person p : personList) {
+                if (p.getPersonKind().contains(PersonType.BARISTA)) {
+                    if (p.getDateOfFire() != null) {
+                        if (!p.dateOfEmployment.isAfter(dateTo) && !p.getDateOfFire().isBefore(dateFrom)) {
+                            result.add(p);
+                        }
+                    } else {
+                        if (!p.dateOfEmployment.isAfter(dateTo)) {
+                            result.add(p);
+                        }
+                    }
+                }
+            }
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+        return result;
+    }
+
+    @Transient
+    public String getSeniority() throws Exception {
+        checkIfEmployee();
+        if (dateOfFire == null) {
+            throw new NotNullException("Can't calculate it, because dateOfFire is not set, employee is still working!");
+        }
+        int years = dateOfFire.getYear() - dateOfEmployment.getYear();
+        int month = dateOfFire.getMonthValue() - dateOfEmployment.getMonthValue();
+        if (month < 0) {
+            years -= 1;
+            month = 12 - Math.abs(month);
+        }
+        return "Worked years: " + years + ", months: " + month;
     }
 
     public Set<PersonType> getPersonKind() {
@@ -846,22 +958,6 @@ public class Person {
             throw new NotNullException("Can't set dateOfLeaving, parameter is null");
         }
         this.dateOfLeaving = dateOfLeaving;
-        actualLoyaltyClubMembers.remove(this);
-    }
-
-    @Transient
-    public String getSeniority() throws Exception {
-        checkIfEmployee();
-        if (dateOfFire == null) {
-            throw new NotNullException("Can't calculate it, because dateOfFire is not set, employee is still working!");
-        }
-        int years = dateOfFire.getYear() - dateOfEmployment.getYear();
-        int month = dateOfFire.getMonthValue() - dateOfEmployment.getMonthValue();
-        if (month < 0) {
-            years -= 1;
-            month = 12 - Math.abs(month);
-        }
-        return "Worked years: " + years + ", months: " + month;
     }
 
     @Override

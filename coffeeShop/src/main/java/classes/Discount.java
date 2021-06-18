@@ -16,9 +16,8 @@ public class Discount {
     private Long id_Discount;
     private double discountAmount;
     private String purpose;
+    @Column(unique = true)
     private String code;
-    @Transient
-    private static Map<String, Discount> codeDiscount = new HashMap<>();
 
     @ManyToMany(
             mappedBy = "discounts"
@@ -32,15 +31,11 @@ public class Discount {
         this.discountAmount = discountAmount;
         this.purpose = purpose;
         this.code = code;
-        codeDiscount.put(code, this);
     }
 
     public static Discount createDiscount(Double discountAmount, String purpose, String code) throws Exception {
         if (discountAmount == null || purpose == null || code == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
-        }
-        if (codeDiscount.containsKey(code)) {
-            throw new Exception(String.format("Can't create object, another beverage has code: %s", code));
         }
         return new Discount(discountAmount, purpose, code);
     }
@@ -69,13 +64,14 @@ public class Discount {
         }
     }
 
+    //TODO:
     public static boolean checkDiscountCode(Person person, String code) throws Exception {
-        Discount discount = findByCode(code);
-        for (Person lCM : discount.getLoyaltyClubMembers()) {
-            if (person.equals(lCM)) {
-                return true;
-            }
-        }
+//        Discount discount = findByCode(code);
+//        for (Person lCM : discount.getLoyaltyClubMembers()) {
+//            if (person.equals(lCM)) {
+//                return true;
+//            }
+//        }
         return false;
     }
 
@@ -88,13 +84,6 @@ public class Discount {
 //        }
 //        return false;
 //    }
-
-    public static Discount findByCode(String code) throws Exception {
-        if (!codeDiscount.containsKey(code)) {
-            throw new Exception(String.format("There are no discount with code: %s", code));
-        }
-        return codeDiscount.get(code);
-    }
 
     public double getDiscountAmount() {
         return discountAmount;

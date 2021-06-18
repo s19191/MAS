@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="dodane pobieranie z bazy">
-      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/RunGui.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/RunGui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/resources/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/GUI/ShowBaristasContestsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/GUI/ShowBaristasContestsGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Beverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Beverage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Contest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Contest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Discount.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Discount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Opinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Opinion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../coffeeShop/target/classes/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/target/classes/hibernate.cfg.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mp05.iml" beforeDir="false" afterPath="$PROJECT_DIR$/mp05.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +50,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../coffeeShop" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -62,17 +65,6 @@
     <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Test" />
       <module name="mp05" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -101,6 +93,7 @@
       <workItem from="1623237228821" duration="50000" />
       <workItem from="1623237484878" duration="3399000" />
       <workItem from="1623866030367" duration="4106000" />
+      <workItem from="1623974055049" duration="599000" />
     </task>
     <task id="LOCAL-00001" summary="początek">
       <created>1622496546153</created>

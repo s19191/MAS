@@ -1,12 +1,20 @@
 package classes;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @Entity
 public class Beverage {
@@ -16,8 +24,8 @@ public class Beverage {
     private Long id_Beverage;
     private String name;
     private double price;
+    @Column(unique = true)
     private String code;
-    private static Map<String, Beverage> codeBeverage = new HashMap<>();
 
     @OneToMany(
             mappedBy = "beverage",
@@ -35,15 +43,11 @@ public class Beverage {
         this.name = name;
         this.price = price;
         this.code = code;
-        codeBeverage.put(code, this);
     }
 
     public static Beverage createBeverage(String name, Double price, String code) throws Exception {
         if (name == null || price == null || code == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
-        }
-        if (codeBeverage.containsKey(code)) {
-            throw new Exception(String.format("Can't create object, another beverage has code: %s", code));
         }
         return new Beverage(name, price, code);
     }
@@ -90,11 +94,41 @@ public class Beverage {
         }
     }
 
-    public static Beverage findByCode(String code) throws Exception {
-        if (!codeBeverage.containsKey(code)) {
-            throw new Exception(String.format("There are no beverage with code: %s", code));
+    public static List<Beverage> getAllBeverages() {
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        List<Beverage> result = new ArrayList<>();
+
+        try {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Beverage> queryBeverage = criteriaBuilder.createQuery(Beverage.class);
+            Root<Beverage> beverageRoot = queryBeverage.from(Beverage.class);
+            queryBeverage.select(beverageRoot);
+
+            result = session.createQuery(queryBeverage).getResultList();
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
         }
-        return codeBeverage.get(code);
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+        return result;
     }
 
     public String getName() {
@@ -128,10 +162,6 @@ public class Beverage {
             throw new NotNullException("Can't set value of code, value can not be null");
         }
         this.code = code;
-    }
-
-    public static List<Beverage> getAllBeverages() {
-        return (List<Beverage>) codeBeverage.values();
     }
 
     @Override

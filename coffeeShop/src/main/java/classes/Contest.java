@@ -1,13 +1,24 @@
 package classes;
 
+import clojure.lang.Compiler;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -144,6 +155,133 @@ public class Contest {
         if (description.length() > 300) {
             throw new Exception(String.format("Opis: %s jest przekracza długość 300 znaków", description));
         }
+    }
+
+    public static List<Contest> getContests() {
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        List<Contest> result = new ArrayList<>();
+
+        try {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Contest> queryContest = criteriaBuilder.createQuery(Contest.class);
+            Root<Contest> rootContest = queryContest.from(Contest.class);
+            queryContest.select(rootContest);
+
+            result = session.createQuery(queryContest).getResultList();
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+        return result;
+    }
+
+    public static List<Contest> getContests(LocalDateTime dateFrom, LocalDateTime dateTo) throws Exception {
+        if (dateFrom.isAfter(dateTo)) {
+            throw new Exception("Incorect dates, dateFrom is after dateTo");
+        }
+
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        List<Contest> result = new ArrayList<>();
+
+        try {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Contest> queryContest = criteriaBuilder.createQuery(Contest.class);
+            Root<Contest> rootContest = queryContest.from(Contest.class);
+            queryContest.select(rootContest);
+
+            List<Contest> contestList = session.createQuery(queryContest).getResultList();
+
+            for (Contest c : contestList) {
+                if (c.getDateOfTheEvent().isAfter(dateFrom) && c.getDateOfTheEvent().isBefore(dateFrom)) {
+                   result.add(c);
+                }
+            }
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+        return result;
+    }
+
+    // Tu tak na prawdę to powinno być w Bariście, tam to tylko po asocjacji byśmy znaleźli
+    public static List<Contest> getContestsWon(Person barista) throws Exception {
+        if (!barista.getPersonKind().contains(PersonType.BARISTA)) {
+            throw new Exception("Can't do it, person is not Barista!");
+        }
+
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+        List<Contest> result = new ArrayList<>();
+
+        try {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Contest> queryContest = criteriaBuilder.createQuery(Contest.class);
+            Root<Contest> rootContest = queryContest.from(Contest.class);
+            queryContest.select(rootContest);
+            queryContest.where(criteriaBuilder.equal(rootContest.get("winner"), barista));
+
+            result = session.createQuery(queryContest).getResultList();
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
+        return result;
     }
 
     @Transient

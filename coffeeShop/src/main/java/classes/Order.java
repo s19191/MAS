@@ -1,10 +1,16 @@
 package classes;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
-
-import javax.persistence.Entity;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +25,8 @@ public class Order {
     private LocalDateTime dateOfActualLead;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
+    @Column(unique = true)
     private int orderNr;
-    private static int nr = 1;
 
     @ManyToOne
     private Person assignedBarista;
@@ -42,18 +48,26 @@ public class Order {
     )
     private Opinion opinion;
 
-    public Order() {
+    public Order() {}
+
+    private Order(int orderNr) {
         dateOfAcceptance = LocalDateTime.now();
         orderStatus = OrderStatus.WAITING;
-        orderNr = nr;
-        nr++;
+        this.orderNr = orderNr;
     }
 
-    public static Order createOrder(List<Beverage> beverages, Person loyaltyClubMember) throws Exception {
-        if (beverages == null || beverages.isEmpty() || loyaltyClubMember == null) {
+    public static Order createOrder(Integer orderNr) throws Exception {
+        if (orderNr == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        Order order = new Order();
+        return new Order(orderNr);
+    }
+
+    public static Order createOrder(Integer orderNr, List<Beverage> beverages, Person loyaltyClubMember) throws Exception {
+        if (beverages == null || beverages.isEmpty() || loyaltyClubMember == null || orderNr == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        Order order = new Order(orderNr);
         for (Beverage b : beverages) {
             order.addBeverage(b);
         }
@@ -185,6 +199,43 @@ public class Order {
             result += b.getPrice();
         }
         return result;
+    }
+
+
+    //TODO: Usuwanie zrobić
+    public static void deleteOldOrders() {
+        StandardServiceRegistry registry = null;
+        SessionFactory sessionFactory = null;
+
+        try {
+            registry = new StandardServiceRegistryBuilder()
+                    .configure()
+                    .build();
+            sessionFactory = new MetadataSources(registry)
+                    .buildMetadata()
+                    .buildSessionFactory();
+            Session session = sessionFactory.openSession();
+
+            session.beginTransaction();
+
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Order> queryOrder = criteriaBuilder.createQuery(Order.class);
+            Root<Order> rootOrder = queryOrder.from(Order.class);
+            queryOrder.select(rootOrder);
+
+            List<Order> orderList = session.createQuery(queryOrder).getResultList();
+
+            session.getTransaction().commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
+        finally {
+            if(sessionFactory != null) {
+                sessionFactory.close();
+            }
+        }
     }
 
     public LocalDateTime getDateOfActualLead() {
