@@ -115,6 +115,24 @@ public class Test {
             shiftManagerLoyaltyClubMember02.addDiscount(discount05);
             shiftManagerLoyaltyClubMember02.addDiscount(discount09);
 
+            Beverage beverage01 = Beverage.createBeverage("Latte", 12.0, "L01");
+            Beverage beverage02 = Beverage.createBeverage("Cappuccino", 14.0, "C01");
+            Beverage beverage03 = Beverage.createBeverage("Latte macchiato", 13.0, "LM01");
+            Beverage beverage04 = Beverage.createBeverage("Ice latte", 13.0, "L02");
+            Beverage beverage05 = Beverage.createBeverage("Ice cappuccino", 14.0, "C02");
+            Beverage beverage06 = Beverage.createBeverage("Ice latte macchiato", 13.0, "LM02");
+            Beverage beverage07 = Beverage.createBeverage("Espresso", 13.0, "E01");
+            Beverage beverage08 = Beverage.createBeverage("Espresso dopio", 14.0, "E02");
+
+            session.save(beverage01);
+            session.save(beverage02);
+            session.save(beverage03);
+            session.save(beverage04);
+            session.save(beverage05);
+            session.save(beverage06);
+            session.save(beverage07);
+            session.save(beverage08);
+
             session.save(loyaltyClubMember01);
             session.save(loyaltyClubMember02);
 
