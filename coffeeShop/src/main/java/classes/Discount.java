@@ -35,6 +35,9 @@ public class Discount {
     )
     private List<Person> loyaltyClubMembers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "discount")
+    private List<Order> orders = new ArrayList<>();
+
     public Discount() {}
 
     private Discount(double discountAmount, String purpose, String code) {
@@ -71,6 +74,30 @@ public class Discount {
         if (loyaltyClubMembers.contains(oldLoyaltyClubMember)) {
             loyaltyClubMembers.remove(oldLoyaltyClubMember);
             oldLoyaltyClubMember.removeDiscount(this);
+        }
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void addOrder(Order newOrder) throws Exception {
+        if (newOrder == null) {
+            throw new NotNullException("Can't add value of newOrder, value can not be null");
+        }
+        if (!newOrder.getLoyaltyClubMember().getDiscounts().contains(this)) {
+            throw new Exception("Can't add discount for this order, because loyalty club member who created it don't have this discount!");
+        }
+        if (!orders.contains(newOrder)) {
+            orders.add(newOrder);
+            newOrder.setDiscount(this);
+        }
+    }
+
+    public void removeOrder(Order oldOrder) throws Exception {
+        if (orders.contains(oldOrder)) {
+            orders.remove(oldOrder);
+            oldOrder.removeDiscount();
         }
     }
 

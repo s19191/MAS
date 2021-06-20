@@ -8,7 +8,9 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Test {
@@ -123,6 +125,73 @@ public class Test {
             Beverage beverage06 = Beverage.createBeverage("Ice latte macchiato", 13.0, "LM02");
             Beverage beverage07 = Beverage.createBeverage("Espresso", 13.0, "E01");
             Beverage beverage08 = Beverage.createBeverage("Espresso dopio", 14.0, "E02");
+
+            List<Beverage> beverages01 = new ArrayList<>();
+            beverages01.add(beverage01);
+            beverages01.add(beverage02);
+
+            Order order01 = Order.createOrder(1);
+            Order order02 = Order.createOrder(2, beverages01, loyaltyClubMember01);
+            Order order03 = Order.createOrder(3, beverages01, loyaltyClubMember02, discount01);
+
+            Opinion opinion01 = Opinion.createOpinion(LocalDateTime.now(), "Bardzo fajne zamówienie", 5);
+            Opinion opinion02 = Opinion.createOpinion(LocalDateTime.now(), 1);
+
+            opinion01.setOrder(order01);
+            opinion02.setOrder(order02);
+
+            Ingredient ingredient01 = Ingredient.createIngredient("Arabica", 200.0, "kg");
+            Ingredient ingredient02 = Ingredient.createIngredient("Rogusta", 200.0, "kg");
+            Ingredient ingredient03 = Ingredient.createIngredient("Lód", 200.0, "kg");
+            Ingredient ingredient04 = Ingredient.createIngredient("Melko", 100.0, "l");
+
+            Recipe recipe01 = Recipe.createRecipe(0.2, 90.5, beverage01, ingredient01);
+            Recipe recipe02 = Recipe.createRecipe(0.3, 90.5, beverage01, ingredient04);
+            Recipe recipe03 = Recipe.createRecipe(0.2, 90.5, beverage02, ingredient02);
+            Recipe recipe04 = Recipe.createRecipe(0.2, 90.5, beverage02, ingredient04);
+            Recipe recipe05 = Recipe.createRecipe(0.2, 90.5, beverage03, ingredient01);
+            Recipe recipe06 = Recipe.createRecipe(0.2, 90.5, beverage03, ingredient04);
+            Recipe recipe07 = Recipe.createRecipe(0.2, 90.5, beverage04, ingredient01);
+            Recipe recipe08 = Recipe.createRecipe(0.2, 90.5, beverage04, ingredient04);
+            Recipe recipe09 = Recipe.createRecipe(0.2, 90.5, beverage04, ingredient03);
+            Recipe recipe10 = Recipe.createRecipe(0.2, 90.5, beverage05, ingredient01);
+            Recipe recipe11 = Recipe.createRecipe(0.2, 90.5, beverage05, ingredient04);
+            Recipe recipe12 = Recipe.createRecipe(0.2, 90.5, beverage05, ingredient03);
+            Recipe recipe13 = Recipe.createRecipe(0.2, 90.5, beverage06, ingredient01);
+            Recipe recipe14 = Recipe.createRecipe(0.2, 90.5, beverage06, ingredient04);
+            Recipe recipe15 = Recipe.createRecipe(0.2, 90.5, beverage06, ingredient03);
+            Recipe recipe16 = Recipe.createRecipe(0.1, 90.5, beverage07, ingredient01);
+            Recipe recipe17 = Recipe.createRecipe(0.2, 90.5, beverage08, ingredient02);
+
+            session.save(opinion01);
+            session.save(opinion02);
+
+            session.save(ingredient01);
+            session.save(ingredient02);
+            session.save(ingredient03);
+            session.save(ingredient04);
+
+            session.save(recipe01);
+            session.save(recipe02);
+            session.save(recipe03);
+            session.save(recipe04);
+            session.save(recipe05);
+            session.save(recipe06);
+            session.save(recipe07);
+            session.save(recipe08);
+            session.save(recipe09);
+            session.save(recipe10);
+            session.save(recipe11);
+            session.save(recipe12);
+            session.save(recipe13);
+            session.save(recipe14);
+            session.save(recipe15);
+            session.save(recipe16);
+            session.save(recipe17);
+
+            session.save(order01);
+            session.save(order02);
+            session.save(order03);
 
             session.save(beverage01);
             session.save(beverage02);

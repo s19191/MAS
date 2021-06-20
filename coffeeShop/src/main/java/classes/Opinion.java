@@ -40,6 +40,7 @@ public class Opinion {
         if (dateOfIssue == null || description == null || score == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
+        checkScore(score);
         checkDescriptionLength(description);
         return new Opinion(dateOfIssue, description, score);
     }
@@ -49,10 +50,11 @@ public class Opinion {
         this.score = score;
     }
 
-    public static Opinion createOpinion(LocalDateTime dateOfIssue, Integer score) throws NotNullException {
+    public static Opinion createOpinion(LocalDateTime dateOfIssue, Integer score) throws Exception {
         if (dateOfIssue == null || score == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
+        checkScore(score);
         return new Opinion(dateOfIssue, score);
     }
 
@@ -64,7 +66,10 @@ public class Opinion {
         if (newOrder == null) {
             throw new NotNullException("Can't set order, parameter is null");
         }
-        if (order != null) {
+        if (newOrder != order) {
+            if (order != null) {
+                removeOrder();
+            }
             this.order = newOrder;
             newOrder.setOpinion(this);
         }
@@ -77,9 +82,15 @@ public class Opinion {
         }
     }
 
-    public static void checkDescriptionLength(String description) throws Exception {
+    private static void checkDescriptionLength(String description) throws Exception {
         if (description.length() > 300) {
             throw new Exception(String.format("Opis: %s jest przekracza długość 300 znaków", description));
+        }
+    }
+
+    private static void checkScore(Integer score) throws Exception {
+        if (score > 5 || score < 1) {
+            throw new Exception("Incorrect score vale, score value should be form 1 do 5");
         }
     }
 

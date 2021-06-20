@@ -48,6 +48,9 @@ public class Order {
     )
     private Opinion opinion;
 
+    @ManyToOne
+    private Discount discount;
+
     public Order() {}
 
     private Order(int orderNr) {
@@ -72,6 +75,19 @@ public class Order {
             order.addBeverage(b);
         }
         order.setLoyaltyClubMember(loyaltyClubMember);
+        return order;
+    }
+
+    public static Order createOrder(Integer orderNr, List<Beverage> beverages, Person loyaltyClubMember, Discount discount) throws Exception {
+        if (beverages == null || beverages.isEmpty() || loyaltyClubMember == null || orderNr == null || discount == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        Order order = new Order(orderNr);
+        for (Beverage b : beverages) {
+            order.addBeverage(b);
+        }
+        order.setLoyaltyClubMember(loyaltyClubMember);
+        order.setDiscount(discount);
         return order;
     }
 
@@ -171,6 +187,33 @@ public class Order {
         }
     }
 
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount newDiscount) throws Exception {
+        if (newDiscount == null) {
+            throw new NotNullException("Can't create object, one of parameters is null");
+        }
+        if (!loyaltyClubMember.getDiscounts().contains(newDiscount)) {
+            throw new Exception("Loyalty club member don't have this discount");
+        }
+        if (newDiscount != discount) {
+            if (discount != null) {
+                removeDiscount();
+            }
+            discount = newDiscount;
+            newDiscount.addOrder(this);
+        }
+    }
+
+    public void removeDiscount() throws Exception {
+        if (discount != null) {
+            discount.removeOrder(this);
+            discount = null;
+        }
+    }
+
     public void acceptOrder() {
         orderStatus = OrderStatus.INPROGRESS;
     }
@@ -197,6 +240,12 @@ public class Order {
         double result = 0.0;
         for (Beverage b : beverages) {
             result += b.getPrice();
+        }
+        if (discount != null) {
+            result -= discount.getDiscountAmount();
+        }
+        if (result <= 0.0) {
+            result = 0.0;
         }
         return result;
     }

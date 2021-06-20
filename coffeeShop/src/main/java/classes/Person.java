@@ -585,7 +585,7 @@ public class Person {
     }
 
     private static void checkE_mailAddress(String e_mailAddress) throws Exception {
-        Pattern p = Pattern.compile(".+@.+");
+        Pattern p = Pattern.compile("^\\S+@\\S+$");
         Matcher m = p.matcher(e_mailAddress);
         if (!m.matches()) {
             throw new Exception(String.format("Invalid e_mailAddress %s", e_mailAddress));
@@ -601,7 +601,7 @@ public class Person {
             }
         }
         if (result == null) {
-            throw new NotNullException(String.format("There are no decount with code: %s", code));
+            throw new NotNullException(String.format("There are no discount with code: %s", code));
         }
         return result;
     }
