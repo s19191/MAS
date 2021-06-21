@@ -203,6 +203,10 @@ public class Opinion {
     @Override
     public boolean equals(Object obj) {
         Opinion o = (Opinion) obj;
-        return id_Opinion.equals(o.getId_Opinion());
+        if (id_Opinion != null && o.getId_Opinion() != null) {
+            return id_Opinion.equals(o.getId_Opinion());
+        } else {
+            return super.equals(obj);
+        }
     }
 }

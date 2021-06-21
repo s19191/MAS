@@ -183,6 +183,10 @@ public class Discount {
         return result;
     }
 
+    public Long getId_Discount() {
+        return id_Discount;
+    }
+
     public double getDiscountAmount() {
         return discountAmount;
     }
@@ -226,6 +230,10 @@ public class Discount {
     @Override
     public boolean equals(Object obj) {
         Discount d = (Discount) obj;
-        return code.equals(d.getCode());
+        if (id_Discount != null && d.getId_Discount() != null) {
+            return code.equals(d.getCode());
+        } else {
+            return super.equals(obj);
+        }
     }
 }

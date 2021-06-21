@@ -5,15 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1d88be31-79f2-400a-b942-a76cb04bac32" name="Default Changelist" comment="dodane pobieranie z bazy">
-      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/GUI/DiscountLoyaltyClubMemberGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/GUI/DiscountLoyaltyClubMemberGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/GUI/ExecutionOfANewOrderGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/GUI/ExecutionOfANewOrderGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/GUI/ShowBaristasContestsGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/GUI/ShowBaristasContestsGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Beverage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Beverage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Contest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Contest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Discount.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Discount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Ingredient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Ingredient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/MethodTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/MethodTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Opinion.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Opinion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Order.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/../coffeeShop/src/main/java/classes/Person.java" afterDir="false" />
@@ -55,7 +50,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../coffeeShop" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -100,6 +95,7 @@
       <workItem from="1623866030367" duration="4106000" />
       <workItem from="1623974055049" duration="599000" />
       <workItem from="1624233726775" duration="594000" />
+      <workItem from="1624267943082" duration="627000" />
     </task>
     <task id="LOCAL-00001" summary="początek">
       <created>1622496546153</created>

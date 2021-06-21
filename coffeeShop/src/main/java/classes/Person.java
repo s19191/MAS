@@ -103,18 +103,6 @@ public class Person {
         personKind.add(PersonType.BARISTA);
     }
 
-    /**
-     * @param firstName
-     * @param secondName
-     * @param surname
-     * @param sex
-     * @param dateOfBirth
-     * @param address
-     * @param dateOfEmployment
-     * @param baristaRank
-     * @return
-     * @throws NotNullException
-     */
     public static Person createBarista(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, BaristaRank baristaRank) throws NotNullException {
         if (firstName == null || secondName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || baristaRank == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
@@ -986,6 +974,10 @@ public class Person {
     @Override
     public boolean equals(Object obj) {
         Person p = (Person) obj;
-        return id_Person.equals(p.getId_Person());
+        if (id_Person != null && p.getId_Person() != null) {
+            return id_Person.equals(p.getId_Person());
+        } else {
+            return super.equals(obj);
+        }
     }
 }

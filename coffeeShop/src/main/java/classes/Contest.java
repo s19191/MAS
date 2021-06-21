@@ -396,6 +396,10 @@ public class Contest {
     @Override
     public boolean equals(Object obj) {
         Contest c = (Contest) obj;
-        return id_Contest.equals(c.getId_Contest());
+        if (id_Contest != null && c.getId_Contest() != null) {
+            return id_Contest.equals(c.getId_Contest());
+        } else {
+            return super.equals(obj);
+        }
     }
 }

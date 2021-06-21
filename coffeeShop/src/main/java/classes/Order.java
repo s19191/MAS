@@ -334,6 +334,10 @@ public class Order {
     @Override
     public boolean equals(Object obj) {
         Order o = (Order) obj;
-        return id_Order.equals(o.getId_Order());
+        if (id_Order != null && o.getId_Order() != null) {
+            return id_Order.equals(o.getId_Order());
+        } else {
+            return super.equals(obj);
+        }
     }
 }

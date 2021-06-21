@@ -106,6 +106,10 @@ public class Ingredient {
     @Override
     public boolean equals(Object obj) {
         Ingredient i = (Ingredient) obj;
-        return id_Ingredient.equals(i.getId_Ingredient());
+        if (id_Ingredient != null && i.getId_Ingredient() != null) {
+            return id_Ingredient.equals(i.getId_Ingredient());
+        } else {
+            return super.equals(obj);
+        }
     }
 }

@@ -120,6 +120,10 @@ public class Recipe {
     @Override
     public boolean equals(Object obj) {
         Recipe r = (Recipe) obj;
-        return id_Composition.equals(r.getId_Composition());
+        if (id_Composition != null && r.getId_Composition() != null) {
+            return id_Composition.equals(r.getId_Composition());
+        } else {
+            return super.equals(obj);
+        }
     }
 }

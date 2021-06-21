@@ -188,6 +188,10 @@ public class Beverage {
     @Override
     public boolean equals(Object obj) {
         Beverage b = (Beverage) obj;
-        return id_Beverage.equals(b.getId_Beverage());
+        if (id_Beverage != null && b.getId_Beverage() != null) {
+            return id_Beverage.equals(b.getId_Beverage());
+        } else {
+            return super.equals(obj);
+        }
     }
 }
