@@ -3,8 +3,6 @@ package classes;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -151,7 +149,8 @@ public class Order {
             throw new NotNullException("Can't set order, parameter is null");
         }
         if (opinion != null) {
-            this.opinion = newOpinion;
+            opinion = newOpinion;
+            setOrderStatus(OrderStatus.RATED);
             newOpinion.setOrder(this);
         }
     }
