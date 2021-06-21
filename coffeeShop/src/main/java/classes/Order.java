@@ -290,7 +290,7 @@ public class Order {
         }
     }
 
-    public Long getId_Order() {
+    public Long getOrderNr() {
         return id_Order;
     }
 
@@ -316,10 +316,6 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public Long getOrderNr() {
-        return id_Order;
-    }
-
     @Override
     public String toString() {
         return "Order{" +
@@ -333,8 +329,8 @@ public class Order {
     @Override
     public boolean equals(Object obj) {
         Order o = (Order) obj;
-        if (id_Order != null && o.getId_Order() != null) {
-            return id_Order.equals(o.getId_Order());
+        if (id_Order != null && o.getOrderNr() != null) {
+            return id_Order.equals(o.getOrderNr());
         } else {
             return super.equals(obj);
         }
