@@ -11,8 +11,9 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Discount {
@@ -28,15 +29,17 @@ public class Discount {
     )
     private String code;
 
-    //TODO: Tu coś
     @ManyToMany(
             mappedBy = "discounts",
             fetch = FetchType.EAGER
     )
-    private List<Person> loyaltyClubMembers = new ArrayList<>();
+    private Set<Person> loyaltyClubMembers = new HashSet<>();
 
-    @OneToMany(mappedBy = "discount")
-    private List<Order> orders = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "discount",
+            fetch = FetchType.EAGER
+    )
+    private Set<Order> orders = new HashSet<>();
 
     public Discount() {}
 
@@ -53,7 +56,7 @@ public class Discount {
         return new Discount(discountAmount, purpose, code);
     }
 
-    public List<Person> getLoyaltyClubMembers() {
+    public Set<Person> getLoyaltyClubMembers() {
         return loyaltyClubMembers;
     }
 
@@ -77,7 +80,7 @@ public class Discount {
         }
     }
 
-    public List<Order> getOrders() {
+    public Set<Order> getOrders() {
         return orders;
     }
 
@@ -85,8 +88,14 @@ public class Discount {
         if (newOrder == null) {
             throw new NotNullException("Can't add value of newOrder, value can not be null");
         }
-        if (!newOrder.getLoyaltyClubMember().getDiscounts().contains(this)) {
-            throw new Exception("Can't add discount for this order, because loyalty club member who created it don't have this discount!");
+        boolean check = false;
+        for (Discount d : newOrder.getLoyaltyClubMember().getDiscounts()) {
+            if (d.equals(this)) {
+                check = true;
+            }
+        }
+        if (!check) {
+            throw new Exception("Loyalty club member don't have this discount");
         }
         if (!orders.contains(newOrder)) {
             orders.add(newOrder);
@@ -152,8 +161,12 @@ public class Discount {
 
             List<Discount> discountList = session.createQuery(queryDiscount).getResultList();
 
-            if (discountList.get(0).getLoyaltyClubMembers().contains(loyaltyClubMember)) {
-                result = true;
+            if (discountList.size() > 0) {
+                for (Person p : discountList.get(0).getLoyaltyClubMembers()) {
+                    if (p.equals(loyaltyClubMember)) {
+                        result = true;
+                    }
+                }
             }
 
             session.getTransaction().commit();
@@ -208,5 +221,11 @@ public class Discount {
         return "Kwota zniżki: " + discountAmount +
                 ", cel: " + purpose +
                 ", kod: " + code;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Discount d = (Discount) obj;
+        return code.equals(d.getCode());
     }
 }

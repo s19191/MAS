@@ -16,6 +16,7 @@ import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -41,7 +42,7 @@ public class Contest {
             mappedBy = "contests",
             fetch = FetchType.EAGER
     )
-    private List<Person> baristas = new ArrayList<>();
+    private Set<Person> baristas = new HashSet<>();
 
     @ManyToOne(
             fetch = FetchType.EAGER)
@@ -68,7 +69,7 @@ public class Contest {
         return new Contest(name, mainPrize, sumOfPrizes, dateOfTheEvent, address, organizer, urlAddress, description);
     }
 
-    public List<Person> getBaristas() {
+    public Set<Person> getBaristas() {
         return baristas;
     }
 
@@ -129,7 +130,7 @@ public class Contest {
         this.organizer.add(organizer);
     }
 
-    public void addOrganizer(List<String> organizer) throws NotNullException {
+    public void addOrganizer(Set<String> organizer) throws NotNullException {
         if (organizer == null) {
             throw new NotNullException("Can't add organizer, value can not be null");
         }
@@ -140,7 +141,7 @@ public class Contest {
         this.organizer.remove(organizer);
     }
 
-    public void removeOrganizer(List<String> organizer) {
+    public void removeOrganizer(Set<String> organizer) {
         this.organizer.removeAll(organizer);
     }
 
@@ -292,6 +293,10 @@ public class Contest {
         return "Name of contest: " + getName() + ", url address: " + getUrlAddress();
     }
 
+    public Long getId_Contest() {
+        return id_Contest;
+    }
+
     public String getName() {
         return name;
     }
@@ -386,5 +391,11 @@ public class Contest {
         return "Konkurs: " + name + '\'' +
                 ", główna nagroda: " + mainPrize +
                 ", kiedy się odbywa: " + dateOfTheEvent;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Contest c = (Contest) obj;
+        return id_Contest.equals(c.getId_Contest());
     }
 }

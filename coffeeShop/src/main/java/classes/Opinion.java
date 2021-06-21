@@ -165,6 +165,10 @@ public class Opinion {
         this.dateOfIssue = dateOfIssue;
     }
 
+    public Long getId_Opinion() {
+        return id_Opinion;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -194,5 +198,11 @@ public class Opinion {
                 ", description='" + description + '\'' +
                 ", score=" + score +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Opinion o = (Opinion) obj;
+        return id_Opinion.equals(o.getId_Opinion());
     }
 }

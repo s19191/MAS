@@ -15,7 +15,16 @@ public class MethodTest {
 
             System.out.println(Person.getEmployees(LocalDate.of(1000, 2, 2), LocalDate.now().plusYears(2)));
 
-            Order.deleteOldOrders();
+            Person loyaltyClubMember01 = Person.createLoyaltyClubMember("Jan", "Kwasowski", Sex.MALE, LocalDate.of(1998,9,23), address01,"s19191@pjwstk.pl","+48111111111", LocalDate.now());
+            Discount discount01 = Discount.createDiscount(2.50, "Na dobry początek", "NEWMEMBER");
+            loyaltyClubMember01.addDiscount(discount01);
+
+            System.out.println(discount01.getLoyaltyClubMembers().contains(loyaltyClubMember01) + "AAAAAAAAAAAAAAAAAAAAA");
+
+            System.out.println(Discount.checkDiscountCode02(loyaltyClubMember01, discount01.getCode()));
+
+
+//            Order.deleteOldOrders();
         } catch (Exception e) {
             e.printStackTrace();
         }

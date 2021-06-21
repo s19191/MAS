@@ -83,6 +83,10 @@ public class Recipe {
         }
     }
 
+    public Long getId_Composition() {
+        return id_Composition;
+    }
+
     public double getQuantity() {
         return quantity;
     }
@@ -107,9 +111,15 @@ public class Recipe {
 
     @Override
     public String toString() {
-        return "Composition{" +
+        return "Recipe{" +
                 "quantity=" + quantity +
                 ", temperature=" + temperature +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Recipe r = (Recipe) obj;
+        return id_Composition.equals(r.getId_Composition());
     }
 }

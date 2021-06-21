@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DiscountLoyaltyClubMemberGUI {
-    public List<Person> getLoyaltyClubMembers() {
+    private List<Person> getLoyaltyClubMembers() {
         StandardServiceRegistry registry = null;
         SessionFactory sessionFactory = null;
 
@@ -62,7 +62,7 @@ public class DiscountLoyaltyClubMemberGUI {
         }
     }
 
-    public List<Discount> getDiscounts() {
+    private List<Discount> getDiscounts() {
         StandardServiceRegistry registry = null;
         SessionFactory sessionFactory = null;
 
@@ -101,7 +101,7 @@ public class DiscountLoyaltyClubMemberGUI {
 
     public void showGui() throws NullPointerException {
         SwingUtilities.invokeLater(() -> {
-            JFrame jf = new JFrame("Currency converter");
+            JFrame jf = new JFrame("Kawiarnia StarDucks");
             jf.setPreferredSize(new Dimension(1080,720));
 //            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 //            jf.setPreferredSize(dim);

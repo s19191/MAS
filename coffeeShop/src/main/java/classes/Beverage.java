@@ -12,7 +12,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Beverage {
@@ -31,12 +33,16 @@ public class Beverage {
     @OneToMany(
             mappedBy = "beverage",
             cascade = CascadeType.ALL,
-            orphanRemoval = true
+            orphanRemoval = true,
+            fetch = FetchType.EAGER
     )
-    private List<Recipe> recipes = new ArrayList<>();
+    private Set<Recipe> recipes = new HashSet<>();
 
-    @ManyToMany(mappedBy = "beverages")
-    private List<Order> orders = new ArrayList<>();
+    @ManyToMany(
+            mappedBy = "beverages",
+            fetch = FetchType.EAGER
+    )
+    private Set<Order> orders = new HashSet<>();
 
     public Beverage() {}
 
@@ -53,7 +59,7 @@ public class Beverage {
         return new Beverage(name, price, code);
     }
 
-    public List<Recipe> getCompositions() {
+    public Set<Recipe> getCompositions() {
         return recipes;
     }
 
@@ -74,7 +80,7 @@ public class Beverage {
         }
     }
 
-    public List<Order> getOrders() {
+    public Set<Order> getOrders() {
         return orders;
     }
 
@@ -132,6 +138,10 @@ public class Beverage {
         return result;
     }
 
+    public Long getId_Beverage() {
+        return id_Beverage;
+    }
+
     public String getName() {
         return name;
     }
@@ -167,11 +177,17 @@ public class Beverage {
 
     @Override
     public String toString() {
-        return "classes.Beverage{" +
+        return "Beverage{" +
                 "name='" + name + '\'' +
                 ", price=" + price +
                 ", code='" + code + '\'' +
                 ", compositions=" + recipes +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Beverage b = (Beverage) obj;
+        return id_Beverage.equals(b.getId_Beverage());
     }
 }

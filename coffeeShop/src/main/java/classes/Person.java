@@ -66,16 +66,17 @@ public class Person {
     private Set<Contest> contests = new TreeSet<>(Comparator.comparing(Contest::getDateOfTheEvent));
 
     @OneToMany(mappedBy = "winner")
-    private List<Contest> contestsWon = new ArrayList<>();
+    private Set<Contest> contestsWon = new HashSet<>();
 
     @OneToMany(mappedBy = "assignedBarista")
-    private List<Order> ordersAssigned = new ArrayList<>();
+    private Set<Order> ordersAssigned = new HashSet<>();
 
-    @OneToMany(mappedBy = "loyaltyClubMember")
-    private List<Order> ordersPlaced = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "loyaltyClubMember",
+            fetch = FetchType.EAGER
+    )
+    private Set<Order> ordersPlaced = new HashSet<>();
 
-
-    //TODO: TU COś
     @ManyToMany(
             fetch = FetchType.EAGER
     )
@@ -84,7 +85,7 @@ public class Person {
             joinColumns = { @JoinColumn(name = "id_loyaltyClubMember") },
             inverseJoinColumns = { @JoinColumn(name = "id_discount") }
     )
-    private List<Discount> discounts = new ArrayList<>();
+    private Set<Discount> discounts = new HashSet<>();
 
     public Person() {}
 
@@ -102,6 +103,18 @@ public class Person {
         personKind.add(PersonType.BARISTA);
     }
 
+    /**
+     * @param firstName
+     * @param secondName
+     * @param surname
+     * @param sex
+     * @param dateOfBirth
+     * @param address
+     * @param dateOfEmployment
+     * @param baristaRank
+     * @return
+     * @throws NotNullException
+     */
     public static Person createBarista(String firstName, String secondName, String surname, Sex sex, LocalDate dateOfBirth, Address address, LocalDate dateOfEmployment, BaristaRank baristaRank) throws NotNullException {
         if (firstName == null || secondName == null || surname == null || sex == null || dateOfBirth == null || address == null || dateOfEmployment == null || baristaRank == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
@@ -444,7 +457,7 @@ public class Person {
         }
     }
 
-    public List<Contest> getContestsWon() throws Exception {
+    public Set<Contest> getContestsWon() throws Exception {
         checkIfBarista();
         return contestsWon;
     }
@@ -474,7 +487,7 @@ public class Person {
         }
     }
 
-    public List<Order> getOrdersAssigned() throws Exception {
+    public Set<Order> getOrdersAssigned() throws Exception {
         checkIfBarista();
         return ordersAssigned;
     }
@@ -498,7 +511,7 @@ public class Person {
         }
     }
 
-    public List<Order> getOrdersPlaced() throws Exception {
+    public Set<Order> getOrdersPlaced() throws Exception {
         checkIfLoyaltyClubMember();
         return ordersPlaced;
     }
@@ -522,7 +535,7 @@ public class Person {
         }
     }
 
-    public List<Discount> getDiscounts() throws Exception {
+    public Set<Discount> getDiscounts() throws Exception {
         checkIfLoyaltyClubMember();
         return discounts;
     }
@@ -774,6 +787,10 @@ public class Person {
         return "Worked years: " + years + ", months: " + month;
     }
 
+    public Long getId_Person() {
+        return id_Person;
+    }
+
     public Set<PersonType> getPersonKind() {
         return personKind;
     }
@@ -964,5 +981,11 @@ public class Person {
         return "Pierwsze imie: " + firstName +
                 (secondName!=null ? secondName : "") +
                 ", nazwisko: " + surname;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Person p = (Person) obj;
+        return id_Person.equals(p.getId_Person());
     }
 }

@@ -71,7 +71,7 @@ public class ShowBaristasContestsGUI {
 
     public void showGui() throws NullPointerException {
         SwingUtilities.invokeLater(() -> {
-            JFrame jf = new JFrame("Currency converter");
+            JFrame jf = new JFrame("Kawiarnia StarDucks");
             jf.setPreferredSize(new Dimension(1080,720));
 //            Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 //            jf.setPreferredSize(dim);

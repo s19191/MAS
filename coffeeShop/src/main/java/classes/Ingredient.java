@@ -3,8 +3,8 @@ package classes;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Ingredient {
@@ -19,7 +19,7 @@ public class Ingredient {
     @OneToMany(
             mappedBy = "ingredient"
     )
-    private List<Recipe> recipes = new ArrayList<>();
+    private Set<Recipe> recipes = new HashSet<>();
 
     public Ingredient() {}
 
@@ -36,7 +36,7 @@ public class Ingredient {
         return new Ingredient(name, quantityOnStock, unit);
     }
 
-    public List<Recipe> getCompositions() {
+    public Set<Recipe> getCompositions() {
         return recipes;
     }
 
@@ -68,6 +68,10 @@ public class Ingredient {
         this.name = name;
     }
 
+    public Long getId_Ingredient() {
+        return id_Ingredient;
+    }
+
     public double getQuantityOnStock() {
         return quantityOnStock;
     }
@@ -97,5 +101,11 @@ public class Ingredient {
                 ", quantityOnStock=" + quantityOnStock +
                 ", unit='" + unit + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Ingredient i = (Ingredient) obj;
+        return id_Ingredient.equals(i.getId_Ingredient());
     }
 }

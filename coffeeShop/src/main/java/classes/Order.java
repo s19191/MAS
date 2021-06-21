@@ -3,6 +3,8 @@ package classes;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -12,8 +14,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity(name = "OrderTable")
 public class Order {
@@ -25,8 +28,6 @@ public class Order {
     private LocalDateTime dateOfActualLead;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
-    @Column(unique = true)
-    private int orderNr;
 
     @ManyToOne
     private Person assignedBarista;
@@ -34,13 +35,13 @@ public class Order {
     @ManyToOne
     private Person loyaltyClubMember;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "Beverage_Order",
             joinColumns = { @JoinColumn(name = "id_order") },
             inverseJoinColumns = { @JoinColumn(name = "id_beverage") }
     )
-    private List<Beverage> beverages = new ArrayList<>();
+    private Set<Beverage> beverages = new HashSet<>();
 
     @OneToOne(
             cascade = CascadeType.ALL,
@@ -53,24 +54,20 @@ public class Order {
 
     public Order() {}
 
-    private Order(int orderNr) {
-        dateOfAcceptance = LocalDateTime.now();
+    private Order(LocalDateTime dateOfAcceptance) {
+        this.dateOfAcceptance = dateOfAcceptance;
         orderStatus = OrderStatus.WAITING;
-        this.orderNr = orderNr;
     }
 
-    public static Order createOrder(Integer orderNr) throws Exception {
-        if (orderNr == null) {
-            throw new NotNullException("Can't create object, one of parameters is null");
-        }
-        return new Order(orderNr);
+    public static Order createOrder() throws Exception {
+        return new Order(LocalDateTime.now());
     }
 
-    public static Order createOrder(Integer orderNr, List<Beverage> beverages, Person loyaltyClubMember) throws Exception {
-        if (beverages == null || beverages.isEmpty() || loyaltyClubMember == null || orderNr == null) {
+    public static Order createOrder(List<Beverage> beverages, Person loyaltyClubMember) throws Exception {
+        if (beverages == null || beverages.isEmpty() || loyaltyClubMember == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        Order order = new Order(orderNr);
+        Order order = new Order(LocalDateTime.now());
         for (Beverage b : beverages) {
             order.addBeverage(b);
         }
@@ -78,11 +75,11 @@ public class Order {
         return order;
     }
 
-    public static Order createOrder(Integer orderNr, List<Beverage> beverages, Person loyaltyClubMember, Discount discount) throws Exception {
-        if (beverages == null || beverages.isEmpty() || loyaltyClubMember == null || orderNr == null || discount == null) {
+    public static Order createOrder(List<Beverage> beverages, Person loyaltyClubMember, Discount discount) throws Exception {
+        if (beverages == null || beverages.isEmpty() || loyaltyClubMember == null || discount == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        Order order = new Order(orderNr);
+        Order order = new Order(LocalDateTime.now());
         for (Beverage b : beverages) {
             order.addBeverage(b);
         }
@@ -166,7 +163,7 @@ public class Order {
         }
     }
 
-    public List<Beverage> getBeverages() {
+    public Set<Beverage> getBeverages() {
         return beverages;
     }
 
@@ -195,7 +192,13 @@ public class Order {
         if (newDiscount == null) {
             throw new NotNullException("Can't create object, one of parameters is null");
         }
-        if (!loyaltyClubMember.getDiscounts().contains(newDiscount)) {
+        boolean check = false;
+        for (Discount d : loyaltyClubMember.getDiscounts()) {
+            if (d.equals(newDiscount)) {
+                check = true;
+            }
+        }
+        if (!check) {
             throw new Exception("Loyalty club member don't have this discount");
         }
         if (newDiscount != discount) {
@@ -288,6 +291,10 @@ public class Order {
         }
     }
 
+    public Long getId_Order() {
+        return id_Order;
+    }
+
     public LocalDateTime getDateOfActualLead() {
         return dateOfActualLead;
     }
@@ -310,17 +317,23 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public int getOrderNr() {
-        return orderNr;
+    public Long getOrderNr() {
+        return id_Order;
     }
 
     @Override
     public String toString() {
-        return "classes.Order{" +
+        return "Order{" +
                 "dateOfAcceptance=" + dateOfAcceptance +
                 ", dateOfActualLead=" + dateOfActualLead +
                 ", orderStatus=" + orderStatus +
-                ", orderNr=" + orderNr +
+                ", orderNr=" + id_Order +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Order o = (Order) obj;
+        return id_Order.equals(o.getId_Order());
     }
 }

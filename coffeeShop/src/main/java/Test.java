@@ -130,9 +130,9 @@ public class Test {
             beverages01.add(beverage01);
             beverages01.add(beverage02);
 
-            Order order01 = Order.createOrder(1);
-            Order order02 = Order.createOrder(2, beverages01, loyaltyClubMember01);
-            Order order03 = Order.createOrder(3, beverages01, loyaltyClubMember02, discount01);
+            Order order01 = Order.createOrder();
+            Order order02 = Order.createOrder(beverages01, loyaltyClubMember01);
+            Order order03 = Order.createOrder(beverages01, loyaltyClubMember02, discount01);
 
             Opinion opinion01 = Opinion.createOpinion(LocalDateTime.now(), "Bardzo fajne zamówienie", 5);
             Opinion opinion02 = Opinion.createOpinion(LocalDateTime.now(), 1);
