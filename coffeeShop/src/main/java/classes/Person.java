@@ -65,7 +65,10 @@ public class Person {
     )
     private Set<Contest> contests = new TreeSet<>(Comparator.comparing(Contest::getDateOfTheEvent));
 
-    @OneToMany(mappedBy = "winner")
+    @OneToMany(
+            mappedBy = "winner",
+            fetch = FetchType.EAGER
+    )
     private Set<Contest> contestsWon = new HashSet<>();
 
     @OneToMany(mappedBy = "assignedBarista")
